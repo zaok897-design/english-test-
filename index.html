@@ -2,421 +2,145 @@
 <html lang="mn">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Англи хэлний цахим шалгалтын систем — English Exam Portal">
-<title>English Exam Portal — Англи хэлний цахим шалгалтын систем</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>English Exam Portal</title>
 <style>
-/* ============ RESET & TOKENS ============ */
 *{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#f4f7fc;
-  --card:#ffffff;
-  --primary:#2563eb;
-  --primary-dark:#1d4ed8;
-  --primary-light:#dbeafe;
-  --accent:#0ea5e9;
-  --text:#0f172a;
-  --muted:#64748b;
-  --border:#e2e8f0;
-  --success:#16a34a;
-  --success-light:#dcfce7;
-  --danger:#dc2626;
-  --danger-light:#fee2e2;
-  --warning:#f59e0b;
-  --radius:16px;
-  --radius-sm:10px;
-  --shadow:0 4px 16px rgba(15,23,42,.06);
-  --shadow-lg:0 12px 40px rgba(15,23,42,.12);
-}
-html{scroll-behavior:smooth}
-body{
-  font-family:'Inter','Segoe UI',system-ui,-apple-system,'Noto Sans',Arial,sans-serif;
-  background:var(--bg);color:var(--text);line-height:1.6;
-  -webkit-font-smoothing:antialiased;min-height:100vh;
-  display:flex;flex-direction:column;
-}
-img{max-width:100%}
+body{font-family:Arial,sans-serif;background:#f4f7fc;color:#0f172a;line-height:1.6}
 button{font-family:inherit;cursor:pointer;border:none;background:none}
 input,select{font-family:inherit}
-
-/* ============ LAYOUT ============ */
-.container{width:100%;max-width:1120px;margin:0 auto;padding:0 18px}
-header.site-header{
-  position:sticky;top:0;z-index:50;
-  background:rgba(255,255,255,.85);backdrop-filter:blur(12px);
-  border-bottom:1px solid var(--border);
-}
-.header-inner{display:flex;align-items:center;justify-content:space-between;gap:14px;height:68px}
-.brand{display:flex;align-items:center;gap:11px;cursor:pointer;user-select:none}
-.brand-mark{
-  width:42px;height:42px;border-radius:12px;flex-shrink:0;
-  background:linear-gradient(135deg,#1e3a8a,#2563eb 55%,#0ea5e9);
-  display:grid;place-items:center;color:#fff;font-weight:800;font-size:17px;
-  box-shadow:0 4px 12px rgba(37,99,235,.35);
-}
-.brand-text b{display:block;font-size:15.5px;letter-spacing:-.2px;line-height:1.2}
-.brand-text span{display:block;font-size:11.5px;color:var(--muted);line-height:1.3}
-.header-nav{display:flex;gap:6px;align-items:center}
-.nav-link{
-  padding:8px 14px;border-radius:9px;font-size:14px;font-weight:600;color:var(--muted);
-  transition:.18s;
-}
-.nav-link:hover{background:var(--primary-light);color:var(--primary-dark)}
-.nav-link.active{background:var(--primary);color:#fff}
-
-main{flex:1;padding:26px 0 60px}
-
-/* ============ SCREENS ============ */
-.screen{display:none;animation:fade .32s ease}
+.container{max-width:1100px;margin:0 auto;padding:0 18px}
+header{background:#fff;border-bottom:1px solid #e2e8f0;padding:12px 0;position:sticky;top:0;z-index:50}
+.header-inner{display:flex;justify-content:space-between;align-items:center;gap:14px}
+.brand{display:flex;gap:11px;align-items:center;cursor:pointer}
+.brand-mark{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,#1e3a8a,#2563eb,#0ea5e9);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800}
+.brand-text b{display:block;font-size:15px}
+.brand-text span{display:block;font-size:11px;color:#64748b}
+nav{display:flex;gap:6px}
+.nav-link{padding:8px 14px;border-radius:9px;font-size:14px;font-weight:600;color:#64748b}
+.nav-link:hover{background:#dbeafe;color:#1d4ed8}
+.nav-link.active{background:#2563eb;color:#fff}
+main{padding:26px 0 60px;min-height:60vh}
+.screen{display:none}
 .screen.active{display:block}
-@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
-
-/* ============ HERO ============ */
-.hero{
-  position:relative;overflow:hidden;border-radius:24px;
-  background:linear-gradient(135deg,#1e3a8a 0%,#2563eb 52%,#0ea5e9 100%);
-  color:#fff;padding:56px 36px;box-shadow:var(--shadow-lg);
-}
-.hero::before{
-  content:'';position:absolute;width:420px;height:420px;border-radius:50%;
-  background:radial-gradient(circle,rgba(255,255,255,.22),transparent 68%);
-  top:-170px;right:-120px;
-}
-.hero::after{
-  content:'';position:absolute;width:300px;height:300px;border-radius:50%;
-  background:radial-gradient(circle,rgba(255,255,255,.13),transparent 68%);
-  bottom:-160px;left:-90px;
-}
-.hero-content{position:relative;z-index:2;max-width:720px}
-.hero-badge{
-  display:inline-flex;align-items:center;gap:8px;
-  background:rgba(255,255,255,.17);border:1px solid rgba(255,255,255,.28);
-  padding:6px 15px;border-radius:999px;font-size:12.5px;font-weight:600;
-  letter-spacing:.4px;margin-bottom:20px;
-}
-.hero h1{font-size:clamp(30px,5.2vw,48px);line-height:1.13;letter-spacing:-1.2px;font-weight:800;margin-bottom:14px}
-.hero .subtitle{font-size:clamp(15px,2.3vw,19px);opacity:.94;font-weight:500;margin-bottom:8px}
-.hero .desc{font-size:15px;opacity:.82;margin-bottom:32px;max-width:600px}
-.hero-actions{display:flex;flex-wrap:wrap;gap:12px}
-.hero-stats{
-  display:flex;flex-wrap:wrap;gap:28px;margin-top:38px;padding-top:26px;
-  border-top:1px solid rgba(255,255,255,.22);position:relative;z-index:2;
-}
-.hero-stat b{display:block;font-size:26px;font-weight:800;line-height:1.1}
-.hero-stat span{font-size:12.5px;opacity:.82}
-
-/* ============ BUTTONS ============ */
-.btn{
-  display:inline-flex;align-items:center;justify-content:center;gap:8px;
-  padding:12px 22px;border-radius:11px;font-size:14.5px;font-weight:700;
-  transition:.18s;white-space:nowrap;text-decoration:none;line-height:1.2;
-}
-.btn:active{transform:scale(.975)}
-.btn-primary{background:var(--primary);color:#fff;box-shadow:0 4px 14px rgba(37,99,235,.3)}
-.btn-primary:hover{background:var(--primary-dark);box-shadow:0 6px 20px rgba(37,99,235,.4)}
-.btn-white{background:#fff;color:var(--primary-dark);box-shadow:0 4px 16px rgba(0,0,0,.15)}
-.btn-white:hover{background:#f1f5ff}
+.hero{background:linear-gradient(135deg,#1e3a8a,#2563eb,#0ea5e9);color:#fff;padding:50px 32px;border-radius:24px}
+.hero h1{font-size:42px;font-weight:800;margin-bottom:12px}
+.hero .subtitle{font-size:18px;opacity:.95;margin-bottom:8px}
+.hero .desc{font-size:15px;opacity:.85;margin-bottom:28px;max-width:600px}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 22px;border-radius:11px;font-size:14.5px;font-weight:700;transition:.18s;text-decoration:none}
+.btn-primary{background:#2563eb;color:#fff}
+.btn-primary:hover{background:#1d4ed8}
+.btn-white{background:#fff;color:#1d4ed8}
 .btn-glass{background:rgba(255,255,255,.15);color:#fff;border:1.5px solid rgba(255,255,255,.45)}
-.btn-glass:hover{background:rgba(255,255,255,.27)}
-.btn-outline{background:#fff;color:var(--text);border:1.5px solid var(--border)}
-.btn-outline:hover{border-color:var(--primary);color:var(--primary);background:#f8fbff}
-.btn-success{background:var(--success);color:#fff}
-.btn-success:hover{background:#15803d}
-.btn-danger{background:var(--danger);color:#fff}
-.btn-danger:hover{background:#b91c1c}
-.btn-lg{padding:15px 30px;font-size:16px;border-radius:13px}
-.btn-sm{padding:8px 14px;font-size:13px;border-radius:9px}
-.btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
-
-/* ============ CARDS ============ */
-.card{
-  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
-  padding:26px;box-shadow:var(--shadow);
-}
-.section-title{font-size:22px;font-weight:800;letter-spacing:-.5px;margin-bottom:6px}
-.section-sub{color:var(--muted);font-size:14.5px;margin-bottom:24px}
-.muted{color:var(--muted)}
+.btn-glass:hover{background:rgba(255,255,255,.28)}
+.btn-outline{background:#fff;color:#0f172a;border:1.5px solid #e2e8f0}
+.btn-outline:hover{border-color:#2563eb;color:#2563eb}
+.btn-success{background:#16a34a;color:#fff}
+.btn-danger{background:#dc2626;color:#fff}
+.btn-lg{padding:15px 30px;font-size:16px}
+.btn-sm{padding:8px 14px;font-size:13px}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.card{background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:24px;box-shadow:0 4px 16px rgba(15,23,42,.06)}
+.section-title{font-size:22px;font-weight:800;margin-bottom:6px}
+.section-sub{color:#64748b;font-size:14px;margin-bottom:20px}
+.muted{color:#64748b}
 .small{font-size:13px}
 .grid{display:grid;gap:18px}
-.grid-3{grid-template-columns:repeat(auto-fit,minmax(255px,1fr))}
-.grid-2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
-.mt-24{margin-top:24px}
-.mt-16{margin-top:16px}
-.mb-16{margin-bottom:16px}
-.mb-24{margin-bottom:24px}
-
-/* ============ FEATURE CARDS ============ */
-.feature{display:flex;gap:15px;align-items:flex-start}
-.feature-icon{
-  width:46px;height:46px;border-radius:13px;flex-shrink:0;display:grid;place-items:center;
-  font-size:21px;background:var(--primary-light);
-}
-.feature h3{font-size:16px;font-weight:700;margin-bottom:4px}
-.feature p{font-size:13.5px;color:var(--muted);line-height:1.55}
-
-/* ============ ACTION TILES ============ */
-.tile{
-  display:flex;flex-direction:column;gap:12px;align-items:flex-start;
-  padding:28px;border-radius:var(--radius);border:1.5px solid var(--border);
-  background:#fff;box-shadow:var(--shadow);transition:.2s;text-align:left;width:100%;
-}
-.tile:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);border-color:#c7d9f7}
-.tile-icon{width:54px;height:54px;border-radius:15px;display:grid;place-items:center;font-size:25px}
+.grid-3{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.grid-2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.mt-24{margin-top:24px}.mt-16{margin-top:16px}.mb-16{margin-bottom:16px}.mb-24{margin-bottom:24px}
+.tile{padding:26px;border-radius:16px;border:1.5px solid #e2e8f0;background:#fff;text-align:left;display:flex;flex-direction:column;gap:10px;transition:.2s;width:100%}
+.tile:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(15,23,42,.12)}
+.tile-icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px}
 .tile h3{font-size:17px;font-weight:700}
-.tile p{font-size:13.5px;color:var(--muted);line-height:1.55}
-.tile .arrow{font-size:13px;font-weight:700;color:var(--primary);margin-top:auto}
-
-/* ============ EXAM SELECT ============ */
+.tile p{font-size:13.5px;color:#64748b}
 .exam-card{position:relative;overflow:hidden}
-.exam-card::before{
-  content:'';position:absolute;left:0;top:0;bottom:0;width:5px;
-  background:linear-gradient(180deg,var(--primary),var(--accent));
-}
-.exam-year{font-size:30px;font-weight:800;letter-spacing:-1px;line-height:1.1}
-.version-row{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
+.exam-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:5px;background:linear-gradient(180deg,#2563eb,#0ea5e9)}
+.exam-year{font-size:30px;font-weight:800}
+.version-row{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
 .version-row .btn{flex:1;min-width:120px}
-.badge{
-  display:inline-block;padding:3px 10px;border-radius:999px;
-  font-size:11.5px;font-weight:700;letter-spacing:.3px;
-}
-.badge-a{background:#dbeafe;color:#1d4ed8}
-.badge-b{background:#dcfce7;color:#15803d}
-
-/* ============ FORMS ============ */
+.badge{display:inline-block;padding:3px 10px;border-radius:999px;font-size:11.5px;font-weight:700;background:#dbeafe;color:#1d4ed8}
 .field{margin-bottom:18px}
 .field label{display:block;font-size:13.5px;font-weight:700;margin-bottom:7px}
-.field input,.field select{
-  width:100%;padding:13px 15px;border-radius:11px;border:1.5px solid var(--border);
-  font-size:15px;background:#fff;transition:.18s;color:var(--text);
-}
-.field input:focus,.field select:focus{
-  outline:none;border-color:var(--primary);box-shadow:0 0 0 4px rgba(37,99,235,.12);
-}
+.field input,.field select{width:100%;padding:13px 15px;border-radius:11px;border:1.5px solid #e2e8f0;font-size:15px;background:#fff}
+.field input:focus{outline:none;border-color:#2563eb;box-shadow:0 0 0 4px rgba(37,99,235,.12)}
 .form-narrow{max-width:480px;margin:0 auto}
-
-/* ============ EXAM RUN ============ */
-.exam-top{
-  display:flex;align-items:center;justify-content:space-between;gap:16px;
-  padding:18px 24px;flex-wrap:wrap;
-}
-.exam-title{font-size:16.5px;font-weight:800;letter-spacing:-.3px}
-.timer{
-  font-size:21px;font-weight:800;font-variant-numeric:tabular-nums;
-  padding:9px 18px;border-radius:11px;background:var(--primary-light);color:var(--primary-dark);
-  letter-spacing:.5px;transition:.3s;
-}
+.exam-top{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px 24px;flex-wrap:wrap}
+.timer{font-size:21px;font-weight:800;padding:9px 18px;border-radius:11px;background:#dbeafe;color:#1d4ed8}
 .timer.warning{background:#fef3c7;color:#b45309}
-.timer.danger{background:var(--danger-light);color:var(--danger);animation:pulse 1s infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.55}}
-
+.timer.danger{background:#fee2e2;color:#dc2626}
 .progress{height:7px;background:#e4ebf6;border-radius:999px;overflow:hidden;margin:14px 0 20px}
-.progress-bar{height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,var(--primary),var(--accent));transition:width .35s ease}
-
-.exam-layout{display:grid;grid-template-columns:1fr 268px;gap:20px;align-items:start}
-.question-card{padding:30px}
-.q-number{
-  display:inline-block;font-size:12px;font-weight:800;letter-spacing:1px;
-  color:var(--primary);background:var(--primary-light);padding:4px 12px;border-radius:999px;
-  margin-bottom:16px;
-}
-.passage{
-  background:#f8fafc;border-left:4px solid var(--accent);border-radius:0 10px 10px 0;
-  padding:16px 20px;margin-bottom:18px;font-size:14.5px;line-height:1.75;color:#334155;
-  font-style:italic;
-}
-.q-text{font-size:17.5px;font-weight:600;line-height:1.55;margin-bottom:22px;letter-spacing:-.2px}
-.options{display:flex;flex-direction:column;gap:11px}
-.opt{
-  display:flex;align-items:center;gap:14px;text-align:left;width:100%;
-  padding:15px 18px;border-radius:12px;border:1.5px solid var(--border);
-  background:#fff;font-size:15px;font-weight:500;color:var(--text);transition:.16s;
-}
+.progress-bar{height:100%;width:0;background:linear-gradient(90deg,#2563eb,#0ea5e9);transition:width .35s}
+.exam-layout{display:grid;grid-template-columns:1fr 260px;gap:20px;align-items:start}
+.question-card{padding:28px}
+.q-number{display:inline-block;font-size:12px;font-weight:800;color:#2563eb;background:#dbeafe;padding:4px 12px;border-radius:999px;margin-bottom:14px}
+.q-text{font-size:17px;font-weight:600;line-height:1.55;margin-bottom:20px}
+.options{display:flex;flex-direction:column;gap:10px}
+.opt{display:flex;align-items:center;gap:14px;text-align:left;width:100%;padding:14px 18px;border-radius:12px;border:1.5px solid #e2e8f0;background:#fff;font-size:15px;font-weight:500;transition:.16s}
 .opt:hover{border-color:#a8c4f0;background:#f8fbff}
-.opt .letter{
-  width:31px;height:31px;border-radius:50%;flex-shrink:0;display:grid;place-items:center;
-  background:#f1f5f9;font-weight:800;font-size:13.5px;color:var(--muted);transition:.16s;
-}
-.opt.selected{border-color:var(--primary);background:#eff6ff;box-shadow:0 0 0 3px rgba(37,99,235,.1)}
-.opt.selected .letter{background:var(--primary);color:#fff}
-.opt.correct{border-color:var(--success);background:var(--success-light)}
-.opt.correct .letter{background:var(--success);color:#fff}
-.opt.wrong{border-color:var(--danger);background:var(--danger-light)}
-.opt.wrong .letter{background:var(--danger);color:#fff}
-
-.exam-actions{display:flex;gap:11px;margin-top:28px;flex-wrap:wrap}
+.opt .letter{width:30px;height:30px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:#f1f5f9;font-weight:800;font-size:13px;color:#64748b}
+.opt.selected{border-color:#2563eb;background:#eff6ff}
+.opt.selected .letter{background:#2563eb;color:#fff}
+.exam-actions{display:flex;gap:11px;margin-top:24px;flex-wrap:wrap}
 .exam-actions .btn{flex:1;min-width:130px}
-
-.side-card{padding:22px;position:sticky;top:88px}
-.side-card h4{font-size:14px;font-weight:800;margin-bottom:14px;letter-spacing:-.2px}
-.qnav{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
-.qnav button{
-  aspect-ratio:1;border-radius:9px;border:1.5px solid var(--border);background:#fff;
-  font-size:13px;font-weight:700;color:var(--muted);transition:.15s;
-}
-.qnav button:hover{border-color:var(--primary);color:var(--primary)}
-.qnav button.answered{background:var(--primary-light);border-color:#93b4f5;color:var(--primary-dark)}
-.qnav button.current{background:var(--primary);border-color:var(--primary);color:#fff}
-.legend{display:flex;flex-direction:column;gap:7px;margin-top:18px;padding-top:16px;border-top:1px solid var(--border);font-size:12px;color:var(--muted)}
-.legend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:7px;vertical-align:-1px}
-
-/* ============ RESULT ============ */
-.result-hero{text-align:center;padding:44px 26px}
-.score-ring{
-  width:168px;height:168px;border-radius:50%;margin:0 auto 22px;
-  display:grid;place-items:center;position:relative;
-  background:conic-gradient(var(--ring-color) calc(var(--pct)*1%), #e8eef8 0);
-}
-.score-ring::after{
-  content:'';position:absolute;inset:13px;border-radius:50%;background:#fff;
-}
-.score-inner{position:relative;z-index:2}
-.score-inner b{display:block;font-size:42px;font-weight:800;letter-spacing:-1.5px;line-height:1}
-.score-inner span{font-size:13px;color:var(--muted);font-weight:600}
-.grade-pill{
-  display:inline-block;padding:9px 26px;border-radius:999px;font-size:15px;
-  font-weight:800;letter-spacing:.5px;margin-bottom:10px;
-}
-.result-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:14px;margin-top:28px}
-.stat-box{background:#f8fafc;border:1px solid var(--border);border-radius:13px;padding:16px 12px;text-align:center}
-.stat-box b{display:block;font-size:23px;font-weight:800;line-height:1.2}
-.stat-box span{font-size:12px;color:var(--muted);font-weight:600}
-
-.review-item{
-  border:1px solid var(--border);border-radius:13px;padding:18px 20px;margin-bottom:13px;background:#fff;
-}
-.review-item.ok{border-left:4px solid var(--success)}
-.review-item.no{border-left:4px solid var(--danger)}
-.review-head{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:9px;flex-wrap:wrap}
-.review-q{font-size:15px;font-weight:600;margin-bottom:11px;line-height:1.55}
-.review-ans{font-size:13.5px;display:flex;flex-direction:column;gap:5px}
-.review-ans .lbl{font-weight:700;color:var(--muted)}
-.tag{font-size:11.5px;font-weight:800;padding:3px 11px;border-radius:999px;letter-spacing:.3px}
-.tag-ok{background:var(--success-light);color:#15803d}
-.tag-no{background:var(--danger-light);color:#b91c1c}
-
-/* ============ TABLE ============ */
-.table-wrap{overflow-x:auto;border-radius:var(--radius);border:1px solid var(--border);background:#fff}
-table{width:100%;border-collapse:collapse;font-size:13.5px;min-width:720px}
+.side-card{padding:20px;position:sticky;top:88px}
+.qnav{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}
+.qnav button{aspect-ratio:1;border-radius:9px;border:1.5px solid #e2e8f0;background:#fff;font-size:13px;font-weight:700;color:#64748b}
+.qnav button.answered{background:#dbeafe;border-color:#93b4f5;color:#1d4ed8}
+.qnav button.current{background:#2563eb;border-color:#2563eb;color:#fff}
+.thankyou{text-align:center;padding:60px 30px}
+.thankyou .big{font-size:80px;margin-bottom:20px}
+.thankyou h2{font-size:28px;font-weight:800;margin-bottom:12px}
+.thankyou p{font-size:16px;color:#64748b;margin-bottom:8px}
+.stat-box{background:#f8fafc;border:1px solid #e2e8f0;border-radius:13px;padding:16px 12px;text-align:center}
+.stat-box b{display:block;font-size:24px;font-weight:800}
+.stat-box span{font-size:12px;color:#64748b;font-weight:600}
+.table-wrap{overflow-x:auto;border-radius:16px;border:1px solid #e2e8f0;background:#fff}
+table{width:100%;border-collapse:collapse;font-size:13.5px;min-width:700px}
 thead{background:#f8fafc}
-th{
-  text-align:left;padding:13px 15px;font-weight:800;font-size:12px;
-  letter-spacing:.5px;color:var(--muted);text-transform:uppercase;border-bottom:1.5px solid var(--border);
-  white-space:nowrap;
-}
-td{padding:13px 15px;border-bottom:1px solid #f1f5f9;white-space:nowrap}
-tbody tr:last-child td{border-bottom:none}
-tbody tr:hover{background:#f8fbff}
-.score-chip{display:inline-block;padding:3px 11px;border-radius:999px;font-weight:800;font-size:12.5px}
-.chip-green{background:var(--success-light);color:#15803d}
-.chip-blue{background:var(--primary-light);color:#1d4ed8}
-.chip-red{background:var(--danger-light);color:#b91c1c}
-
-/* ============ ALERTS ============ */
-.alert{
-  padding:14px 18px;border-radius:12px;font-size:14px;margin-bottom:18px;
-  display:flex;gap:11px;align-items:flex-start;line-height:1.55;
-}
+th{text-align:left;padding:12px 14px;font-weight:800;font-size:12px;color:#64748b;text-transform:uppercase;border-bottom:1.5px solid #e2e8f0}
+td{padding:12px 14px;border-bottom:1px solid #f1f5f9}
+.score-chip{display:inline-block;padding:3px 10px;border-radius:999px;font-weight:800;font-size:12px}
+.alert{padding:13px 17px;border-radius:12px;font-size:14px;margin-bottom:16px;display:flex;gap:10px;line-height:1.5}
 .alert-info{background:#eff6ff;border:1px solid #bfdbfe;color:#1e40af}
 .alert-warn{background:#fffbeb;border:1px solid #fde68a;color:#92400e}
-.alert-ok{background:var(--success-light);border:1px solid #bbf7d0;color:#15803d}
-.alert-err{background:var(--danger-light);border:1px solid #fecaca;color:#b91c1c}
-
-/* ============ MODAL ============ */
-.modal-back{
-  position:fixed;inset:0;background:rgba(15,23,42,.55);backdrop-filter:blur(4px);
-  display:none;place-items:center;z-index:200;padding:20px;
-}
-.modal-back.show{display:grid}
-.modal{
-  background:#fff;border-radius:20px;padding:32px;max-width:440px;width:100%;
-  box-shadow:var(--shadow-lg);animation:pop .25s ease;
-}
-@keyframes pop{from{transform:scale(.94);opacity:0}to{transform:scale(1);opacity:1}}
-.modal h3{font-size:20px;font-weight:800;margin-bottom:10px;letter-spacing:-.4px}
-.modal p{color:var(--muted);font-size:14.5px;margin-bottom:24px;line-height:1.6}
+.alert-err{background:#fee2e2;border:1px solid #fecaca;color:#b91c1c}
+.alert-ok{background:#dcfce7;border:1px solid #bbf7d0;color:#15803d}
+.modal-back{position:fixed;left:0;top:0;right:0;bottom:0;background:rgba(15,23,42,.55);display:none;align-items:center;justify-content:center;z-index:200;padding:20px}
+.modal-back.show{display:flex}
+.modal{background:#fff;border-radius:20px;padding:30px;max-width:440px;width:100%}
+.modal h3{font-size:19px;font-weight:800;margin-bottom:10px}
+.modal p{color:#64748b;font-size:14.5px;margin-bottom:22px}
 .modal-actions{display:flex;gap:11px}
 .modal-actions .btn{flex:1}
-
-/* ============ MISC ============ */
-.empty-state{text-align:center;padding:56px 20px;color:var(--muted)}
-.empty-state .icon{font-size:46px;margin-bottom:14px;opacity:.5}
-.steps{counter-reset:s;display:flex;flex-direction:column;gap:16px}
-.step{display:flex;gap:15px;align-items:flex-start}
-.step-num{
-  width:34px;height:34px;border-radius:50%;background:var(--primary);color:#fff;
-  display:grid;place-items:center;font-weight:800;font-size:14px;flex-shrink:0;
-}
-.step h4{font-size:15px;font-weight:700;margin-bottom:3px}
-.step p{font-size:13.5px;color:var(--muted);line-height:1.6}
-.divider{height:1px;background:var(--border);margin:26px 0}
+.empty-state{text-align:center;padding:50px 20px;color:#64748b}
+.empty-state .icon{font-size:44px;margin-bottom:14px;opacity:.5}
+.steps{display:flex;flex-direction:column;gap:15px}
+.step{display:flex;gap:14px}
+.step-num{width:32px;height:32px;border-radius:50%;background:#2563eb;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;flex-shrink:0}
+.divider{height:1px;background:#e2e8f0;margin:24px 0}
 .flex-between{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
 .hidden{display:none !important}
-code{
-  background:#f1f5f9;padding:2px 7px;border-radius:5px;font-size:12.5px;
-  font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;color:#0f172a;
-}
-pre{
-  background:#0f172a;color:#e2e8f0;padding:18px;border-radius:12px;overflow-x:auto;
-  font-size:12.5px;line-height:1.65;font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;
-}
-details summary{cursor:pointer;font-weight:700;font-size:14px;padding:12px 0;user-select:none}
-details summary:hover{color:var(--primary)}
-
-footer.site-footer{
-  border-top:1px solid var(--border);background:#fff;padding:24px 0;
-  text-align:center;font-size:13px;color:var(--muted);
-}
-
-/* ============ RESPONSIVE ============ */
-@media (max-width:900px){
-  .exam-layout{grid-template-columns:1fr}
-  .side-card{position:static;order:-1}
-  .qnav{grid-template-columns:repeat(8,1fr)}
-}
-@media (max-width:768px){
-  .header-inner{height:62px}
-  .brand-text span{display:none}
-  .nav-link{padding:7px 11px;font-size:13px}
-  .header-nav .nav-hide-mobile{display:none}
-  .hero{padding:40px 24px;border-radius:20px}
-  .hero-stats{gap:20px}
-  .hero-stat b{font-size:22px}
-  .card{padding:20px}
-  .question-card{padding:22px}
-  .q-text{font-size:16px}
-  .exam-actions .btn{flex:1 1 100%}
-  .exam-actions{flex-direction:column-reverse}
-  main{padding:18px 0 46px}
-}
-@media (max-width:480px){
-  .container{padding:0 13px}
-  .hero{padding:32px 18px}
-  .hero-actions .btn{width:100%}
-  .qnav{grid-template-columns:repeat(6,1fr)}
-  .score-ring{width:142px;height:142px}
-  .score-inner b{font-size:35px}
-  .modal{padding:24px}
-  .modal-actions{flex-direction:column}
-}
+footer{border-top:1px solid #e2e8f0;background:#fff;padding:20px;text-align:center;font-size:13px;color:#64748b}
+@media(max-width:800px){.exam-layout{grid-template-columns:1fr}.side-card{position:static;order:-1}.qnav{grid-template-columns:repeat(8,1fr)}.hero h1{font-size:32px}}
 </style>
 </head>
 <body>
 
-<!-- ================= HEADER ================= -->
-<header class="site-header">
+<header>
   <div class="container header-inner">
     <div class="brand" onclick="goHome()">
       <div class="brand-mark">EN</div>
       <div class="brand-text">
         <b>English Exam Portal</b>
-        <span>Англи хэлний цахим шалгалтын систем</span>
+        <span>Англи хэлний цахим шалгалт</span>
       </div>
     </div>
-    <nav class="header-nav">
-      <button class="nav-link" data-nav="home" onclick="goHome()">Нүүр</button>
-      <button class="nav-link nav-hide-mobile" data-nav="instructions" onclick="showScreen('instructions')">Заавар</button>
-      <button class="nav-link nav-hide-mobile" data-nav="myresults" onclick="openMyResults()">Үр дүн</button>
-      <button class="nav-link" data-nav="teacher" onclick="openTeacher()">Багш</button>
+    <nav>
+      <button class="nav-link" id="navHome" onclick="goHome()">Нүүр</button>
+      <button class="nav-link" onclick="showScreen('instructions')">Заавар</button>
+      <button class="nav-link" id="navTeacher" onclick="openTeacher()">👨‍🏫 Багш</button>
     </nav>
   </div>
 </header>
@@ -424,201 +148,101 @@ footer.site-footer{
 <main>
 <div class="container">
 
-<!-- ================= HOME ================= -->
-<section class="screen active" data-screen="home">
+<!-- HOME -->
+<div class="screen active" data-screen="home">
   <div class="hero">
-    <div class="hero-content">
-      <div class="hero-badge">🎓 2021 – 2025 ОНЫ ШАЛГАЛТУУД</div>
-      <h1>English Exam Portal</h1>
-      <p class="subtitle">Англи хэлний цахим шалгалтын систем</p>
-      <p class="desc">
-        Монгол сурагчдад зориулсан англи хэлний онлайн шалгалтын платформ.
-        Шалгалтаа сонгон авч, цахимаар өгөөд үр дүнгээ шууд хараарай.
-      </p>
-      <div class="hero-actions">
-        <button class="btn btn-white btn-lg" onclick="showScreen('select')">📝 Шалгалт өгөх</button>
-        <button class="btn btn-glass btn-lg" onclick="showScreen('instructions')">📖 Заавар</button>
-        <button class="btn btn-glass btn-lg" onclick="openMyResults()">📊 Миний шалгалтын үр дүн</button>
-      </div>
-    </div>
-    <div class="hero-stats">
-      <div class="hero-stat"><b>10</b><span>Шалгалтын хувилбар</span></div>
-      <div class="hero-stat"><b>5</b><span>Жил (2021–2025)</span></div>
-      <div class="hero-stat"><b>100</b><span>Нийт асуулт</span></div>
-      <div class="hero-stat"><b>AUTO</b><span>Автомат үнэлгээ</span></div>
+    <h1>English Exam Portal</h1>
+    <p class="subtitle">Англи хэлний цахим шалгалтын систем</p>
+    <p class="desc">Монгол сурагчдад зориулсан англи хэлний онлайн шалгалт. Шалгалтаа сонгон авч, цахимаар өгөөрэй.</p>
+    <div class="hero-actions">
+      <button class="btn btn-white btn-lg" onclick="showScreen('select')">📝 Шалгалт өгөх</button>
+      <button class="btn btn-glass btn-lg" onclick="showScreen('instructions')">📖 Заавар</button>
     </div>
   </div>
-
   <div class="grid grid-3 mt-24">
     <button class="tile" onclick="showScreen('select')">
       <div class="tile-icon" style="background:#dbeafe">📝</div>
       <h3>Шалгалт өгөх</h3>
-      <p>2021–2025 оны A болон B хувилбараас сонгон шалгалтаа эхлүүлээрэй.</p>
-      <span class="arrow">Эхлэх →</span>
+      <p>2021–2025 оны A болон B хувилбараас сонгоно уу.</p>
     </button>
     <button class="tile" onclick="showScreen('instructions')">
       <div class="tile-icon" style="background:#dcfce7">📖</div>
       <h3>Заавар</h3>
-      <p>Шалгалтын дүрэм, хугацаа, оноо болон үнэлгээний талаарх мэдээлэл.</p>
-      <span class="arrow">Унших →</span>
+      <p>Шалгалтын дүрэм, үнэлгээний талаарх мэдээлэл.</p>
     </button>
-    <button class="tile" onclick="openMyResults()">
-      <div class="tile-icon" style="background:#fef3c7">📊</div>
-      <h3>Миний шалгалтын үр дүн</h3>
-      <p>Өөрийн нэрээр хайж, өмнө өгсөн шалгалтуудын үр дүнгээ хараарай.</p>
-      <span class="arrow">Харах →</span>
+    <button class="tile" onclick="openTeacher()">
+      <div class="tile-icon" style="background:#fef3c7">👨‍🏫</div>
+      <h3>Багшийн хэсэг</h3>
+      <p>Зөвхөн багш нарт зориулсан үр дүнгийн хяналт.</p>
     </button>
   </div>
+</div>
 
-  <div class="card mt-24">
-    <h2 class="section-title">Системийн онцлог</h2>
-    <p class="section-sub">Шалгалтыг хялбар, хурдан, найдвартай болгох боломжууд</p>
-    <div class="grid grid-3">
-      <div class="feature">
-        <div class="feature-icon">⏱️</div>
-        <div><h3>Цаг хяналт</h3><p>Шалгалтын хугацаа автоматаар тоологдож, дуусахад автоматаар илгээгдэнэ.</p></div>
-      </div>
-      <div class="feature">
-        <div class="feature-icon">⚡</div>
-        <div><h3>Шуурхай үнэлгээ</h3><p>Шалгалт дуусахад оноо, хувь, дүн шууд автоматаар бодогдоно.</p></div>
-      </div>
-      <div class="feature">
-        <div class="feature-icon">📈</div>
-        <div><h3>Google Sheets</h3><p>Үр дүн автоматаар Google Sheets хүснэгтэд хадгалагдана.</p></div>
-      </div>
-      <div class="feature">
-        <div class="feature-icon">🔐</div>
-        <div><h3>Багшийн хэсэг</h3><p>Багш нууц үгээр нэвтэрч сурагчдын үр дүнг хянана.</p></div>
-      </div>
-      <div class="feature">
-        <div class="feature-icon">📱</div>
-        <div><h3>Бүх төхөөрөмж</h3><p>Утас, таблет, компьютерт тохирсон орчин үеийн дизайн.</p></div>
-      </div>
-      <div class="feature">
-        <div class="feature-icon">📚</div>
-        <div><h3>2021–2025</h3><p>Таван жилийн A, B хувилбар бүхий бүрэн шалгалтын сан.</p></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= INSTRUCTIONS ================= -->
-<section class="screen" data-screen="instructions">
+<!-- INSTRUCTIONS -->
+<div class="screen" data-screen="instructions">
   <div class="card">
     <h2 class="section-title">📖 Шалгалтын заавар</h2>
-    <p class="section-sub">Шалгалт эхлэхээс өмнө дараах зааврыг анхааралтай уншина уу.</p>
-
-    <div class="alert alert-info">
-      <span>ℹ️</span>
-      <div>Шалгалтын асуултууд <b>англи хэлээр</b>, харин заавар болон товчнууд <b>монгол хэлээр</b> байна.</div>
+    <p class="section-sub">Шалгалт эхлэхээс өмнө уншина уу.</p>
+    <div class="alert alert-info"><span>ℹ️</span><div>Асуултууд <b>англи хэлээр</b>, товчнууд <b>монгол хэлээр</b>.</div></div>
+    <div class="steps mt-16">
+      <div class="step"><div class="step-num">1</div><div><b>Шалгалтаа сонгох</b><p class="small muted">Жил (2021–2025) болон хувилбар (A/B)-аа сонгоно.</p></div></div>
+      <div class="step"><div class="step-num">2</div><div><b>Мэдээллээ бөглөх</b><p class="small muted">Овог нэр, ангиа зөв бичнэ үү.</p></div></div>
+      <div class="step"><div class="step-num">3</div><div><b>Асуултад хариулах</b><p class="small muted">Асуулт бүрт нэг зөв хариултыг сонгоно.</p></div></div>
+      <div class="step"><div class="step-num">4</div><div><b>Шалгалтаа дуусгах</b><p class="small muted">"Шалгалтыг дуусгах" товчийг дарна.</p></div></div>
+      <div class="step"><div class="step-num">5</div><div><b>Багш үр дүнг харна</b><p class="small muted">Таны оноог зөвхөн багш харна.</p></div></div>
     </div>
-
-    <div class="steps mt-24">
-      <div class="step">
-        <div class="step-num">1</div>
-        <div><h4>Шалгалтаа сонгох</h4><p>«Шалгалт өгөх» товчийг дарж, жил (2021–2025) болон хувилбар (A эсвэл B)-аа сонгоно.</p></div>
-      </div>
-      <div class="step">
-        <div class="step-num">2</div>
-        <div><h4>Мэдээллээ бөглөх</h4><p>Овог нэр, ангиа зөв бичнэ үү. Энэ мэдээлэл үр дүнтэй хамт хадгалагдана.</p></div>
-      </div>
-      <div class="step">
-        <div class="step-num">3</div>
-        <div><h4>Асуултад хариулах</h4><p>Асуулт бүрт нэг зөв хариултыг сонгоно. Баруун талын дугааруудыг ашиглан асуулт хооронд шилжиж болно.</p></div>
-      </div>
-      <div class="step">
-        <div class="step-num">4</div>
-        <div><h4>Шалгалтаа дуусгах</h4><p>«Шалгалтыг дуусгах» товчийг дарж баталгаажуулна. Хугацаа дуусахад автоматаар илгээгдэнэ.</p></div>
-      </div>
-      <div class="step">
-        <div class="step-num">5</div>
-        <div><h4>Үр дүнгээ харах</h4><p>Оноо, хувь, дүн болон алдсан асуултуудын зөв хариултыг шууд харна.</p></div>
-      </div>
-    </div>
-
-    <div class="divider"></div>
-
-    <h3 style="font-size:16px;font-weight:800;margin-bottom:14px">Үнэлгээний шалгуур</h3>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>Хувь</th><th>Дүн</th><th>Тайлбар</th></tr></thead>
-        <tbody>
-          <tr><td>90 – 100%</td><td><span class="score-chip chip-green">A</span></td><td>Маш сайн</td></tr>
-          <tr><td>80 – 89%</td><td><span class="score-chip chip-blue">B</span></td><td>Сайн</td></tr>
-          <tr><td>70 – 79%</td><td><span class="score-chip chip-blue">C</span></td><td>Дунд</td></tr>
-          <tr><td>60 – 69%</td><td><span class="score-chip chip-blue">D</span></td><td>Хангалттай</td></tr>
-          <tr><td>0 – 59%</td><td><span class="score-chip chip-red">F</span></td><td>Хангалтгүй</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="alert alert-warn mt-24">
-      <span>⚠️</span>
-      <div><b>Анхаар:</b> Шалгалтын хугацаанд хуудсаа шинэчлэх, хаах эсвэл буцах товч дарах нь хариултуудыг алдахад хүргэж болзошгүй.</div>
-    </div>
-
-    <div class="mt-24">
-      <button class="btn btn-primary btn-lg" onclick="showScreen('select')">Шалгалт эхлүүлэх →</button>
-    </div>
+    <div class="alert alert-warn mt-16"><span>⚠️</span><div>Шалгалт дууссаны дараа оноо <b>шууд харагдахгүй</b>. Багш таны үр дүнг хянана.</div></div>
+    <div class="mt-24"><button class="btn btn-primary btn-lg" onclick="showScreen('select')">Шалгалт эхлүүлэх →</button></div>
   </div>
-</section>
+</div>
 
-<!-- ================= EXAM SELECT ================= -->
-<section class="screen" data-screen="select">
+<!-- EXAM SELECT -->
+<div class="screen" data-screen="select">
   <div class="flex-between mb-16">
     <div>
       <h2 class="section-title">📝 Шалгалт сонгох</h2>
-      <p class="section-sub" style="margin-bottom:0">Жил болон хувилбараа сонгоно уу (A / B).</p>
+      <p class="section-sub" style="margin-bottom:0">Жил болон хувилбараа сонгоно уу.</p>
     </div>
-    <button class="btn btn-outline btn-sm" onclick="goHome()">← Нүүр хуудас</button>
+    <button class="btn btn-outline btn-sm" onclick="goHome()">← Нүүр</button>
   </div>
   <div class="grid grid-2" id="examList"></div>
-</section>
+</div>
 
-<!-- ================= STUDENT INFO ================= -->
-<section class="screen" data-screen="start">
+<!-- STUDENT INFO -->
+<div class="screen" data-screen="start">
   <div class="card form-narrow">
     <h2 class="section-title">Сурагчийн мэдээлэл</h2>
-    <p class="section-sub">Шалгалт эхлэхээс өмнө мэдээллээ бөглөнө үү.</p>
-
-    <div class="alert alert-info" id="startExamInfo">
-      <span>📋</span><div></div>
-    </div>
-
+    <p class="section-sub">Шалгалт эхлэхээс өмнө бөглөнө үү.</p>
+    <div class="alert alert-info" id="startExamInfo"><span>📋</span><div></div></div>
     <div class="field">
-      <label for="inpName">Овог нэр <span style="color:var(--danger)">*</span></label>
-      <input type="text" id="inpName" placeholder="Жишээ: Бат-Эрдэнэ Тэмүүлэн" autocomplete="name">
+      <label>Овог нэр *</label>
+      <input type="text" id="inpName" placeholder="Жишээ: Бат-Эрдэнэ Тэмүүлэн">
     </div>
     <div class="field">
-      <label for="inpClass">Анги / Бүлэг <span style="color:var(--danger)">*</span></label>
-      <input type="text" id="inpClass" placeholder="Жишээ: 11А" autocomplete="off">
+      <label>Анги *</label>
+      <input type="text" id="inpClass" placeholder="Жишээ: 11А">
     </div>
-
     <div id="startError" class="alert alert-err hidden"><span>⚠️</span><div></div></div>
-
     <div class="modal-actions mt-16">
       <button class="btn btn-outline" onclick="showScreen('select')">← Буцах</button>
       <button class="btn btn-primary" onclick="startExam()">Шалгалт эхлүүлэх →</button>
     </div>
   </div>
-</section>
+</div>
 
-<!-- ================= EXAM RUN ================= -->
-<section class="screen" data-screen="exam">
+<!-- EXAM -->
+<div class="screen" data-screen="exam">
   <div class="card exam-top">
     <div>
-      <div class="exam-title" id="examTitle">—</div>
+      <div id="examTitle" style="font-size:16px;font-weight:800">—</div>
       <div class="muted small" id="examStudent">—</div>
     </div>
     <div class="timer" id="timer">30:00</div>
   </div>
-
   <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
-
   <div class="exam-layout">
     <div class="card question-card">
-      <div class="q-number" id="qNumber">АСУУЛТ 1 / 10</div>
-      <div class="passage hidden" id="qPassage"></div>
+      <div class="q-number" id="qNumber">АСУУЛТ 1</div>
       <div class="q-text" id="qText">—</div>
       <div class="options" id="qOptions"></div>
       <div class="exam-actions">
@@ -627,114 +251,81 @@ footer.site-footer{
         <button class="btn btn-success" id="submitBtn" onclick="confirmSubmit()">✓ Шалгалтыг дуусгах</button>
       </div>
     </div>
-
-    <aside class="card side-card">
-      <h4>Асуултууд</h4>
+    <div class="card side-card">
+      <div style="font-size:14px;font-weight:800;margin-bottom:12px">Асуултууд</div>
       <div class="qnav" id="qnav"></div>
-      <div class="legend">
-        <div><i style="background:var(--primary)"></i>Одоогийн асуулт</div>
-        <div><i style="background:var(--primary-light);border:1px solid #93b4f5"></i>Хариулсан</div>
-        <div><i style="background:#fff;border:1.5px solid var(--border)"></i>Хариулаагүй</div>
-      </div>
-      <div class="divider" style="margin:18px 0"></div>
-      <div class="small muted" id="answeredCount">Хариулсан: 0 / 10</div>
-    </aside>
-  </div>
-</section>
-
-<!-- ================= RESULT ================= -->
-<section class="screen" data-screen="result">
-  <div class="card result-hero" id="resultHero"></div>
-
-  <div class="card mt-24">
-    <div class="flex-between mb-24">
-      <div>
-        <h2 class="section-title" style="margin-bottom:2px">📋 Дэлгэрэнгүй хяналт</h2>
-        <p class="section-sub" style="margin-bottom:0">Асуулт бүрийн хариулт ба зөв хариулт</p>
-      </div>
-      <div style="display:flex;gap:9px;flex-wrap:wrap">
-        <button class="btn btn-outline btn-sm" onclick="window.print()">🖨 Хэвлэх</button>
-        <button class="btn btn-primary btn-sm" onclick="goHome()">🏠 Нүүр хуудас</button>
-      </div>
+      <div class="small muted mt-16" id="answeredCount">Хариулсан: 0</div>
     </div>
-    <div id="reviewList"></div>
   </div>
-</section>
+</div>
 
-<!-- ================= MY RESULTS ================= -->
-<section class="screen" data-screen="myresults">
-  <div class="card">
-    <h2 class="section-title">📊 Миний шалгалтын үр дүн</h2>
-    <p class="section-sub">Өөрийн овог нэрийг бичээд үр дүнгээ хараарай.</p>
-
-    <div style="display:flex;gap:10px;flex-wrap:wrap;max-width:560px">
-      <input type="text" id="mySearchName" placeholder="Овог нэрээ бичнэ үү..."
-             style="flex:1;min-width:220px;padding:13px 15px;border-radius:11px;border:1.5px solid var(--border);font-size:15px">
-      <button class="btn btn-primary" onclick="searchMyResults()">🔍 Хайх</button>
+<!-- THANK YOU (student sees this after exam) -->
+<div class="screen" data-screen="thankyou">
+  <div class="card thankyou">
+    <div class="big">✅</div>
+    <h2>Баярлалаа!</h2>
+    <p style="font-size:16px;color:#64748b;margin-bottom:20px">Та шалгалтаа амжилттай дуусгалаа.</p>
+    <div class="alert alert-ok" style="display:inline-flex;text-align:left;max-width:500px">
+      <span>ℹ️</span>
+      <div>Таны үр дүн багшид хүргэгдлээ. <b>Оноог зөвхөн багш харна.</b></div>
     </div>
-
-    <div id="myResultsBox" class="mt-24"></div>
+    <div class="mt-24">
+      <button class="btn btn-primary btn-lg" onclick="goHome()">🏠 Нүүр хуудас</button>
+    </div>
   </div>
-</section>
+</div>
 
-<!-- ================= TEACHER LOGIN ================= -->
-<section class="screen" data-screen="teacher-login">
+<!-- TEACHER LOGIN -->
+<div class="screen" data-screen="teacher-login">
   <div class="card form-narrow">
-    <div style="text-align:center;margin-bottom:22px">
+    <div style="text-align:center;margin-bottom:20px">
       <div style="font-size:44px;margin-bottom:10px">🔐</div>
       <h2 class="section-title">Багшийн хэсэг</h2>
-      <p class="section-sub">Зөвхөн багш нарт зориулсан хэсэг. Нууц үгээ оруулна уу.</p>
+      <p class="section-sub">Нууц үгээ оруулна уу.</p>
     </div>
-
     <div class="field">
-      <label for="inpPass">Нууц үг</label>
+      <label>Нууц үг</label>
       <input type="password" id="inpPass" placeholder="••••••••" onkeydown="if(event.key==='Enter')teacherLogin()">
     </div>
-
     <div id="loginError" class="alert alert-err hidden"><span>⚠️</span><div>Нууц үг буруу байна.</div></div>
-
+    <div class="alert alert-info"><span>💡</span><div>Анхдагч нууц үг: <b>teacher2025</b></div></div>
     <div class="modal-actions mt-16">
       <button class="btn btn-outline" onclick="goHome()">← Буцах</button>
       <button class="btn btn-primary" onclick="teacherLogin()">Нэвтрэх →</button>
     </div>
   </div>
-</section>
+</div>
 
-<!-- ================= TEACHER DASHBOARD ================= -->
-<section class="screen" data-screen="teacher">
+<!-- TEACHER DASHBOARD -->
+<div class="screen" data-screen="teacher">
   <div class="flex-between mb-16">
     <div>
-      <h2 class="section-title">👨‍🏫 Багшийн удирдлагын хэсэг</h2>
-      <p class="section-sub" style="margin-bottom:0">Сурагчдын шалгалтын үр дүнгийн хяналт</p>
+      <h2 class="section-title">👨‍🏫 Багшийн удирдлага</h2>
+      <p class="section-sub" style="margin-bottom:0">Сурагчдын үр дүнгийн хяналт</p>
     </div>
-    <div style="display:flex;gap:9px;flex-wrap:wrap">
-      <button class="btn btn-outline btn-sm" onclick="exportCSV()">⬇️ CSV татах</button>
-      <button class="btn btn-danger btn-sm" onclick="clearAllResults()">🗑 Бүгдийг устгах</button>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn btn-outline btn-sm" onclick="exportCSV()">⬇️ CSV</button>
+      <button class="btn btn-danger btn-sm" onclick="clearAllResults()">🗑 Устгах</button>
       <button class="btn btn-primary btn-sm" onclick="teacherLogout()">Гарах</button>
     </div>
   </div>
-
   <div class="grid grid-3 mb-24" id="teacherStats"></div>
-
   <div class="card mb-24">
     <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end">
-      <div style="flex:1;min-width:190px">
+      <div style="flex:1;min-width:180px">
         <label class="small" style="font-weight:700;display:block;margin-bottom:6px">Нэрээр хайх</label>
-        <input type="text" id="tSearch" placeholder="Сурагчийн нэр..." oninput="renderTeacherTable()"
-               style="width:100%;padding:11px 14px;border-radius:10px;border:1.5px solid var(--border);font-size:14px">
+        <input type="text" id="tSearch" placeholder="Сурагчийн нэр..." oninput="renderTeacherTable()" style="width:100%;padding:11px 14px;border-radius:10px;border:1.5px solid #e2e8f0;font-size:14px">
       </div>
-      <div style="min-width:150px">
+      <div style="min-width:140px">
         <label class="small" style="font-weight:700;display:block;margin-bottom:6px">Жил</label>
-        <select id="tYear" onchange="renderTeacherTable()"
-                style="width:100%;padding:11px 14px;border-radius:10px;border:1.5px solid var(--border);font-size:14px;background:#fff">
+        <select id="tYear" onchange="renderTeacherTable()" style="width:100%;padding:11px 14px;border-radius:10px;border:1.5px solid #e2e8f0;font-size:14px;background:#fff">
           <option value="">Бүгд</option>
           <option>2021</option><option>2022</option><option>2023</option><option>2024</option><option>2025</option>
         </select>
       </div>
-      <div style="min-width:130px">
+      <div style="min-width:120px">
         <label class="small" style="font-weight:700;display:block;margin-bottom:6px">Хувилбар</label>
-        <select id="tVersion" onchange="renderTeacherTable()"
-                style="width:100%;padding:11px 14px;border-radius:10px;border:1.5px solid var(--border);font-size:14px;background:#fff">
+        <select id="tVersion" onchange="renderTeacherTable()" style="width:100%;padding:11px 14px;border-radius:10px;border:1.5px solid #e2e8f0;font-size:14px;background:#fff">
           <option value="">Бүгд</option>
           <option value="A">A</option>
           <option value="B">B</option>
@@ -742,327 +333,248 @@ footer.site-footer{
       </div>
     </div>
   </div>
-
   <div id="teacherTableBox"></div>
-
-  <div class="card mt-24">
-    <details>
-      <summary>⚙️ Google Sheets холболтын тохиргоо</summary>
-      <div class="mt-16">
-        <p class="small muted mb-16">
-          Үр дүнг автоматаар Google Sheets рүү илгээхийн тулд Google Apps Script Web App-ийн URL-ийг оруулна уу.
-          URL-ийг энэ хөтөч дээр хадгална.
-        </p>
-        <div style="display:flex;gap:10px;flex-wrap:wrap">
-          <input type="text" id="scriptUrlInput" placeholder="https://script.google.com/macros/s/..../exec"
-                 style="flex:1;min-width:240px;padding:12px 14px;border-radius:10px;border:1.5px solid var(--border);font-size:13.5px">
-          <button class="btn btn-primary btn-sm" onclick="saveScriptUrl()">Хадгалах</button>
-        </div>
-        <div id="scriptUrlStatus" class="small mt-16"></div>
-
-        <div class="divider"></div>
-        <p class="small" style="font-weight:700;margin-bottom:8px">Google Apps Script код (Code.gs):</p>
-        <pre>function doPost(e) {
-  try {
-    var ss = SpreadsheetApp.getActiveSpreadsheet();
-    var sheet = ss.getSheetByName('Results') || ss.insertSheet('Results');
-
-    if (sheet.getLastRow() === 0) {
-      sheet.appendRow(['Огноо','Овог нэр','Анги','Жил','Хувилбар',
-                       'Оноо','Нийт','Хувь','Дүн','Хугацаа']);
-    }
-
-    var d = JSON.parse(e.postData.contents);
-    sheet.appendRow([
-      new Date(),
-      d.name,
-      d.className,
-      d.year,
-      d.version,
-      d.score,
-      d.total,
-      d.percent + '%',
-      d.grade,
-      d.timeUsed
-    ]);
-
-    return ContentService
-      .createTextOutput(JSON.stringify({ status: 'ok' }))
-      .setMimeType(ContentService.MimeType.JSON);
-  } catch (err) {
-    return ContentService
-      .createTextOutput(JSON.stringify({ status: 'error', message: err.message }))
-      .setMimeType(ContentService.MimeType.JSON);
-  }
-}</pre>
-        <p class="small muted mt-16">
-          Дараа нь <b>Deploy → New deployment → Web app</b> сонгож,
-          <b>Execute as: Me</b>, <b>Who has access: Anyone</b> гэж тохируулан deploy хийнэ.
-        </p>
-      </div>
-    </details>
-  </div>
-</section>
+</div>
 
 </div>
 </main>
 
-<footer class="site-footer">
+<footer>
   <div class="container">
     <p><b>English Exam Portal</b> — Англи хэлний цахим шалгалтын систем</p>
-    <p class="small" style="margin-top:5px">© 2021–2025 · Монгол сурагчдад зориулав</p>
+    <p class="small">© 2021–2025</p>
   </div>
 </footer>
 
-<!-- ================= MODAL ================= -->
 <div class="modal-back" id="modalBack">
   <div class="modal">
     <h3 id="modalTitle">Баталгаажуулалт</h3>
-    <p id="modalText">Та шалгалтаа дуусгахдаа итгэлтэй байна уу?</p>
+    <p id="modalText">Үргэлжлүүлэх үү?</p>
     <div class="modal-actions">
-      <button class="btn btn-outline" id="modalCancel">Үгүй, буцах</button>
-      <button class="btn btn-primary" id="modalOk">Тийм, дуусгах</button>
+      <button class="btn btn-outline" onclick="closeModal()">Үгүй</button>
+      <button class="btn btn-primary" id="modalOk">Тийм</button>
     </div>
   </div>
 </div>
 
 <script>
-/* =========================================================
-   1. CONFIGURATION
-   ========================================================= */
-const CONFIG = {
+var CONFIG = {
   TEACHER_PASSWORD: 'teacher2025',
-  SCRIPT_URL: '',              // Google Apps Script Web App URL (optional)
-  STORAGE_KEY: 'eep_results_v1',
-  SCRIPT_KEY: 'eep_script_url',
-  EXAM_DURATION_MIN: 30
+  STORAGE_KEY: 'eep_results_v1'
 };
 
-/* =========================================================
-   2. EXAM DATABASE  (2021–2025, A & B) - Extracted from Images
-   ========================================================= */
-const EXAMS = {
+var EXAMS = {
   '2021': {
-    A: { duration: 30, questions: [
-      { q:'The town was severely damaged by _______ after the heavy rain.', o:['hurricane','flood','snowstorm','forest fire','earthquake'], a:1 },
-      { q:'Most young children don\'t read newspapers, they prefer to read _______.', o:['magazines','journals','Comics','newspapers','adverts'], a:2 },
-      { q:'There are a lot of _______ in this part of town, so always close the windows and lock the door.', o:['Shoplifters','robberies','thieves','burglars','muggers'], a:3 },
-      { q:'The best _______ movie I\'ve ever seen was Star Wars. It was about the space mission.', o:['action','cartoon','horror','crime','science fiction'], a:4 },
-      { q:'A _______ is a large store that sells different things.', o:['department store','toy store','bookstore','hardware store','stationery'], a:0 },
-      { q:'My car broke _______ again and I had to go to work on foot.', o:['of','Out','off','down','into'], a:3 },
-      { q:'You should check in two hours before your flight is scheduled to take _______.', o:['into','up','for','after','off'], a:4 },
-      { q:'Due to the storm, I put _______ to my doctor\'s appointment until the following week.', o:['off','on','out','up','down'], a:0 },
-      { q:'She came _______ a huge amount of money when her cousin died.', o:['by','out','to','into','up'], a:3 },
-      { q:'Device inside a computer that stores large amounts of information.', o:['Modem','Word processor','Disk drive','Spreadsheet','Hard disk'], a:4 },
-      { q:'An apparatus that allows information to be read from a disk or stored.', o:['Word processor','Hard disk','Disk drive','Spreadsheet','Modem'], a:2 },
-      { q:'A program or the grid you create with it to perform mathematical operations.', o:['Word processor','Spreadsheet','Hard disk','Disk drive','Modern'], a:1 },
-      { q:'Wow! Look at outside now. It\'s raining cats and dogs today. I wish I\'d brought my umbrella to work.', o:['Cats and dogs are falling from the sky','I forgot my umbrella today','I forgot my cats and dogs','It\'s raining heavily','Cats and dogs are outside'], a:3 }
-    ]},
-    B: { duration: 30, questions: [
-      { q:'The buildings are often destroyed by _______ after violent movement of the ground.', o:['forest fire','flood','snowstorm','earthquake','hurricane'], a:3 },
-      { q:'I quite like the _______. There are many interesting adverts.', o:['television commercials','quiz show','soap opera','chat show','documentary'], a:0 },
-      { q:'The _______ attack people in a public place.', o:['robberies','Shoplifters','thieves','burglars','Muggers'], a:4 },
-      { q:'_______ Jim nor Tom passed the exam.', o:['Either','Both','Neither','All','None'], a:2 },
-      { q:'Alex is very _______ of his younger sister.', o:['protect','protection','protected','protective','protector'], a:3 },
-      { q:'We must get a _______ of flour, and some eggs and apples, so we can make an apple pie for dessert.', o:['box','can','tube','bar','bag'], a:4 },
-      { q:'The more he exercises, _______ he will be.', o:['the healthier','healthiest','healthier','the healthiest','healthy'], a:0 },
-      { q:'Children _______ their necks to see who their mother was talking to.', o:['nodded','spilled','fluttered','craned','ignored'], a:3 },
-      { q:'The Professor just wanted to _______ the importance of learning foreign languages.', o:['grasp','integrate','damage','extend','emphasize'], a:4 },
-      { q:'Regular exercise is good for your body and brain. It _______ your blood with oxygen.', o:['stores','influences','enriches','processes','produces'], a:2 },
-      { q:'Millions of birds migrate to the south every year. It is an annual _______.', o:['celebration','phenomenon','perception','motivation','behavior'], a:1 },
-      { q:'The heavy rain flooded the field, and the ground was muddy. Under these _______ the kids couldn\'t play.', o:['willingness','basements','decisions','circumstances','cells'], a:3 },
-      { q:'Many foreign _______ attended the opening ceremony.', o:['scavengers','failures','abilities','attempts','dignitaries'], a:4 },
-      { q:'If I could do it _______ again, I\'d do it differently.', o:['over','without','away','in','with'], a:0 },
-      { q:'It\'s getting late, I\'m turning _______.', o:['into','around','in','up','off'], a:2 },
-      { q:'Be careful walking in the woods, there are a lot of branches sticking _______.', o:['to','at','by','out','with'], a:3 },
-      { q:'Jake and I lost our jobs yesterday. Now we are in the same boat.', o:['They are in the broken boat','They have a good situation','They are looking for a job','They are travelling by boat','They are in the same bad situation'], a:4 },
-      { q:'I only got the message by word of mouth.', o:['He read the message from the newspaper','The message was passed by his mom','He opened his mouth while he was reading the message','The message passed from person to person','He was only mouthing the message'], a:3 },
-      { q:'My girlfriend always acts as if she was born yesterday.', o:['She is naive because she doesn\'t have much experience in life','She was born yesterday','Her boyfriend doesn\'t know what she really wants','She believes that the best way to learn is by experience','His girlfriend is very thoughtful'], a:0 }
-    ]}
+    A: [
+      {q:'The town was severely damaged by _______ after the heavy rain.',o:['hurricane','flood','snowstorm','forest fire','earthquake'],a:1},
+      {q:'Most young children don\'t read newspapers, they prefer to read _______.',o:['magazines','journals','Comics','newspapers','adverts'],a:2},
+      {q:'There are a lot of _______ in this part of town.',o:['Shoplifters','robberies','thieves','burglars','muggers'],a:3},
+      {q:'The best _______ movie I\'ve ever seen was Star Wars.',o:['action','cartoon','horror','crime','science fiction'],a:4},
+      {q:'A _______ is a large store that sells different things.',o:['department store','toy store','bookstore','hardware store','stationery'],a:0},
+      {q:'My car broke _______ again and I had to go to work on foot.',o:['of','Out','off','down','into'],a:3},
+      {q:'Check in two hours before your flight is scheduled to take _______.',o:['into','up','for','after','off'],a:4},
+      {q:'Due to the storm, I put _______ to my doctor\'s appointment.',o:['off','on','out','up','down'],a:0},
+      {q:'She came _______ a huge amount of money when her cousin died.',o:['by','out','to','into','up'],a:3},
+      {q:'Device inside a computer that stores large amounts of information.',o:['Modem','Word processor','Disk drive','Spreadsheet','Hard disk'],a:4},
+      {q:'An apparatus that allows information to be read from a disk.',o:['Word processor','Hard disk','Disk drive','Spreadsheet','Modem'],a:2},
+      {q:'A program or grid to perform mathematical operations.',o:['Word processor','Spreadsheet','Hard disk','Disk drive','Modern'],a:1},
+      {q:'Wow! Look at outside now. It\'s raining cats and dogs today.',o:['Cats and dogs are falling','I forgot my umbrella','I forgot my cats','It\'s raining heavily','Cats and dogs are outside'],a:3}
+    ],
+    B: [
+      {q:'The buildings are often destroyed by _______ after violent movement of the ground.',o:['forest fire','flood','snowstorm','earthquake','hurricane'],a:3},
+      {q:'I quite like the _______. There are many interesting adverts.',o:['television commercials','quiz show','soap opera','chat show','documentary'],a:0},
+      {q:'The _______ attack people in a public place.',o:['robberies','Shoplifters','thieves','burglars','Muggers'],a:4},
+      {q:'_______ Jim nor Tom passed the exam.',o:['Either','Both','Neither','All','None'],a:2},
+      {q:'Alex is very _______ of his younger sister.',o:['protect','protection','protected','protective','protector'],a:3},
+      {q:'We must get a _______ of flour, some eggs and apples.',o:['box','can','tube','bar','bag'],a:4},
+      {q:'The more he exercises, _______ he will be.',o:['the healthier','healthiest','healthier','the healthiest','healthy'],a:0},
+      {q:'Children _______ their necks to see who their mother was talking to.',o:['nodded','spilled','fluttered','craned','ignored'],a:3},
+      {q:'The Professor wanted to _______ the importance of learning foreign languages.',o:['grasp','integrate','damage','extend','emphasize'],a:4},
+      {q:'Regular exercise is good for your body and brain. It _______ your blood with oxygen.',o:['stores','influences','enriches','processes','produces'],a:2},
+      {q:'Millions of birds migrate to the south every year. It is an annual _______.',o:['celebration','phenomenon','perception','motivation','behavior'],a:1},
+      {q:'The heavy rain flooded the field. Under these _______ the kids couldn\'t play.',o:['willingness','basements','decisions','circumstances','cells'],a:3},
+      {q:'Many foreign _______ attended the opening ceremony.',o:['scavengers','failures','abilities','attempts','dignitaries'],a:4},
+      {q:'If I could do it _______ again, I\'d do it differently.',o:['over','without','away','in','with'],a:0},
+      {q:'It\'s getting late, I\'m turning _______.',o:['into','around','in','up','off'],a:2},
+      {q:'Be careful walking in the woods, there are a lot of branches sticking _______.',o:['to','at','by','out','with'],a:3},
+      {q:'Jake and I lost our jobs yesterday. Now we are in the same boat.',o:['In the broken boat','Have a good situation','Looking for a job','Travelling by boat','In the same bad situation'],a:4},
+      {q:'I only got the message by word of mouth.',o:['He read from newspaper','The message was passed by his mom','He opened his mouth','The message passed from person to person','He was only mouthing'],a:3},
+      {q:'My girlfriend always acts as if she was born yesterday.',o:['She is naive','She was born yesterday','Her boyfriend doesn\'t know','She believes in experience','His girlfriend is thoughtful'],a:0}
+    ]
   },
   '2022': {
-    A: { duration: 30, questions: [
-      { q:'We can travel to Brighton _______ by bus or by train; the fare is almost the same.', o:['both','none','neither','either','all'], a:3 },
-      { q:'The more he looked at her, _______ embarrassed she was.', o:['more','the most','the more','mostly','much'], a:2 },
-      { q:'John is _______ and needs help when asked to sign papers.', o:['literate','illiterate','literacy','illiteracy','literally'], a:1 },
-      { q:'When you go to the town, could you please buy a _______ of jam for me?', o:['bar','can','bag','jar','carton'], a:3 },
-      { q:'My boss _______ this language course to me.', o:['recommended','persuaded','influenced','criticized','maintained'], a:0 },
-      { q:'Teaching English in a lively interesting way increases students\' _______ to learn.', o:['volunteering','tolerance','diversity','motivation','automation'], a:3 },
-      { q:'The forecast is for dry, sunny weather with no _______ expected.', o:['degradation','desertification','precipitation','protection','permission'], a:2 },
-      { q:'My _______ is that you\'re not getting enough work done.', o:['concentration','concern','occupation','action','attachment'], a:1 },
-      { q:'Synthetic fabrics are made from _______ substances, not natural ones.', o:['organic','artificial','unique','modern','combined'], a:1 },
-      { q:'The two countries have _______ close ties for centuries.', o:['ignored','distracted','debated','maintained','confused'], a:3 },
-      { q:'Because of some mistakes in my test, my teacher made me do it _______.', o:['without','with','away','in','over'], a:4 },
-      { q:'After the thieves are captured, the stolen items will be turned _______ to the rightful owners.', o:['in','away','into','against','down'], a:0 },
-      { q:'Chingee is nearly eight feet tall and has red hair, so she really sticks _______ in a crowd.', o:['to','down','around','with','out'], a:4 },
-      { q:'The man was desperate to get rid of his car even though it was only one year old. So I was able to buy it for a song.', o:['His car was expensive','He sang a song in his car','He exchanged his car for a different one','He bought the car very cheaply','He bought a CD with his favorite songs'], a:3 },
-      { q:'Chingee got it in the neck because she forgot to turn off the car light last night.', o:['The long drive hurt her neck','She forgot to turn off the car light','She was punished for the damage to the car battery','Her shirt was open at the neck','She was punished for the damage to the car light'], a:2 },
-      { q:'I was up in the air about selling my house and moving into a bigger one.', o:['He was in the air when his wife was moving her house','He was excited about moving into a big house','He always airs his house','He sold his old house and moved into a big one','He left the windows open to let the room air a bit'], a:0 }
-    ]},
-    B: { duration: 30, questions: [
-      { q:'_______ Jim nor Tom passed the exam.', o:['Either','Both','Neither','All','None'], a:2 },
-      { q:'Alex is very _______ of his younger sister.', o:['protect','protection','protected','protective','protector'], a:3 },
-      { q:'We must get a _______ of flour, and some eggs and apples, so we can make an apple pie for dessert.', o:['box','can','tube','bar','bag'], a:4 },
-      { q:'The more he exercises, _______ he will be.', o:['the healthier','healthiest','healthier','the healthiest','healthy'], a:0 },
-      { q:'Children _______ their necks to see who their mother was talking to.', o:['nodded','spilled','fluttered','craned','ignored'], a:3 },
-      { q:'The Professor just wanted to _______ the importance of learning foreign languages.', o:['grasp','integrate','damage','extend','emphasize'], a:4 },
-      { q:'Regular exercise is good for your body and brain. It _______ your blood with oxygen.', o:['stores','influences','enriches','processes','produces'], a:2 },
-      { q:'Millions of birds migrate to the south every year. It is an annual _______.', o:['celebration','phenomenon','perception','motivation','behavior'], a:1 },
-      { q:'The heavy rain flooded the field, and the ground was muddy. Under these _______ the kids couldn\'t play.', o:['willingness','basements','decisions','circumstances','cells'], a:3 },
-      { q:'Many foreign _______ attended the opening ceremony.', o:['scavengers','failures','abilities','attempts','dignitaries'], a:4 },
-      { q:'If I could do it _______ again, I\'d do it differently.', o:['over','without','away','in','with'], a:0 },
-      { q:'It\'s getting late, I\'m turning _______.', o:['into','around','in','up','off'], a:2 },
-      { q:'Be careful walking in the woods, there are a lot of branches sticking _______.', o:['to','at','by','out','with'], a:3 },
-      { q:'Jake and I lost our jobs yesterday. Now we are in the same boat.', o:['They are in the broken boat','They have a good situation','They are looking for a job','They are travelling by boat','They are in the same bad situation'], a:4 },
-      { q:'I only got the message by word of mouth.', o:['He read the message from the newspaper','The message was passed by his mom','He opened his mouth while he was reading the message','The message passed from person to person','He was only mouthing the message'], a:3 },
-      { q:'My girlfriend always acts as if she was born yesterday.', o:['She is naive because she doesn\'t have much experience in life','She was born yesterday','Her boyfriend doesn\'t know what she really wants','She believes that the best way to learn is by experience','His girlfriend is very thoughtful'], a:0 }
-    ]}
+    A: [
+      {q:'We can travel to Brighton _______ by bus or by train.',o:['both','none','neither','either','all'],a:3},
+      {q:'The more he looked at her, _______ embarrassed she was.',o:['more','the most','the more','mostly','much'],a:2},
+      {q:'John is _______ and needs help when asked to sign papers.',o:['literate','illiterate','literacy','illiteracy','literally'],a:1},
+      {q:'Could you please buy a _______ of jam for me?',o:['bar','can','bag','jar','carton'],a:3},
+      {q:'My boss _______ this language course to me.',o:['recommended','persuaded','influenced','criticized','maintained'],a:0},
+      {q:'Teaching in a lively way increases students\' _______ to learn.',o:['volunteering','tolerance','diversity','motivation','automation'],a:3},
+      {q:'The forecast is for dry weather with no _______ expected.',o:['degradation','desertification','precipitation','protection','permission'],a:2},
+      {q:'My _______ is that you\'re not getting enough work done.',o:['concentration','concern','occupation','action','attachment'],a:1},
+      {q:'Synthetic fabrics are made from _______ substances.',o:['organic','artificial','unique','modern','combined'],a:1},
+      {q:'The two countries have _______ close ties for centuries.',o:['ignored','distracted','debated','maintained','confused'],a:3},
+      {q:'Because of mistakes in my test, my teacher made me do it _______.',o:['without','with','away','in','over'],a:4},
+      {q:'After the thieves are captured, the stolen items will be turned _______ to the owners.',o:['in','away','into','against','down'],a:0},
+      {q:'Chingee is nearly eight feet tall and has red hair, so she really sticks _______ in a crowd.',o:['to','down','around','with','out'],a:4},
+      {q:'He was desperate to get rid of his car. I was able to buy it for a song.',o:['His car was expensive','He sang a song','He exchanged his car','He bought the car very cheaply','He bought a CD'],a:3},
+      {q:'Chingee got it in the neck because she forgot to turn off the car light.',o:['The long drive hurt her','She forgot the light','She was punished for the damage','Her shirt was open','She was punished for the light'],a:2},
+      {q:'I was up in the air about selling my house and moving into a bigger one.',o:['He was in the air','He was excited about moving','He always airs his house','He sold his old house','He left the windows open'],a:0}
+    ],
+    B: [
+      {q:'The buildings are often destroyed by _______ after violent movement of the ground.',o:['forest fire','flood','snowstorm','earthquake','hurricane'],a:3},
+      {q:'I quite like the _______. There are many interesting adverts.',o:['television commercials','quiz show','soap opera','chat show','documentary'],a:0},
+      {q:'The _______ attack people in a public place.',o:['robberies','Shoplifters','thieves','burglars','Muggers'],a:4},
+      {q:'_______ Jim nor Tom passed the exam.',o:['Either','Both','Neither','All','None'],a:2},
+      {q:'Alex is very _______ of his younger sister.',o:['protect','protection','protected','protective','protector'],a:3},
+      {q:'We must get a _______ of flour, some eggs and apples.',o:['box','can','tube','bar','bag'],a:4},
+      {q:'The more he exercises, _______ he will be.',o:['the healthier','healthiest','healthier','the healthiest','healthy'],a:0},
+      {q:'Children _______ their necks to see who their mother was talking to.',o:['nodded','spilled','fluttered','craned','ignored'],a:3},
+      {q:'The Professor wanted to _______ the importance of learning foreign languages.',o:['grasp','integrate','damage','extend','emphasize'],a:4},
+      {q:'Regular exercise is good for your body and brain. It _______ your blood with oxygen.',o:['stores','influences','enriches','processes','produces'],a:2},
+      {q:'Millions of birds migrate to the south every year. It is an annual _______.',o:['celebration','phenomenon','perception','motivation','behavior'],a:1},
+      {q:'The heavy rain flooded the field. Under these _______ the kids couldn\'t play.',o:['willingness','basements','decisions','circumstances','cells'],a:3},
+      {q:'Many foreign _______ attended the opening ceremony.',o:['scavengers','failures','abilities','attempts','dignitaries'],a:4},
+      {q:'If I could do it _______ again, I\'d do it differently.',o:['over','without','away','in','with'],a:0},
+      {q:'It\'s getting late, I\'m turning _______.',o:['into','around','in','up','off'],a:2},
+      {q:'Be careful walking in the woods, there are a lot of branches sticking _______.',o:['to','at','by','out','with'],a:3},
+      {q:'Jake and I lost our jobs yesterday. Now we are in the same boat.',o:['In the broken boat','Have a good situation','Looking for a job','Travelling by boat','In the same bad situation'],a:4},
+      {q:'I only got the message by word of mouth.',o:['He read from newspaper','The message was passed by his mom','He opened his mouth','The message passed from person to person','He was only mouthing'],a:3},
+      {q:'My girlfriend always acts as if she was born yesterday.',o:['She is naive','She was born yesterday','Her boyfriend doesn\'t know','She believes in experience','His girlfriend is thoughtful'],a:0}
+    ]
   },
   '2023': {
-    A: { duration: 30, questions: [
-      { q:'You need to acquire _______ in social work.', o:['application','qualification','necessity','operation','cooperation'], a:1 },
-      { q:'He lied to me and to make matters worse, he didn\'t _______ at all.', o:['thank','apologize','reject','admit','accept'], a:1 },
-      { q:'The level of junk food _______ was illustrated by statistics.', o:['consideration','compulsion','consumption','combination','compassion'], a:2 },
-      { q:'Many groups are working to reduce _______ to protect pastureland in the Gobi region.', o:['drought','hazards','blizzard','soil erosion','gale'], a:3 },
-      { q:'Jack has already _______ a very good reputation as a talented prosecutor.', o:['made','won','done','gained','achieved'], a:3 },
-      { q:'The little boy\'s eyes _______ when he saw his daddy.', o:['lit up','shone','lightened','flowed','darkened'], a:0 },
-      { q:'Always _______ your files and any documents you\'re working on.', o:['back up','hack into','log in','click on','crash on'], a:0 },
-      { q:'Alice: You were late for the meeting this morning! Tom: I feel sorry for being tardy. The alarm didn\'t go off.', o:['denying','refusing','making an excuse','requesting','regretting'], a:2 },
-      { q:'Sharon: Who is the girl? Do you know her? John: She must be Alice\'s daughter. She looks just like her.', o:['criticism','complaint','compliment','assumption','suggestion'], a:3 },
-      { q:'go on a, balanced, a sensible (A. date, B. meal, C. solution, D. plan, E. diet)', o:['date','meal','solution','plan','diet'], a:4 },
-      { q:'Knowledge, Wisdom, Information (A. to impart, B. to conduct, C. to instruct, D. to earn, E. to endure)', o:['to impart','to conduct','to instruct','to earn','to endure'], a:0 },
-      { q:'I recognize a few words in the passage, therefore, I _______.', o:['find it easy to understand the whole content','keep my mouth shut like a fish','am not eager to learn new words','try hard to catch the meaning of every word','never look up a new word in a dictionary'], a:3 },
-      { q:'Choose the most possible solution to flood.', o:['stonework','wind turbines','dams and canals','tunnels and subways','sea barrier'], a:2 },
-      { q:'Finally the department\'s solution to the problem hit the nail on the head.', o:['The accident was caused by the failures','The staff did exactly right','The staff\'s solution was not bad','The staff\'s act was quite smart','The staff hit the box of nails'], a:1 },
-      { q:'The computer he gave you isn\'t the best one in the world, but you shouldn\'t look a gift horse in the mouth.', o:['You should give back the computer to him','The computer is a bad gift','You should not complain about the gift given to you','Never receive a gift you don\'t like','Receiving a horse as a gift is his hobby'], a:2 }
-    ]},
-    B: { duration: 30, questions: [
-      { q:'I\'ve got great _______ on my assignment from the teacher who remarked how I could improve on it.', o:['feedback','portfolio','debate','grant','finance'], a:0 },
-      { q:'Roads should have a _______ so that people can cross the road safely.', o:['zebra crossing','intersection','dead end','one-way street','lane'], a:0 },
-      { q:'The particles that make up plasmas have electric charges, so plasmas can _______ electricity.', o:['dissolve','attract','affect','insulate','conduct'], a:4 },
-      { q:'When fossil fuels burn, different substances are _______ into the air.', o:['supplied','tapped','trapped','released','accelerated'], a:3 },
-      { q:'In the tournament, Hannah _______ all her opponents and won the gold medal.', o:['had','gained','beat','granted','rewarded'], a:2 },
-      { q:'The cave of the Apocalypse in Greece is in the list of UNESCO world _______ sites.', o:['legacy','representation','heritage','tradition','masterpiece'], a:2 },
-      { q:'I was working on my presentation and suddenly the screen _______ black.', o:['crashed','went','installed','loaded','turned'], a:1 },
-      { q:'Anna: You must come and visit us some time. Don\'t keep putting it off. Tom: Yes, I\'ll come and see you in the not too distant future.', o:['denying','refusing','making an excuse','requesting','regretting'], a:2 },
-      { q:'(A. demand, B. promise, C. offer, D. prediction, E. appointment) - Jack: I can\'t drink bitter coffee.', o:['demand','promise','offer','prediction','appointment'], a:2 },
-      { q:'(A. determination, B. enthusiasm, C. source, D. guarantee, E. extension) - a valuable, rich, a reliable', o:['determination','enthusiasm','source','guarantee','extension'], a:2 },
-      { q:'(A. to let out, B. to make, C. to bump into, D. to burst into, E. to cry over) - tears, laughter, song', o:['to let out','to make','to bump into','to burst into','to cry over'], a:3 },
-      { q:'I struggle to speak for a long time and say \'Err\' a lot when I _______.', o:['run out of ideas','avoid pronouncing words','find my spoken fluency','provide feedback on the grammatical accuracy','have a significant impact'], a:0 },
-      { q:'Choose the most possible solution to air pollution.', o:['temporary shelter','dump sites','organic products','hybrid cars','exhaust fumes'], a:3 },
-      { q:'He was late and made up some cock-and-bull story about losing his car keys.', o:['He was upset about being late','Other people thought he was true','He was involved in illegal activities','He told a story about animals','He told a fake story'], a:4 },
-      { q:'The police will arrest the suspect by hook or by crook.', o:['They will investigate all offenders','They will use technological devices','They will mobilize all units','They will use any method possible','They will be on duty at check-points'], a:3 }
-    ]}
+    A: [
+      {q:'You need to acquire _______ in social work.',o:['application','qualification','necessity','operation','cooperation'],a:1},
+      {q:'He lied to me and to make matters worse, he didn\'t _______ at all.',o:['thank','apologize','reject','admit','accept'],a:1},
+      {q:'The level of junk food _______ was illustrated by statistics.',o:['consideration','compulsion','consumption','combination','compassion'],a:2},
+      {q:'Many groups are working to reduce _______ to protect pastureland in the Gobi region.',o:['drought','hazards','blizzard','soil erosion','gale'],a:3},
+      {q:'Jack has already _______ a very good reputation as a talented prosecutor.',o:['made','won','done','gained','achieved'],a:3},
+      {q:'The little boy\'s eyes _______ when he saw his daddy.',o:['lit up','shone','lightened','flowed','darkened'],a:0},
+      {q:'Always _______ your files and any documents you\'re working on.',o:['back up','hack into','log in','click on','crash on'],a:0},
+      {q:'Tom: I feel sorry for being tardy. The alarm didn\'t go off.',o:['denying','refusing','making an excuse','requesting','regretting'],a:2},
+      {q:'John: She must be Alice\'s daughter. She looks just like her.',o:['criticism','complaint','compliment','assumption','suggestion'],a:3},
+      {q:'go on a, balanced, a sensible',o:['date','meal','solution','plan','diet'],a:4},
+      {q:'Knowledge, Wisdom, Information',o:['to impart','to conduct','to instruct','to earn','to endure'],a:0},
+      {q:'I recognize a few words in the passage, therefore, I _______.',o:['find it easy','keep my mouth shut','am not eager','try hard to catch meaning','never look up'],a:3},
+      {q:'Choose the most possible solution to flood.',o:['stonework','wind turbines','dams and canals','tunnels and subways','sea barrier'],a:2},
+      {q:'The department\'s solution hit the nail on the head.',o:['caused by failures','staff did exactly right','was not bad','was quite smart','hit box of nails'],a:1},
+      {q:'The computer isn\'t the best, but you shouldn\'t look a gift horse in the mouth.',o:['give back','bad gift','not complain about gift','never receive','receiving horse is hobby'],a:2}
+    ],
+    B: [
+      {q:'I\'ve got great _______ on my assignment from the teacher.',o:['feedback','portfolio','debate','grant','finance'],a:0},
+      {q:'Roads should have a _______ so people can cross the road safely.',o:['zebra crossing','intersection','dead end','one-way street','lane'],a:0},
+      {q:'Plasmas can _______ electricity.',o:['dissolve','attract','affect','insulate','conduct'],a:4},
+      {q:'When fossil fuels burn, different substances are _______ into the air.',o:['supplied','tapped','trapped','released','accelerated'],a:3},
+      {q:'In the tournament, Hannah _______ all her opponents.',o:['had','gained','beat','granted','rewarded'],a:2},
+      {q:'The cave is in the list of UNESCO world _______ sites.',o:['legacy','representation','heritage','tradition','masterpiece'],a:2},
+      {q:'I was working and suddenly the screen _______ black.',o:['crashed','went','installed','loaded','turned'],a:1},
+      {q:'Anna: You must come and visit us some time. Don\'t keep putting it off.',o:['denying','refusing','making an excuse','requesting','regretting'],a:2},
+      {q:'Jack: I can\'t drink bitter coffee.',o:['demand','promise','offer','prediction','appointment'],a:2},
+      {q:'a valuable, rich, a reliable',o:['determination','enthusiasm','source','guarantee','extension'],a:2},
+      {q:'tears, laughter, song',o:['to let out','to make','to bump into','to burst into','to cry over'],a:3},
+      {q:'I struggle to speak and say "Err" a lot when I _______.',o:['run out of ideas','avoid pronouncing','find fluency','provide feedback','have impact'],a:0},
+      {q:'Choose the most possible solution to air pollution.',o:['temporary shelter','dump sites','organic products','hybrid cars','exhaust fumes'],a:3},
+      {q:'He made up some cock-and-bull story about losing his car keys.',o:['upset about being late','people thought true','illegal activities','story about animals','told a fake story'],a:4},
+      {q:'The police will arrest the suspect by hook or by crook.',o:['investigate all','use technology','mobilize all','use any method possible','be on duty'],a:3}
+    ]
   },
   '2024': {
-    A: { duration: 30, questions: [
-      { q:'The rain won\'t last long; it\'s only a _______.', o:['hail','breeze','shower','frost','downpour'], a:2 },
-      { q:'_______ is a person whose job is riding horses in races.', o:['Fencer','Jockey','Runner','Swimmer','Golfer'], a:1 },
-      { q:'The theory of _______ studies the nature and origin of the universe.', o:['chemistry','physics','biology','cosmology','medicine'], a:3 },
-      { q:'For security reasons, always log _______ when you leave your computer unattended for any period of time.', o:['up','in','on','for','out'], a:4 },
-      { q:'crane your neck -> _______', o:['crane(d)','ostrich','lever','move(d)','stretch(ed)'], a:0 },
-      { q:'enrich your blood with oxygen -> _______', o:['crane(d)','ostrich','lever','move(d)','enriches'], a:4 },
-      { q:'annual phenomenon -> _______', o:['crane(d)','ostrich','lever','phenomenon','stretch(ed)'], a:3 },
-      { q:'under these circumstances -> _______', o:['crane(d)','circumstances','lever','move(d)','stretch(ed)'], a:1 },
-      { q:'dignitaries attended the opening ceremony -> _______', o:['crane(d)','ostrich','lever','dignitaries','stretch(ed)'], a:3 },
-      { q:'A (an) _______ war Europe, traumatic stress disorder, industrial age', o:['sub-','post-','inter-','trans-','com-'], a:1 },
-      { q:'History (_______) novels', o:['-ical','-ic','-ian','-ous','-ish'], a:0 },
-      { q:'My uncle suffers _______ a type of diabetes.', o:['From','of','with','off','about'], a:0 },
-      { q:'The answer was _______ the tip of my tongue, but I just couldn\'t remember it.', o:['in','at','on','from','with'], a:2 },
-      { q:'The bad news had an adverse effect on her and she became more down in the dumps as the day passed.', o:['gloomy but peaceful','having a mixed emotion','happy and encouraged','sad and discouraged','dejected but energetic'], a:3 },
-      { q:'He really caught it in the neck because he didn\'t put the fire out.', o:['He was rewarded','He was praised','He was captured','He was disgraced','He was scolded'], a:4 }
-    ]},
-    B: { duration: 30, questions: [
-      { q:'I would love to be a good _______, but my eyesight isn\'t very good.', o:['high jumper','gymnast','archer','weight lifter','canoeist'], a:2 },
-      { q:'It was absolutely pouring down yesterday. It was a real _______.', o:['shower','downpour','gale','hurricane','blizzard'], a:1 },
-      { q:'_______ studies the rocks and similar substances that make up the Earth\'s surface.', o:['Archeology','Geography','Geometry','Geology','Astrology'], a:3 },
-      { q:'The ability of zoom _______ is particularly useful when you are working on detailed diagrams.', o:['over','out','up','on','in'], a:3 },
-      { q:'(A. capital, B. block, C. clog, D. bulk, E. fill) - Please, print your name and address in _______ letters.', o:['capital','block','clog','bulk','fill'], a:0 },
-      { q:'(A. capital, B. block, C. clog, D. bulk, E. fill) - My boyfriend and I live on the same _______.', o:['capital','block','clog','bulk','fill'], a:1 },
-      { q:'(A. capital, B. block, C. clog, D. bulk, E. fill) - Every autumn dead leaves _______ the drains.', o:['capital','block','clog','bulk','fill'], a:2 },
-      { q:'What will you wear when you go hiking?', o:['camping gear','climbing boots','a walking stick','walking boots','a surfing board'], a:3 },
-      { q:'What expression is used for making others experience pain?', o:['to experience pain','to feel pain','to ease pain','to relieve pain','to inflict pain'], a:4 },
-      { q:'The store owner was held _______ by three men wearing ski masks.', o:['down','back','up','in','on'], a:2 },
-      { q:'My grandma said, "If you don\'t wear an undershirt, you\'ll _______ down with pneumonia."', o:['come','get','put','take','hold'], a:0 },
-      { q:'A (an) _______ ageing substance, viral drug, depressant treatment', o:['ante-','pro-','non-','pre-','anti-'], a:4 },
-      { q:'A persist (_______) learner', o:['-ance','-ant','-ence','-ent','-ible'], a:1 },
-      { q:'Tonya spends a lot of money _______ fancy clothes.', o:['in','over','on','for','onto'], a:2 },
-      { q:'I asked our neighbors to keep an eye _______ the house while we were away.', o:['with','over','at','for','on'], a:4 },
-      { q:'It really got Mr Robert\'s goat when he had to wait two hours to get his plane tickets.', o:['He was annoyed at the long delay','He was angry because he couldn\'t get the ticket','He didn\'t care about the long line','He was frustrated because he was late for the flight','He didn\'t mind the long delay'], a:0 },
-      { q:'Who wears trousers in your family?', o:['be a caregiver of the family','be financially dependent on the spouse','be the dominant partner in a marriage','be the most educated family member','be the only breadwinner of the family'], a:2 }
-    ]}
+    A: [
+      {q:'The rain won\'t last long; it\'s only a _______.',o:['hail','breeze','shower','frost','downpour'],a:2},
+      {q:'_______ is a person whose job is riding horses in races.',o:['Fencer','Jockey','Runner','Swimmer','Golfer'],a:1},
+      {q:'The theory of _______ studies the nature and origin of the universe.',o:['chemistry','physics','biology','cosmology','medicine'],a:3},
+      {q:'For security reasons, always log _______ when you leave your computer.',o:['up','in','on','for','out'],a:4},
+      {q:'crane your neck',o:['crane(d)','ostrich','lever','move(d)','stretch(ed)'],a:0},
+      {q:'enrich your blood with oxygen',o:['crane(d)','ostrich','lever','move(d)','enriches'],a:4},
+      {q:'annual phenomenon',o:['crane(d)','ostrich','lever','phenomenon','stretch(ed)'],a:3},
+      {q:'under these circumstances',o:['crane(d)','circumstances','lever','move(d)','stretch(ed)'],a:1},
+      {q:'dignitaries attended the opening ceremony',o:['crane(d)','ostrich','lever','dignitaries','stretch(ed)'],a:3},
+      {q:'A (an) _______ war Europe, traumatic stress disorder, industrial age',o:['sub-','post-','inter-','trans-','com-'],a:1},
+      {q:'History (_______) novels',o:['-ical','-ic','-ian','-ous','-ish'],a:0},
+      {q:'My uncle suffers _______ a type of diabetes.',o:['From','of','with','off','about'],a:0},
+      {q:'The answer was _______ the tip of my tongue.',o:['in','at','on','from','with'],a:2},
+      {q:'She became more down in the dumps as the day passed.',o:['gloomy but peaceful','mixed emotion','happy and encouraged','sad and discouraged','dejected but energetic'],a:3},
+      {q:'He really caught it in the neck because he didn\'t put the fire out.',o:['rewarded','praised','captured','disgraced','scolded'],a:4}
+    ],
+    B: [
+      {q:'I would love to be a good _______, but my eyesight isn\'t very good.',o:['high jumper','gymnast','archer','weight lifter','canoeist'],a:2},
+      {q:'It was absolutely pouring down yesterday. It was a real _______.',o:['shower','downpour','gale','hurricane','blizzard'],a:1},
+      {q:'_______ studies the rocks that make up the Earth\'s surface.',o:['Archeology','Geography','Geometry','Geology','Astrology'],a:3},
+      {q:'The ability of zoom _______ is useful when working on detailed diagrams.',o:['over','out','up','on','in'],a:3},
+      {q:'Please, print your name and address in _______ letters.',o:['capital','block','clog','bulk','fill'],a:0},
+      {q:'My boyfriend and I live on the same _______.',o:['capital','block','clog','bulk','fill'],a:1},
+      {q:'Every autumn dead leaves _______ the drains.',o:['capital','block','clog','bulk','fill'],a:2},
+      {q:'What will you wear when you go hiking?',o:['camping gear','climbing boots','a walking stick','walking boots','a surfing board'],a:3},
+      {q:'What expression is used for making others experience pain?',o:['to experience pain','to feel pain','to ease pain','to relieve pain','to inflict pain'],a:4},
+      {q:'The store owner was held _______ by three men wearing ski masks.',o:['down','back','up','in','on'],a:2},
+      {q:'If you don\'t wear an undershirt, you\'ll _______ down with pneumonia.',o:['come','get','put','take','hold'],a:0},
+      {q:'A (an) _______ ageing substance, viral drug, depressant treatment',o:['ante-','pro-','non-','pre-','anti-'],a:4},
+      {q:'A persist (_______) learner',o:['-ance','-ant','-ence','-ent','-ible'],a:1},
+      {q:'Tonya spends a lot of money _______ fancy clothes.',o:['in','over','on','for','onto'],a:2},
+      {q:'I asked our neighbors to keep an eye _______ the house.',o:['with','over','at','for','on'],a:4},
+      {q:'It really got Mr Robert\'s goat when he had to wait two hours.',o:['annoyed at long delay','angry couldn\'t get ticket','didn\'t care about line','frustrated was late','didn\'t mind delay'],a:0},
+      {q:'Who wears trousers in your family?',o:['caregiver','financially dependent','dominant partner in marriage','most educated','only breadwinner'],a:2}
+    ]
   },
   '2025': {
-    A: { duration: 30, questions: [
-      { q:'Which item is made from cotton?', o:['a raincoat','a shirt','a wristband','nylons','a jumper'], a:1 },
-      { q:'A young horse is called? A _______.', o:['fawn','kid','cub','lamb','foal'], a:4 },
-      { q:'A _______ is a part of the building where a vehicle is kept.', o:['garage','patio','garden','shade','concrete'], a:0 },
-      { q:'Name the means of a transport the front part of which is a cockpit.', o:['coach','aircraft','caravan','train','ferry'], a:1 },
-      { q:'A _______ uses a computer or smartphone to commit crimes.', o:['kidnapper','fraudster','vandal','mugger','cybercriminal'], a:4 },
-      { q:'As soon as Lydia and I met, we knew we were going to get _______ well.', o:['up','(a) round','at','on','in'], a:3 },
-      { q:'It was sunny and hot.', o:['There was a bit of drizzle','There were a few sunny showers','It was very overcast','There was quite a breeze','We had a bit of heat wave'], a:4 },
-      { q:'It\'s so easy to get around. Public transport is excellent - it\'s cheap and _______.', o:['useful','efficient','cosmopolitan','stressful','crowded'], a:1 },
-      { q:'They won two nil.', o:['year somebody was born','the temperature','a telephone number','the score in a tennis match','the result of the football match'], a:4 },
-      { q:'A few months ago Ron was arrested by the police, who (26) _______ him of being involved in a robbery at a local post office.', o:['suspected','heard','questioned','charged','convicted'], a:2 },
-      { q:'He had been (27) _______ previously of petty crime, but never anything serious.', o:['suspected','heard','questioned','charged','convicted'], a:0 },
-      { q:'The police (28) _______ him for several hours', o:['suspected','heard','questioned','charged','convicted'], a:3 },
-      { q:'and finally (29) _______ him with robbery.', o:['suspected','heard','questioned','charged','convicted'], a:1 },
-      { q:'A few weeks later he got a letter saying that he had to appear in court the following month when his case would be (30) _______.', o:['suspected','heard','questioned','charged','convicted'], a:4 },
-      { q:'In which of the following sentences "to take off" means "to remove something from a surface?"', o:['Take off your shoes. You\'re getting mud on the carpet','You need to take the old wax off the floor before you wax it again','Our plane took off an hour late because of the snow','If this business takes off, we could make a lot of money'], a:1 }
-    ]},
-    B: { duration: 30, questions: [
-      { q:'(A. shower, B. downpour, C. gale, D. hurricane, E. blizzard) - It was absolutely pouring down yesterday. It was a real _______.', o:['shower','downpour','gale','hurricane','blizzard'], a:1 },
-      { q:'(A. take, B. promise, C. offer, D. prediction, E. appointment) - Jack: I can\'t drink bitter coffee.', o:['take','promise','offer','prediction','appointment'], a:2 },
-      { q:'(A. determination, B. enthusiasm, C. source, D. guarantee, E. extension) - a valuable, rich, a reliable', o:['determination','enthusiasm','source','guarantee','extension'], a:2 },
-      { q:'(A. to let out, B. to make, C. to bump into, D. to burst into, E. to cry over) - tears, laughter, song', o:['to let out','to make','to bump into','to burst into','to cry over'], a:3 },
-      { q:'I recognize a few words in the passage, therefore, I _______.', o:['find it easy to understand the whole content','keep my mouth shut like a fish','am not eager to learn new words','try hard to catch the meaning of every word','never look up a new word in a dictionary'], a:3 },
-      { q:'Choose the most possible solution to flood.', o:['stonework','wind turbines','dams and canals','tunnels and subways','sea barrier'], a:2 },
-      { q:'Finally the department\'s solution to the problem hit the nail on the head.', o:['The accident was caused by the failures','The staff did exactly right','The staff\'s solution was not bad','The staff\'s act was quite smart','The staff hit the box of nails'], a:1 },
-      { q:'The computer he gave you isn\'t the best one in the world, but you shouldn\'t look a gift horse in the mouth.', o:['You should give back the computer to him','The computer is a bad gift','You should not complain about the gift given to you','Never receive a gift you don\'t like','Receiving a horse as a gift is his hobby'], a:2 }
-    ]}
+    A: [
+      {q:'Which item is made from cotton?',o:['a raincoat','a shirt','a wristband','nylons','a jumper'],a:1},
+      {q:'A young horse is called? A _______.',o:['fawn','kid','cub','lamb','foal'],a:4},
+      {q:'A _______ is a part of the building where a vehicle is kept.',o:['garage','patio','garden','shade','concrete'],a:0},
+      {q:'Name the means of a transport the front part of which is a cockpit.',o:['coach','aircraft','caravan','train','ferry'],a:1},
+      {q:'A _______ uses a computer or smartphone to commit crimes.',o:['kidnapper','fraudster','vandal','mugger','cybercriminal'],a:4},
+      {q:'As soon as Lydia and I met, we knew we were going to get _______ well.',o:['up','(a) round','at','on','in'],a:3},
+      {q:'It was sunny and hot.',o:['a bit of drizzle','a few sunny showers','very overcast','quite a breeze','a bit of heat wave'],a:4},
+      {q:'Public transport is excellent - it\'s cheap and _______.',o:['useful','efficient','cosmopolitan','stressful','crowded'],a:1},
+      {q:'They won two nil.',o:['year somebody was born','the temperature','a telephone number','the score in a tennis match','the result of the football match'],a:4},
+      {q:'Ron was arrested by the police, who (26) _______ him of being involved in a robbery.',o:['suspected','heard','questioned','charged','convicted'],a:2},
+      {q:'He had been (27) _______ previously of petty crime, but never anything serious.',o:['suspected','heard','questioned','charged','convicted'],a:0},
+      {q:'The police (28) _______ him for several hours',o:['suspected','heard','questioned','charged','convicted'],a:3},
+      {q:'and finally (29) _______ him with robbery.',o:['suspected','heard','questioned','charged','convicted'],a:1},
+      {q:'His case would be (30) _______.',o:['suspected','heard','questioned','charged','convicted'],a:4},
+      {q:'In which sentence does "to take off" mean "to remove something from a surface"?',o:['Take off your shoes. You\'re getting mud on the carpet','You need to take the old wax off the floor','Our plane took off an hour late','If this business takes off, we could make money'],a:1}
+    ],
+    B: [
+      {q:'It was absolutely pouring down yesterday. It was a real _______.',o:['shower','downpour','gale','hurricane','blizzard'],a:1},
+      {q:'Jack: I can\'t drink bitter coffee.',o:['take','promise','offer','prediction','appointment'],a:2},
+      {q:'a valuable, rich, a reliable',o:['determination','enthusiasm','source','guarantee','extension'],a:2},
+      {q:'tears, laughter, song',o:['to let out','to make','to bump into','to burst into','to cry over'],a:3},
+      {q:'I recognize a few words in the passage, therefore, I _______.',o:['find it easy','keep my mouth shut','am not eager','try hard to catch meaning','never look up'],a:3},
+      {q:'Choose the most possible solution to flood.',o:['stonework','wind turbines','dams and canals','tunnels and subways','sea barrier'],a:2},
+      {q:'The department\'s solution hit the nail on the head.',o:['caused by failures','staff did exactly right','was not bad','was quite smart','hit box of nails'],a:1},
+      {q:'The computer isn\'t the best, but you shouldn\'t look a gift horse in the mouth.',o:['give back','bad gift','not complain about gift','never receive','receiving horse is hobby'],a:2}
+    ]
   }
 };
 
-/* =========================================================
-   3. STATE
-   ========================================================= */
-const state = {
-  selected: null,        // { year, version, duration, questions }
-  student: { name:'', className:'' },
-  answers: [],
-  current: 0,
-  timerId: null,
-  remaining: 0,
-  startTime: 0,
-  submitted: false
+var state = {
+  selected:null, student:{name:'',className:''},
+  answers:[], current:0, timerId:null, remaining:0,
+  startTime:0, submitted:false
 };
 
-/* =========================================================
-   4. HELPERS
-   ========================================================= */
-const $  = (s, el = document) => el.querySelector(s);
-const $$ = (s, el = document) => Array.from(el.querySelectorAll(s));
-const esc = (s) => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function $(s){return document.querySelector(s)}
+function $$(s){return Array.prototype.slice.call(document.querySelectorAll(s))}
+function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
 
 function showScreen(name){
-  $$('.screen').forEach(s => s.classList.toggle('active', s.dataset.screen === name));
-  $$('.nav-link').forEach(n => n.classList.remove('active'));
-  const map = { home:'home', instructions:'instructions', myresults:'myresults', teacher:'teacher' };
-  if (map[name]) {
-    const nav = $(`.nav-link[data-nav="${map[name]}"]`);
-    if (nav) nav.classList.add('active');
+  var screens = $$('.screen');
+  for (var i=0; i<screens.length; i++) {
+    if (screens[i].getAttribute('data-screen') === name) {
+      screens[i].classList.add('active');
+    } else {
+      screens[i].classList.remove('active');
+    }
   }
   if (name !== 'exam') stopTimer();
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  window.scrollTo(0,0);
 }
 
 function goHome(){
   if (state.timerId && !state.submitted) {
-    openModal('Шалгалтаас гарах уу?', 'Хэрэв та одоо гарвал хариултууд хадгалагдахгүй болно.', 'Тийм, гарах', () => {
-      stopTimer();
-      state.timerId = null;
-      state.submitted = true;
-      showScreen('home');
+    openModal('Шалгалтаас гарах уу?', 'Хариултууд хадгалагдахгүй.', 'Тийм, гарах', function(){
+      stopTimer(); state.timerId = null; state.submitted = true; showScreen('home');
     });
     return;
   }
@@ -1070,105 +582,80 @@ function goHome(){
 }
 
 function fmtTime(sec){
-  const m = Math.floor(sec / 60);
-  const s = sec % 60;
+  var m = Math.floor(sec/60), s = sec%60;
   return String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
 }
 
-function gradeOf(pct){
-  if (pct >= 90) return { letter:'A', label:'Маш сайн',    color:'#16a34a' };
-  if (pct >= 80) return { letter:'B', label:'Сайн',        color:'#2563eb' };
-  if (pct >= 70) return { letter:'C', label:'Дунд',        color:'#0891b2' };
-  if (pct >= 60) return { letter:'D', label:'Хангалттай',  color:'#f59e0b' };
-  return                 { letter:'F', label:'Хангалтгүй',  color:'#dc2626' };
+function gradeOf(p){
+  if (p>=90) return {letter:'A',label:'Маш сайн',color:'#16a34a'};
+  if (p>=80) return {letter:'B',label:'Сайн',color:'#2563eb'};
+  if (p>=70) return {letter:'C',label:'Дунд',color:'#0891b2'};
+  if (p>=60) return {letter:'D',label:'Хангалттай',color:'#f59e0b'};
+  return {letter:'F',label:'Хангалтгүй',color:'#dc2626'};
 }
 
 function fmtDate(iso){
-  const d = new Date(iso);
-  const p = n => String(n).padStart(2,'0');
-  return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}`;
+  var d = new Date(iso);
+  function p(n){return String(n).padStart(2,'0')}
+  return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())+' '+p(d.getHours())+':'+p(d.getMinutes());
 }
 
-/* =========================================================
-   5. MODAL
-   ========================================================= */
-let modalAction = null;
-function openModal(title, text, okLabel, action){
-  $('#modalTitle').textContent = title;
-  $('#modalText').textContent = text;
-  $('#modalOk').textContent = okLabel || 'Тийм';
+var modalAction = null;
+function openModal(title,text,okLabel,action){
+  document.getElementById('modalTitle').textContent = title;
+  document.getElementById('modalText').textContent = text;
+  document.getElementById('modalOk').textContent = okLabel || 'Тийм';
   modalAction = action;
-  $('#modalBack').classList.add('show');
+  document.getElementById('modalBack').classList.add('show');
 }
 function closeModal(){
-  $('#modalBack').classList.remove('show');
+  document.getElementById('modalBack').classList.remove('show');
   modalAction = null;
 }
-$('#modalCancel').addEventListener('click', closeModal);
-$('#modalOk').addEventListener('click', () => {
-  const a = modalAction;
-  closeModal();
-  if (typeof a === 'function') a();
-});
-$('#modalBack').addEventListener('click', e => { if (e.target === $('#modalBack')) closeModal(); });
 
-/* =========================================================
-   6. EXAM SELECTION
-   ========================================================= */
 function renderExamList(){
-  const wrap = $('#examList');
+  var wrap = document.getElementById('examList');
+  if (!wrap) return;
   wrap.innerHTML = '';
-  Object.keys(EXAMS).sort().forEach(year => {
-    const card = document.createElement('div');
-    card.className = 'card exam-card';
-    card.innerHTML = `
-      <div class="flex-between">
-        <div class="exam-year">${year}</div>
-        <span class="badge badge-a">2 хувилбар</span>
-      </div>
-      <p class="muted small" style="margin-top:6px">
-        Англи хэлний шалгалт · ${EXAMS[year].A.questions.length} асуулт · ${EXAMS[year].A.duration} минут
-      </p>
-      <div class="version-row">
-        <button class="btn btn-primary" data-year="${year}" data-version="A">A хувилбар</button>
-        <button class="btn btn-outline" data-year="${year}" data-version="B">B хувилбар</button>
-      </div>`;
-    wrap.appendChild(card);
-  });
-
-  wrap.addEventListener('click', e => {
-    const btn = e.target.closest('button[data-year]');
-    if (!btn) return;
-    selectExam(btn.dataset.year, btn.dataset.version);
-  });
+  var years = Object.keys(EXAMS).sort();
+  for (var i=0; i<years.length; i++) {
+    var year = years[i];
+    var count = EXAMS[year].A.length;
+    var div = document.createElement('div');
+    div.className = 'card exam-card';
+    div.innerHTML = '<div class="flex-between"><div class="exam-year">'+year+'</div>'+
+      '<span class="badge">2 хувилбар</span></div>'+
+      '<p class="muted small" style="margin-top:6px">Англи хэл · '+count+' асуулт · 30 минут</p>'+
+      '<div class="version-row">'+
+      '<button class="btn btn-primary" data-year="'+year+'" data-version="A">A хувилбар</button>'+
+      '<button class="btn btn-outline" data-year="'+year+'" data-version="B">B хувилбар</button>'+
+      '</div>';
+    wrap.appendChild(div);
+  }
+  wrap.onclick = function(e){
+    var target = e.target;
+    while (target && target !== wrap) {
+      if (target.getAttribute && target.getAttribute('data-year')) {
+        selectExam(target.getAttribute('data-year'), target.getAttribute('data-version'));
+        return;
+      }
+      target = target.parentNode;
+    }
+  };
 }
 
 function selectExam(year, version){
-  const data = EXAMS[year][version];
-  state.selected = {
-    year,
-    version,
-    duration: data.duration,
-    questions: data.questions
-  };
-
-  $('#startExamInfo').innerHTML = `<span>📋</span><div>
-    <b>${year} он · ${version} хувилбар</b><br>
-    Асуултын тоо: <b>${data.questions.length}</b> · Хугацаа: <b>${data.duration} минут</b>
-  </div>`;
-
+  var data = EXAMS[year][version];
+  state.selected = {year:year, version:version, duration:30, questions:data};
+  document.getElementById('startExamInfo').innerHTML = '<span>📋</span><div><b>'+year+' он · '+version+' хувилбар</b><br>Асуулт: <b>'+data.length+'</b> · Хугацаа: <b>30 минут</b></div>';
   showScreen('start');
-  setTimeout(() => $('#inpName').focus(), 250);
+  setTimeout(function(){document.getElementById('inpName').focus()},250);
 }
 
-/* =========================================================
-   7. START EXAM
-   ========================================================= */
 function startExam(){
-  const name = $('#inpName').value.trim();
-  const cls  = $('#inpClass').value.trim();
-  const errBox = $('#startError');
-
+  var name = document.getElementById('inpName').value.trim();
+  var cls = document.getElementById('inpClass').value.trim();
+  var errBox = document.getElementById('startError');
   if (!name || !cls) {
     errBox.classList.remove('hidden');
     errBox.querySelector('div').textContent = 'Овог нэр болон ангиа бөглөнө үү.';
@@ -1176,15 +663,16 @@ function startExam(){
   }
   errBox.classList.add('hidden');
 
-  state.student = { name, className: cls };
-  state.answers  = new Array(state.selected.questions.length).fill(null);
-  state.current  = 0;
+  state.student = {name:name, className:cls};
+  state.answers = new Array(state.selected.questions.length);
+  for (var i=0; i<state.answers.length; i++) state.answers[i] = null;
+  state.current = 0;
   state.submitted = false;
   state.startTime = Date.now();
-  state.remaining = state.selected.duration * 60;
+  state.remaining = 30 * 60;
 
-  $('#examTitle').textContent = `${state.selected.year} он · ${state.selected.version} хувилбар — English Test`;
-  $('#examStudent').textContent = `${name} · ${cls}`;
+  document.getElementById('examTitle').textContent = state.selected.year+' он · '+state.selected.version+' хувилбар — English Test';
+  document.getElementById('examStudent').textContent = name+' · '+cls;
 
   showScreen('exam');
   renderQuestion();
@@ -1192,61 +680,50 @@ function startExam(){
   startTimer();
 }
 
-/* =========================================================
-   8. TIMER
-   ========================================================= */
 function startTimer(){
   stopTimer();
   updateTimerDisplay();
-  state.timerId = setInterval(() => {
+  state.timerId = setInterval(function(){
     state.remaining--;
     updateTimerDisplay();
-    if (state.remaining <= 0) {
-      stopTimer();
-      autoSubmit();
-    }
+    if (state.remaining <= 0) { stopTimer(); autoSubmit(); }
   }, 1000);
 }
 function stopTimer(){
   if (state.timerId) { clearInterval(state.timerId); state.timerId = null; }
 }
 function updateTimerDisplay(){
-  const el = $('#timer');
+  var el = document.getElementById('timer');
+  if (!el) return;
   el.textContent = fmtTime(Math.max(0, state.remaining));
-  el.classList.remove('warning','danger');
+  el.classList.remove('warning');
+  el.classList.remove('danger');
   if (state.remaining <= 60) el.classList.add('danger');
   else if (state.remaining <= 300) el.classList.add('warning');
 }
 
-/* =========================================================
-   9. QUESTION RENDERING
-   ========================================================= */
 function renderQuestion(){
-  const qs = state.selected.questions;
-  const idx = state.current;
-  const q = qs[idx];
+  var qs = state.selected.questions;
+  var idx = state.current;
+  var q = qs[idx];
+  document.getElementById('qNumber').textContent = 'АСУУЛТ '+(idx+1)+' / '+qs.length;
+  document.getElementById('qText').textContent = q.q;
 
-  $('#qNumber').textContent = `АСУУЛТ ${idx + 1} / ${qs.length}`;
-  $('#qText').textContent = q.q;
-
-  const pBox = $('#qPassage');
-  if (q.p) { pBox.textContent = q.p; pBox.classList.remove('hidden'); }
-  else { pBox.classList.add('hidden'); pBox.textContent = ''; }
-
-  const optBox = $('#qOptions');
+  var optBox = document.getElementById('qOptions');
   optBox.innerHTML = '';
-  const letters = ['A','B','C','D','E'];
-  q.o.forEach((text, i) => {
-    const b = document.createElement('button');
-    b.className = 'opt' + (state.answers[idx] === i ? ' selected' : '');
-    b.innerHTML = `<span class="letter">${letters[i]}</span><span>${esc(text)}</span>`;
-    b.addEventListener('click', () => chooseAnswer(i));
-    optBox.appendChild(b);
-  });
+  var letters = ['A','B','C','D','E'];
+  for (var i=0; i<q.o.length; i++) {
+    (function(i){
+      var b = document.createElement('button');
+      b.className = 'opt' + (state.answers[idx] === i ? ' selected' : '');
+      b.innerHTML = '<span class="letter">'+letters[i]+'</span><span>'+esc(q.o[i])+'</span>';
+      b.onclick = function(){ chooseAnswer(i); };
+      optBox.appendChild(b);
+    })(i);
+  }
 
-  $('#prevBtn').disabled = idx === 0;
-  $('#nextBtn').style.display = idx === qs.length - 1 ? 'none' : 'inline-flex';
-
+  document.getElementById('prevBtn').disabled = idx === 0;
+  document.getElementById('nextBtn').style.display = idx === qs.length-1 ? 'none' : 'inline-flex';
   updateProgress();
 }
 
@@ -1257,53 +734,51 @@ function chooseAnswer(i){
 }
 
 function renderQNav(){
-  const nav = $('#qnav');
+  var nav = document.getElementById('qnav');
   nav.innerHTML = '';
-  state.selected.questions.forEach((_, i) => {
-    const b = document.createElement('button');
-    b.textContent = i + 1;
-    if (state.answers[i] !== null) b.classList.add('answered');
-    if (i === state.current) b.classList.add('current');
-    b.addEventListener('click', () => { state.current = i; renderQuestion(); renderQNav(); });
-    nav.appendChild(b);
-  });
-  const answered = state.answers.filter(a => a !== null).length;
-  $('#answeredCount').textContent = `Хариулсан: ${answered} / ${state.selected.questions.length}`;
+  for (var i=0; i<state.selected.questions.length; i++) {
+    (function(i){
+      var b = document.createElement('button');
+      b.textContent = i+1;
+      if (state.answers[i] !== null) b.classList.add('answered');
+      if (i === state.current) b.classList.add('current');
+      b.onclick = function(){ state.current = i; renderQuestion(); renderQNav(); };
+      nav.appendChild(b);
+    })(i);
+  }
+  var ans = 0;
+  for (var j=0; j<state.answers.length; j++) if (state.answers[j] !== null) ans++;
+  document.getElementById('answeredCount').textContent = 'Хариулсан: '+ans+' / '+state.selected.questions.length;
 }
 
 function updateProgress(){
-  const answered = state.answers.filter(a => a !== null).length;
-  const total = state.selected.questions.length;
-  $('#progressBar').style.width = ((state.current + 1) / total * 100) + '%';
-  $('#answeredCount').textContent = `Хариулсан: ${answered} / ${total}`;
+  var ans = 0;
+  for (var j=0; j<state.answers.length; j++) if (state.answers[j] !== null) ans++;
+  var total = state.selected.questions.length;
+  document.getElementById('progressBar').style.width = ((state.current+1)/total*100)+'%';
+  document.getElementById('answeredCount').textContent = 'Хариулсан: '+ans+' / '+total;
 }
 
 function nextQuestion(){
   if (state.current < state.selected.questions.length - 1) {
-    state.current++;
-    renderQuestion(); renderQNav();
+    state.current++; renderQuestion(); renderQNav();
   }
 }
 function prevQuestion(){
-  if (state.current > 0) {
-    state.current--;
-    renderQuestion(); renderQNav();
-  }
+  if (state.current > 0) { state.current--; renderQuestion(); renderQNav(); }
 }
 
-/* =========================================================
-   10. SUBMIT & GRADING
-   ========================================================= */
 function confirmSubmit(){
-  const unanswered = state.answers.filter(a => a === null).length;
-  const msg = unanswered > 0
-    ? `Танд ${unanswered} хариулаагүй асуулт байна. Шалгалтыг дуусгахдаа итгэлтэй байна уу?`
-    : 'Та бүх асуултад хариулсан байна. Шалгалтыг дуусгахдаа итгэлтэй байна уу?';
+  var un = 0;
+  for (var i=0; i<state.answers.length; i++) if (state.answers[i] === null) un++;
+  var msg = un > 0
+    ? 'Танд '+un+' хариулаагүй асуулт байна. Шалгалтыг дуусгах уу?'
+    : 'Бүх асуултад хариулсан. Шалгалтыг дуусгах уу?';
   openModal('Шалгалтыг дуусгах', msg, 'Тийм, дуусгах', finishExam);
 }
 
 function autoSubmit(){
-  openModal('Хугацаа дууслаа', 'Шалгалтын хугацаа дууссан тул хариултууд автоматаар илгээгдлээ.', 'Үр дүнг харах', finishExam);
+  openModal('Хугацаа дууслаа','Хариултууд автоматаар илгээгдлээ.','Үргэлжлүүлэх', finishExam);
 }
 
 function finishExam(){
@@ -1311,215 +786,77 @@ function finishExam(){
   state.submitted = true;
   stopTimer();
 
-  const qs = state.selected.questions;
-  let score = 0;
-  const details = qs.map((q, i) => {
-    const chosen = state.answers[i];
-    const ok = chosen === q.a;
-    if (ok) score++;
-    return { q: q.q, p: q.p, options: q.o, chosen, correct: q.a, ok };
-  });
+  var qs = state.selected.questions;
+  var score = 0;
+  for (var i=0; i<qs.length; i++) {
+    if (state.answers[i] === qs[i].a) score++;
+  }
 
-  const total = qs.length;
-  const percent = Math.round(score / total * 100);
-  const grade = gradeOf(percent);
-  const secondsUsed = Math.round((Date.now() - state.startTime) / 1000);
-  const timeUsed = fmtTime(secondsUsed);
+  var total = qs.length;
+  var percent = Math.round(score/total*100);
+  var grade = gradeOf(percent);
+  var secsUsed = Math.round((Date.now() - state.startTime)/1000);
 
-  const record = {
-    id: Date.now() + '-' + Math.random().toString(36).slice(2, 8),
+  var record = {
+    id: Date.now()+'-'+Math.random().toString(36).slice(2,8),
     timestamp: new Date().toISOString(),
     name: state.student.name,
     className: state.student.className,
     year: state.selected.year,
     version: state.selected.version,
-    score, total, percent,
-    grade: grade.letter,
-    gradeLabel: grade.label,
-    timeUsed
+    score: score, total: total, percent: percent,
+    grade: grade.letter, gradeLabel: grade.label,
+    timeUsed: fmtTime(secsUsed)
   };
 
   saveResult(record);
-  sendToSheet(record);
-  renderResult(record, details);
-  showScreen('result');
+  // ЗӨВХӨН БАЯРЛАЛАА ХАРУУЛНА - оноо ХАРАГДАХГҮЙ
+  showScreen('thankyou');
 }
 
-/* =========================================================
-   11. RESULT RENDERING
-   ========================================================= */
-function renderResult(r, details){
-  const g = gradeOf(r.percent);
-  const ringColor = g.color;
-
-  $('#resultHero').innerHTML = `
-    <div class="score-ring" style="--pct:${r.percent};--ring-color:${ringColor}">
-      <div class="score-inner">
-        <b style="color:${ringColor}">${r.percent}%</b>
-        <span>${r.score} / ${r.total} оноо</span>
-      </div>
-    </div>
-    <div class="grade-pill" style="background:${g.color}1a;color:${g.color}">
-      ${g.letter} — ${g.label}
-    </div>
-    <h2 style="font-size:21px;font-weight:800;letter-spacing:-.4px">${esc(r.name)}</h2>
-    <p class="muted small">${esc(r.className)} · ${r.year} он · ${r.version} хувилбар</p>
-
-    <div class="result-stats">
-      <div class="stat-box"><b style="color:var(--success)">${r.score}</b><span>Зөв хариулт</span></div>
-      <div class="stat-box"><b style="color:var(--danger)">${r.total - r.score}</b><span>Буруу хариулт</span></div>
-      <div class="stat-box"><b>${r.percent}%</b><span>Гүйцэтгэл</span></div>
-      <div class="stat-box"><b>${r.timeUsed}</b><span>Зарцуулсан хугацаа</span></div>
-    </div>`;
-
-  const letters = ['A','B','C','D','E'];
-  const list = $('#reviewList');
-  list.innerHTML = '';
-
-  details.forEach((d, i) => {
-    const div = document.createElement('div');
-    div.className = 'review-item ' + (d.ok ? 'ok' : 'no');
-
-    const chosenText = d.chosen === null
-      ? '<i style="color:var(--danger)">Хариулаагүй</i>'
-      : `${letters[d.chosen]}) ${esc(d.options[d.chosen])}`;
-
-    div.innerHTML = `
-      <div class="review-head">
-        <span class="q-number" style="margin:0">АСУУЛТ ${i + 1}</span>
-        <span class="tag ${d.ok ? 'tag-ok' : 'tag-no'}">${d.ok ? '✓ ЗӨВ' : '✗ БУРУУ'}</span>
-      </div>
-      ${d.p ? `<div class="passage" style="margin-bottom:12px">${esc(d.p)}</div>` : ''}
-      <div class="review-q">${esc(d.q)}</div>
-      <div class="review-ans">
-        <div><span class="lbl">Таны хариулт: </span>${chosenText}</div>
-        <div><span class="lbl">Зөв хариулт: </span><b style="color:var(--success)">${letters[d.correct]}) ${esc(d.options[d.correct])}</b></div>
-      </div>`;
-    list.appendChild(div);
-  });
-}
-
-/* =========================================================
-   12. STORAGE
-   ========================================================= */
 function getResults(){
   try { return JSON.parse(localStorage.getItem(CONFIG.STORAGE_KEY) || '[]'); }
-  catch { return []; }
+  catch(e){ return []; }
 }
 function saveResult(r){
-  const all = getResults();
+  var all = getResults();
   all.push(r);
-  try { localStorage.setItem(CONFIG.STORAGE_KEY, JSON.stringify(all)); } catch(e){ console.warn(e); }
+  try { localStorage.setItem(CONFIG.STORAGE_KEY, JSON.stringify(all)); } catch(e){}
 }
 function clearAllResults(){
-  openModal('Бүх үр дүнг устгах', 'Энэ үйлдлийг буцаах боломжгүй. Үргэлжлүүлэх үү?', 'Тийм, устгах', () => {
+  openModal('Бүх үр дүнг устгах','Энэ үйлдлийг буцаах боломжгүй.','Тийм, устгах', function(){
     localStorage.removeItem(CONFIG.STORAGE_KEY);
     renderTeacherTable();
     renderTeacherStats();
   });
 }
 
-/* =========================================================
-   13. GOOGLE SHEETS SUBMISSION
-   ========================================================= */
-function getScriptUrl(){
-  return localStorage.getItem(CONFIG.SCRIPT_KEY) || CONFIG.SCRIPT_URL || '';
-}
-
-async function sendToSheet(payload){
-  const url = getScriptUrl();
-  if (!url) { console.info('[Sheets] URL тохируулаагүй — зөвхөн локал хадгаллаа.'); return; }
-  try {
-    await fetch(url, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      body: JSON.stringify(payload)
-    });
-    console.info('[Sheets] Илгээгдлээ.');
-  } catch (e) {
-    console.warn('[Sheets] Алдаа:', e);
-  }
-}
-
-/* =========================================================
-   14. MY RESULTS
-   ========================================================= */
-function openMyResults(){
-  showScreen('myresults');
-  setTimeout(() => $('#mySearchName').focus(), 200);
-}
-
-function searchMyResults(){
-  const q = $('#mySearchName').value.trim().toLowerCase();
-  const box = $('#myResultsBox');
-
-  if (!q) {
-    box.innerHTML = `<div class="alert alert-warn"><span>⚠️</span><div>Хайх нэрээ бичнэ үү.</div></div>`;
-    return;
-  }
-
-  const found = getResults()
-    .filter(r => r.name.toLowerCase().includes(q))
-    .sort((a,b) => new Date(b.timestamp) - new Date(a.timestamp));
-
-  if (!found.length) {
-    box.innerHTML = `<div class="empty-state">
-      <div class="icon">🔍</div>
-      <p><b>«${esc($('#mySearchName').value.trim())}»</b> нэрээр үр дүн олдсонгүй.</p>
-      <p class="small" style="margin-top:6px">Шалгалтаа өгсөн нэрээ бүрэн бичсэн эсэхээ шалгаарай.</p>
-    </div>`;
-    return;
-  }
-
-  box.innerHTML = `<div class="table-wrap"><table>
-    <thead><tr>
-      <th>Огноо</th><th>Овог нэр</th><th>Анги</th><th>Жил</th>
-      <th>Хувилбар</th><th>Оноо</th><th>Хувь</th><th>Дүн</th>
-    </tr></thead>
-    <tbody>${found.map(r => {
-      const g = gradeOf(r.percent);
-      return `<tr>
-        <td>${fmtDate(r.timestamp)}</td>
-        <td><b>${esc(r.name)}</b></td>
-        <td>${esc(r.className)}</td>
-        <td>${r.year}</td>
-        <td><span class="badge badge-${r.version.toLowerCase()}">${r.version}</span></td>
-        <td>${r.score} / ${r.total}</td>
-        <td><b>${r.percent}%</b></td>
-        <td><span class="score-chip" style="background:${g.color}1a;color:${g.color}">${g.letter}</span></td>
-      </tr>`;
-    }).join('')}</tbody>
-  </table></div>`;
-}
-
-/* =========================================================
-   15. TEACHER
-   ========================================================= */
 function openTeacher(){
   if (sessionStorage.getItem('eep_teacher') === '1') {
     renderTeacherStats();
     renderTeacherTable();
     showScreen('teacher');
   } else {
+    document.getElementById('loginError').classList.add('hidden');
+    document.getElementById('inpPass').value = '';
     showScreen('teacher-login');
-    setTimeout(() => $('#inpPass').focus(), 200);
+    setTimeout(function(){document.getElementById('inpPass').focus()},200);
   }
 }
 
 function teacherLogin(){
-  const pass = $('#inpPass').value;
+  var pass = document.getElementById('inpPass').value;
   if (pass === CONFIG.TEACHER_PASSWORD) {
-    sessionStorage.setItem('eep_teacher', '1');
-    $('#inpPass').value = '';
-    $('#loginError').classList.add('hidden');
+    sessionStorage.setItem('eep_teacher','1');
+    document.getElementById('inpPass').value = '';
+    document.getElementById('loginError').classList.add('hidden');
     renderTeacherStats();
     renderTeacherTable();
     showScreen('teacher');
   } else {
-    $('#loginError').classList.remove('hidden');
-    $('#inpPass').value = '';
-    $('#inpPass').focus();
+    document.getElementById('loginError').classList.remove('hidden');
+    document.getElementById('inpPass').value = '';
+    document.getElementById('inpPass').focus();
   }
 }
 
@@ -1529,29 +866,100 @@ function teacherLogout(){
 }
 
 function renderTeacherStats(){
-  const all = getResults();
-  const box = $('#teacherStats');
-
+  var all = getResults();
+  var box = document.getElementById('teacherStats');
   if (!all.length) {
-    box.innerHTML = `<div class="card" style="grid-column:1/-1">
-      <div class="empty-state"><div class="icon">📭</div>
-      <p>Одоогоор ямар ч үр дүн бүртгэгдээгүй байна.</p></div></div>`;
+    box.innerHTML = '<div class="card" style="grid-column:1/-1"><div class="empty-state"><div class="icon">📭</div><p>Одоогоор үр дүн байхгүй.</p></div></div>';
+    return;
+  }
+  var sum=0, best=0, passed=0;
+  for (var i=0; i<all.length; i++) {
+    sum += all[i].percent;
+    if (all[i].percent > best) best = all[i].percent;
+    if (all[i].percent >= 60) passed++;
+  }
+  var avg = Math.round(sum/all.length);
+  box.innerHTML =
+    '<div class="card" style="text-align:center"><div style="font-size:30px;font-weight:800;color:#2563eb">'+all.length+'</div><div class="muted small" style="font-weight:700">Нийт шалгалт</div></div>'+
+    '<div class="card" style="text-align:center"><div style="font-size:30px;font-weight:800;color:#0ea5e9">'+avg+'%</div><div class="muted small" style="font-weight:700">Дундаж</div></div>'+
+    '<div class="card" style="text-align:center"><div style="font-size:30px;font-weight:800;color:#16a34a">'+best+'%</div><div class="muted small" style="font-weight:700">Хамгийн өндөр</div></div>'+
+    '<div class="card" style="text-align:center"><div style="font-size:30px;font-weight:800;color:#f59e0b">'+passed+'/'+all.length+'</div><div class="muted small" style="font-weight:700">Тэнцсэн</div></div>';
+}
+
+function renderTeacherTable(){
+  var box = document.getElementById('teacherTableBox');
+  var searchEl = document.getElementById('tSearch');
+  var yearEl = document.getElementById('tYear');
+  var versionEl = document.getElementById('tVersion');
+  if (!searchEl || !yearEl || !versionEl) return;
+
+  var search = (searchEl.value||'').toLowerCase();
+  var year = yearEl.value;
+  var version = versionEl.value;
+
+  var rows = getResults();
+  rows.sort(function(a,b){return new Date(b.timestamp) - new Date(a.timestamp)});
+
+  var filtered = [];
+  for (var i=0; i<rows.length; i++) {
+    var r = rows[i];
+    if (search && r.name.toLowerCase().indexOf(search) === -1 && (r.className||'').toLowerCase().indexOf(search) === -1) continue;
+    if (year && r.year !== year) continue;
+    if (version && r.version !== version) continue;
+    filtered.push(r);
+  }
+
+  if (!filtered.length) {
+    box.innerHTML = '<div class="card"><div class="empty-state"><div class="icon">📭</div><p>Үр дүн олдсонгүй.</p></div></div>';
     return;
   }
 
-  const avg = Math.round(all.reduce((s,r) => s + r.percent, 0) / all.length);
-  const best = Math.max(...all.map(r => r.percent));
-  const passed = all.filter(r => r.percent >= 60).length;
+  var html = '<div class="table-wrap"><table><thead><tr><th>#</th><th>Огноо</th><th>Овог нэр</th><th>Анги</th><th>Жил</th><th>Хувилбар</th><th>Оноо</th><th>Хувь</th><th>Дүн</th><th>Хугацаа</th></tr></thead><tbody>';
+  for (var j=0; j<filtered.length; j++) {
+    var r = filtered[j];
+    var g = gradeOf(r.percent);
+    html += '<tr><td>'+(j+1)+'</td><td>'+fmtDate(r.timestamp)+'</td><td><b>'+esc(r.name)+'</b></td><td>'+esc(r.className)+'</td><td>'+r.year+'</td><td>'+r.version+'</td><td>'+r.score+' / '+r.total+'</td><td><b>'+r.percent+'%</b></td><td><span class="score-chip" style="background:'+g.color+'1a;color:'+g.color+'">'+g.letter+'</span></td><td class="muted">'+(r.timeUsed||'—')+'</td></tr>';
+  }
+  html += '</tbody></table></div><p class="small muted mt-16">Нийт <b>'+filtered.length+'</b> бичлэг.</p>';
+  box.innerHTML = html;
+}
 
-  box.innerHTML = `
-    <div class="card" style="text-align:center">
-      <div style="font-size:30px;font-weight:800;color:var(--primary)">${all.length}</div>
-      <div class="muted small" style="font-weight:700">Нийт шалгалт</div>
-    </div>
-    <div class="card" style="text-align:center">
-      <div style="font-size:30px;font-weight:800;color:var(--accent)">${avg}%</div>
-      <div class="muted small" style="font-weight:700">Дундаж гүйцэтгэл</div>
-    </div>
-    <div class="card" style="text-align:center">
-      <div style="font-size:30px;font-weight:800;color:var(--success)">${best}%</div>
-      <div class="muted small" style="font-weight:700">Хамги
+function exportCSV(){
+  var rows = getResults();
+  if (!rows.length) { alert('Өгөгдөл байхгүй.'); return; }
+  rows.sort(function(a,b){return new Date(b.timestamp) - new Date(a.timestamp)});
+  var head = ['Огноо','Овог нэр','Анги','Жил','Хувилбар','Оноо','Нийт','Хувь','Дүн','Хугацаа'];
+  var lines = [head.join(',')];
+  for (var i=0; i<rows.length; i++) {
+    var r = rows[i];
+    var line = [fmtDate(r.timestamp), r.name, r.className, r.year, r.version, r.score, r.total, r.percent+'%', r.grade, r.timeUsed||''].map(function(c){
+      return '"'+String(c).replace(/"/g,'""')+'"';
+    }).join(',');
+    lines.push(line);
+  }
+  var csv = lines.join('\r\n');
+  var blob = new Blob(['\uFEFF'+csv], {type:'text/csv;charset=utf-8;'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'results_'+new Date().toISOString().slice(0,10)+'.csv';
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+document.addEventListener('DOMContentLoaded', function(){
+  renderExamList();
+  document.getElementById('modalOk').onclick = function(){
+    var a = modalAction;
+    closeModal();
+    if (typeof a === 'function') a();
+  };
+  document.addEventListener('keydown', function(e){
+    var examScreen = document.querySelector('.screen[data-screen="exam"]');
+    if (!examScreen || !examScreen.classList.contains('active')) return;
+    if (e.key === 'ArrowRight') nextQuestion();
+    if (e.key === 'ArrowLeft') prevQuestion();
+  });
+});
+</script>
+</body>
+</html>
