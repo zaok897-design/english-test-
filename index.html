@@ -1,0 +1,1639 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Англи хэлний цахим шалгалтын систем — English Exam Portal">
+<title>English Exam Portal — Англи хэлний цахим шалгалтын систем</title>
+<style>
+/* ============ RESET & TOKENS ============ */
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f4f7fc;
+  --card:#ffffff;
+  --primary:#2563eb;
+  --primary-dark:#1d4ed8;
+  --primary-light:#dbeafe;
+  --accent:#0ea5e9;
+  --text:#0f172a;
+  --muted:#64748b;
+  --border:#e2e8f0;
+  --success:#16a34a;
+  --success-light:#dcfce7;
+  --danger:#dc2626;
+  --danger-light:#fee2e2;
+  --warning:#f59e0b;
+  --radius:16px;
+  --radius-sm:10px;
+  --shadow:0 4px 16px rgba(15,23,42,.06);
+  --shadow-lg:0 12px 40px rgba(15,23,42,.12);
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter','Segoe UI',system-ui,-apple-system,'Noto Sans',Arial,sans-serif;
+  background:var(--bg);color:var(--text);line-height:1.6;
+  -webkit-font-smoothing:antialiased;min-height:100vh;
+  display:flex;flex-direction:column;
+}
+img{max-width:100%}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+input,select{font-family:inherit}
+
+/* ============ LAYOUT ============ */
+.container{width:100%;max-width:1120px;margin:0 auto;padding:0 18px}
+header.site-header{
+  position:sticky;top:0;z-index:50;
+  background:rgba(255,255,255,.85);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+}
+.header-inner{display:flex;align-items:center;justify-content:space-between;gap:14px;height:68px}
+.brand{display:flex;align-items:center;gap:11px;cursor:pointer;user-select:none}
+.brand-mark{
+  width:42px;height:42px;border-radius:12px;flex-shrink:0;
+  background:linear-gradient(135deg,#1e3a8a,#2563eb 55%,#0ea5e9);
+  display:grid;place-items:center;color:#fff;font-weight:800;font-size:17px;
+  box-shadow:0 4px 12px rgba(37,99,235,.35);
+}
+.brand-text b{display:block;font-size:15.5px;letter-spacing:-.2px;line-height:1.2}
+.brand-text span{display:block;font-size:11.5px;color:var(--muted);line-height:1.3}
+.header-nav{display:flex;gap:6px;align-items:center}
+.nav-link{
+  padding:8px 14px;border-radius:9px;font-size:14px;font-weight:600;color:var(--muted);
+  transition:.18s;
+}
+.nav-link:hover{background:var(--primary-light);color:var(--primary-dark)}
+.nav-link.active{background:var(--primary);color:#fff}
+
+main{flex:1;padding:26px 0 60px}
+
+/* ============ SCREENS ============ */
+.screen{display:none;animation:fade .32s ease}
+.screen.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+/* ============ HERO ============ */
+.hero{
+  position:relative;overflow:hidden;border-radius:24px;
+  background:linear-gradient(135deg,#1e3a8a 0%,#2563eb 52%,#0ea5e9 100%);
+  color:#fff;padding:56px 36px;box-shadow:var(--shadow-lg);
+}
+.hero::before{
+  content:'';position:absolute;width:420px;height:420px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,255,255,.22),transparent 68%);
+  top:-170px;right:-120px;
+}
+.hero::after{
+  content:'';position:absolute;width:300px;height:300px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,255,255,.13),transparent 68%);
+  bottom:-160px;left:-90px;
+}
+.hero-content{position:relative;z-index:2;max-width:720px}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(255,255,255,.17);border:1px solid rgba(255,255,255,.28);
+  padding:6px 15px;border-radius:999px;font-size:12.5px;font-weight:600;
+  letter-spacing:.4px;margin-bottom:20px;
+}
+.hero h1{font-size:clamp(30px,5.2vw,48px);line-height:1.13;letter-spacing:-1.2px;font-weight:800;margin-bottom:14px}
+.hero .subtitle{font-size:clamp(15px,2.3vw,19px);opacity:.94;font-weight:500;margin-bottom:8px}
+.hero .desc{font-size:15px;opacity:.82;margin-bottom:32px;max-width:600px}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px}
+.hero-stats{
+  display:flex;flex-wrap:wrap;gap:28px;margin-top:38px;padding-top:26px;
+  border-top:1px solid rgba(255,255,255,.22);position:relative;z-index:2;
+}
+.hero-stat b{display:block;font-size:26px;font-weight:800;line-height:1.1}
+.hero-stat span{font-size:12.5px;opacity:.82}
+
+/* ============ BUTTONS ============ */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:12px 22px;border-radius:11px;font-size:14.5px;font-weight:700;
+  transition:.18s;white-space:nowrap;text-decoration:none;line-height:1.2;
+}
+.btn:active{transform:scale(.975)}
+.btn-primary{background:var(--primary);color:#fff;box-shadow:0 4px 14px rgba(37,99,235,.3)}
+.btn-primary:hover{background:var(--primary-dark);box-shadow:0 6px 20px rgba(37,99,235,.4)}
+.btn-white{background:#fff;color:var(--primary-dark);box-shadow:0 4px 16px rgba(0,0,0,.15)}
+.btn-white:hover{background:#f1f5ff}
+.btn-glass{background:rgba(255,255,255,.15);color:#fff;border:1.5px solid rgba(255,255,255,.45)}
+.btn-glass:hover{background:rgba(255,255,255,.27)}
+.btn-outline{background:#fff;color:var(--text);border:1.5px solid var(--border)}
+.btn-outline:hover{border-color:var(--primary);color:var(--primary);background:#f8fbff}
+.btn-success{background:var(--success);color:#fff}
+.btn-success:hover{background:#15803d}
+.btn-danger{background:var(--danger);color:#fff}
+.btn-danger:hover{background:#b91c1c}
+.btn-lg{padding:15px 30px;font-size:16px;border-radius:13px}
+.btn-sm{padding:8px 14px;font-size:13px;border-radius:9px}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+
+/* ============ CARDS ============ */
+.card{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:26px;box-shadow:var(--shadow);
+}
+.section-title{font-size:22px;font-weight:800;letter-spacing:-.5px;margin-bottom:6px}
+.section-sub{color:var(--muted);font-size:14.5px;margin-bottom:24px}
+.muted{color:var(--muted)}
+.small{font-size:13px}
+.grid{display:grid;gap:18px}
+.grid-3{grid-template-columns:repeat(auto-fit,minmax(255px,1fr))}
+.grid-2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.mt-24{margin-top:24px}
+.mt-16{margin-top:16px}
+.mb-16{margin-bottom:16px}
+.mb-24{margin-bottom:24px}
+
+/* ============ FEATURE CARDS ============ */
+.feature{display:flex;gap:15px;align-items:flex-start}
+.feature-icon{
+  width:46px;height:46px;border-radius:13px;flex-shrink:0;display:grid;place-items:center;
+  font-size:21px;background:var(--primary-light);
+}
+.feature h3{font-size:16px;font-weight:700;margin-bottom:4px}
+.feature p{font-size:13.5px;color:var(--muted);line-height:1.55}
+
+/* ============ ACTION TILES ============ */
+.tile{
+  display:flex;flex-direction:column;gap:12px;align-items:flex-start;
+  padding:28px;border-radius:var(--radius);border:1.5px solid var(--border);
+  background:#fff;box-shadow:var(--shadow);transition:.2s;text-align:left;width:100%;
+}
+.tile:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);border-color:#c7d9f7}
+.tile-icon{width:54px;height:54px;border-radius:15px;display:grid;place-items:center;font-size:25px}
+.tile h3{font-size:17px;font-weight:700}
+.tile p{font-size:13.5px;color:var(--muted);line-height:1.55}
+.tile .arrow{font-size:13px;font-weight:700;color:var(--primary);margin-top:auto}
+
+/* ============ EXAM SELECT ============ */
+.exam-card{position:relative;overflow:hidden}
+.exam-card::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:5px;
+  background:linear-gradient(180deg,var(--primary),var(--accent));
+}
+.exam-year{font-size:30px;font-weight:800;letter-spacing:-1px;line-height:1.1}
+.version-row{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
+.version-row .btn{flex:1;min-width:120px}
+.badge{
+  display:inline-block;padding:3px 10px;border-radius:999px;
+  font-size:11.5px;font-weight:700;letter-spacing:.3px;
+}
+.badge-a{background:#dbeafe;color:#1d4ed8}
+.badge-b{background:#dcfce7;color:#15803d}
+
+/* ============ FORMS ============ */
+.field{margin-bottom:18px}
+.field label{display:block;font-size:13.5px;font-weight:700;margin-bottom:7px}
+.field input,.field select{
+  width:100%;padding:13px 15px;border-radius:11px;border:1.5px solid var(--border);
+  font-size:15px;background:#fff;transition:.18s;color:var(--text);
+}
+.field input:focus,.field select:focus{
+  outline:none;border-color:var(--primary);box-shadow:0 0 0 4px rgba(37,99,235,.12);
+}
+.form-narrow{max-width:480px;margin:0 auto}
+
+/* ============ EXAM RUN ============ */
+.exam-top{
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:18px 24px;flex-wrap:wrap;
+}
+.exam-title{font-size:16.5px;font-weight:800;letter-spacing:-.3px}
+.timer{
+  font-size:21px;font-weight:800;font-variant-numeric:tabular-nums;
+  padding:9px 18px;border-radius:11px;background:var(--primary-light);color:var(--primary-dark);
+  letter-spacing:.5px;transition:.3s;
+}
+.timer.warning{background:#fef3c7;color:#b45309}
+.timer.danger{background:var(--danger-light);color:var(--danger);animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.55}}
+
+.progress{height:7px;background:#e4ebf6;border-radius:999px;overflow:hidden;margin:14px 0 20px}
+.progress-bar{height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,var(--primary),var(--accent));transition:width .35s ease}
+
+.exam-layout{display:grid;grid-template-columns:1fr 268px;gap:20px;align-items:start}
+.question-card{padding:30px}
+.q-number{
+  display:inline-block;font-size:12px;font-weight:800;letter-spacing:1px;
+  color:var(--primary);background:var(--primary-light);padding:4px 12px;border-radius:999px;
+  margin-bottom:16px;
+}
+.passage{
+  background:#f8fafc;border-left:4px solid var(--accent);border-radius:0 10px 10px 0;
+  padding:16px 20px;margin-bottom:18px;font-size:14.5px;line-height:1.75;color:#334155;
+  font-style:italic;
+}
+.q-text{font-size:17.5px;font-weight:600;line-height:1.55;margin-bottom:22px;letter-spacing:-.2px}
+.options{display:flex;flex-direction:column;gap:11px}
+.opt{
+  display:flex;align-items:center;gap:14px;text-align:left;width:100%;
+  padding:15px 18px;border-radius:12px;border:1.5px solid var(--border);
+  background:#fff;font-size:15px;font-weight:500;color:var(--text);transition:.16s;
+}
+.opt:hover{border-color:#a8c4f0;background:#f8fbff}
+.opt .letter{
+  width:31px;height:31px;border-radius:50%;flex-shrink:0;display:grid;place-items:center;
+  background:#f1f5f9;font-weight:800;font-size:13.5px;color:var(--muted);transition:.16s;
+}
+.opt.selected{border-color:var(--primary);background:#eff6ff;box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+.opt.selected .letter{background:var(--primary);color:#fff}
+.opt.correct{border-color:var(--success);background:var(--success-light)}
+.opt.correct .letter{background:var(--success);color:#fff}
+.opt.wrong{border-color:var(--danger);background:var(--danger-light)}
+.opt.wrong .letter{background:var(--danger);color:#fff}
+
+.exam-actions{display:flex;gap:11px;margin-top:28px;flex-wrap:wrap}
+.exam-actions .btn{flex:1;min-width:130px}
+
+.side-card{padding:22px;position:sticky;top:88px}
+.side-card h4{font-size:14px;font-weight:800;margin-bottom:14px;letter-spacing:-.2px}
+.qnav{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.qnav button{
+  aspect-ratio:1;border-radius:9px;border:1.5px solid var(--border);background:#fff;
+  font-size:13px;font-weight:700;color:var(--muted);transition:.15s;
+}
+.qnav button:hover{border-color:var(--primary);color:var(--primary)}
+.qnav button.answered{background:var(--primary-light);border-color:#93b4f5;color:var(--primary-dark)}
+.qnav button.current{background:var(--primary);border-color:var(--primary);color:#fff}
+.legend{display:flex;flex-direction:column;gap:7px;margin-top:18px;padding-top:16px;border-top:1px solid var(--border);font-size:12px;color:var(--muted)}
+.legend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:7px;vertical-align:-1px}
+
+/* ============ RESULT ============ */
+.result-hero{text-align:center;padding:44px 26px}
+.score-ring{
+  width:168px;height:168px;border-radius:50%;margin:0 auto 22px;
+  display:grid;place-items:center;position:relative;
+  background:conic-gradient(var(--ring-color) calc(var(--pct)*1%), #e8eef8 0);
+}
+.score-ring::after{
+  content:'';position:absolute;inset:13px;border-radius:50%;background:#fff;
+}
+.score-inner{position:relative;z-index:2}
+.score-inner b{display:block;font-size:42px;font-weight:800;letter-spacing:-1.5px;line-height:1}
+.score-inner span{font-size:13px;color:var(--muted);font-weight:600}
+.grade-pill{
+  display:inline-block;padding:9px 26px;border-radius:999px;font-size:15px;
+  font-weight:800;letter-spacing:.5px;margin-bottom:10px;
+}
+.result-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:14px;margin-top:28px}
+.stat-box{background:#f8fafc;border:1px solid var(--border);border-radius:13px;padding:16px 12px;text-align:center}
+.stat-box b{display:block;font-size:23px;font-weight:800;line-height:1.2}
+.stat-box span{font-size:12px;color:var(--muted);font-weight:600}
+
+.review-item{
+  border:1px solid var(--border);border-radius:13px;padding:18px 20px;margin-bottom:13px;background:#fff;
+}
+.review-item.ok{border-left:4px solid var(--success)}
+.review-item.no{border-left:4px solid var(--danger)}
+.review-head{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:9px;flex-wrap:wrap}
+.review-q{font-size:15px;font-weight:600;margin-bottom:11px;line-height:1.55}
+.review-ans{font-size:13.5px;display:flex;flex-direction:column;gap:5px}
+.review-ans .lbl{font-weight:700;color:var(--muted)}
+.tag{font-size:11.5px;font-weight:800;padding:3px 11px;border-radius:999px;letter-spacing:.3px}
+.tag-ok{background:var(--success-light);color:#15803d}
+.tag-no{background:var(--danger-light);color:#b91c1c}
+
+/* ============ TABLE ============ */
+.table-wrap{overflow-x:auto;border-radius:var(--radius);border:1px solid var(--border);background:#fff}
+table{width:100%;border-collapse:collapse;font-size:13.5px;min-width:720px}
+thead{background:#f8fafc}
+th{
+  text-align:left;padding:13px 15px;font-weight:800;font-size:12px;
+  letter-spacing:.5px;color:var(--muted);text-transform:uppercase;border-bottom:1.5px solid var(--border);
+  white-space:nowrap;
+}
+td{padding:13px 15px;border-bottom:1px solid #f1f5f9;white-space:nowrap}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover{background:#f8fbff}
+.score-chip{display:inline-block;padding:3px 11px;border-radius:999px;font-weight:800;font-size:12.5px}
+.chip-green{background:var(--success-light);color:#15803d}
+.chip-blue{background:var(--primary-light);color:#1d4ed8}
+.chip-red{background:var(--danger-light);color:#b91c1c}
+
+/* ============ ALERTS ============ */
+.alert{
+  padding:14px 18px;border-radius:12px;font-size:14px;margin-bottom:18px;
+  display:flex;gap:11px;align-items:flex-start;line-height:1.55;
+}
+.alert-info{background:#eff6ff;border:1px solid #bfdbfe;color:#1e40af}
+.alert-warn{background:#fffbeb;border:1px solid #fde68a;color:#92400e}
+.alert-ok{background:var(--success-light);border:1px solid #bbf7d0;color:#15803d}
+.alert-err{background:var(--danger-light);border:1px solid #fecaca;color:#b91c1c}
+
+/* ============ MODAL ============ */
+.modal-back{
+  position:fixed;inset:0;background:rgba(15,23,42,.55);backdrop-filter:blur(4px);
+  display:none;place-items:center;z-index:200;padding:20px;
+}
+.modal-back.show{display:grid}
+.modal{
+  background:#fff;border-radius:20px;padding:32px;max-width:440px;width:100%;
+  box-shadow:var(--shadow-lg);animation:pop .25s ease;
+}
+@keyframes pop{from{transform:scale(.94);opacity:0}to{transform:scale(1);opacity:1}}
+.modal h3{font-size:20px;font-weight:800;margin-bottom:10px;letter-spacing:-.4px}
+.modal p{color:var(--muted);font-size:14.5px;margin-bottom:24px;line-height:1.6}
+.modal-actions{display:flex;gap:11px}
+.modal-actions .btn{flex:1}
+
+/* ============ MISC ============ */
+.empty-state{text-align:center;padding:56px 20px;color:var(--muted)}
+.empty-state .icon{font-size:46px;margin-bottom:14px;opacity:.5}
+.steps{counter-reset:s;display:flex;flex-direction:column;gap:16px}
+.step{display:flex;gap:15px;align-items:flex-start}
+.step-num{
+  width:34px;height:34px;border-radius:50%;background:var(--primary);color:#fff;
+  display:grid;place-items:center;font-weight:800;font-size:14px;flex-shrink:0;
+}
+.step h4{font-size:15px;font-weight:700;margin-bottom:3px}
+.step p{font-size:13.5px;color:var(--muted);line-height:1.6}
+.divider{height:1px;background:var(--border);margin:26px 0}
+.flex-between{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
+.hidden{display:none !important}
+code{
+  background:#f1f5f9;padding:2px 7px;border-radius:5px;font-size:12.5px;
+  font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;color:#0f172a;
+}
+pre{
+  background:#0f172a;color:#e2e8f0;padding:18px;border-radius:12px;overflow-x:auto;
+  font-size:12.5px;line-height:1.65;font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+}
+details summary{cursor:pointer;font-weight:700;font-size:14px;padding:12px 0;user-select:none}
+details summary:hover{color:var(--primary)}
+
+footer.site-footer{
+  border-top:1px solid var(--border);background:#fff;padding:24px 0;
+  text-align:center;font-size:13px;color:var(--muted);
+}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width:900px){
+  .exam-layout{grid-template-columns:1fr}
+  .side-card{position:static;order:-1}
+  .qnav{grid-template-columns:repeat(8,1fr)}
+}
+@media (max-width:768px){
+  .header-inner{height:62px}
+  .brand-text span{display:none}
+  .nav-link{padding:7px 11px;font-size:13px}
+  .header-nav .nav-hide-mobile{display:none}
+  .hero{padding:40px 24px;border-radius:20px}
+  .hero-stats{gap:20px}
+  .hero-stat b{font-size:22px}
+  .card{padding:20px}
+  .question-card{padding:22px}
+  .q-text{font-size:16px}
+  .exam-actions .btn{flex:1 1 100%}
+  .exam-actions{flex-direction:column-reverse}
+  main{padding:18px 0 46px}
+}
+@media (max-width:480px){
+  .container{padding:0 13px}
+  .hero{padding:32px 18px}
+  .hero-actions .btn{width:100%}
+  .qnav{grid-template-columns:repeat(6,1fr)}
+  .score-ring{width:142px;height:142px}
+  .score-inner b{font-size:35px}
+  .modal{padding:24px}
+  .modal-actions{flex-direction:column}
+}
+</style>
+</head>
+<body>
+
+<!-- ================= HEADER ================= -->
+<header class="site-header">
+  <div class="container header-inner">
+    <div class="brand" onclick="goHome()">
+      <div class="brand-mark">EN</div>
+      <div class="brand-text">
+        <b>English Exam Portal</b>
+        <span>Англи хэлний цахим шалгалтын систем</span>
+      </div>
+    </div>
+    <nav class="header-nav">
+      <button class="nav-link" data-nav="home" onclick="goHome()">Нүүр</button>
+      <button class="nav-link nav-hide-mobile" data-nav="instructions" onclick="showScreen('instructions')">Заавар</button>
+      <button class="nav-link nav-hide-mobile" data-nav="myresults" onclick="openMyResults()">Үр дүн</button>
+      <button class="nav-link" data-nav="teacher" onclick="openTeacher()">Багш</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+<div class="container">
+
+<!-- ================= HOME ================= -->
+<section class="screen active" data-screen="home">
+  <div class="hero">
+    <div class="hero-content">
+      <div class="hero-badge">🎓 2021 – 2025 ОНЫ ШАЛГАЛТУУД</div>
+      <h1>English Exam Portal</h1>
+      <p class="subtitle">Англи хэлний цахим шалгалтын систем</p>
+      <p class="desc">
+        Монгол сурагчдад зориулсан англи хэлний онлайн шалгалтын платформ.
+        Шалгалтаа сонгон авч, цахимаар өгөөд үр дүнгээ шууд хараарай.
+      </p>
+      <div class="hero-actions">
+        <button class="btn btn-white btn-lg" onclick="showScreen('select')">📝 Шалгалт өгөх</button>
+        <button class="btn btn-glass btn-lg" onclick="showScreen('instructions')">📖 Заавар</button>
+        <button class="btn btn-glass btn-lg" onclick="openMyResults()">📊 Миний шалгалтын үр дүн</button>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><b>10</b><span>Шалгалтын хувилбар</span></div>
+      <div class="hero-stat"><b>5</b><span>Жил (2021–2025)</span></div>
+      <div class="hero-stat"><b>100</b><span>Нийт асуулт</span></div>
+      <div class="hero-stat"><b>AUTO</b><span>Автомат үнэлгээ</span></div>
+    </div>
+  </div>
+
+  <div class="grid grid-3 mt-24">
+    <button class="tile" onclick="showScreen('select')">
+      <div class="tile-icon" style="background:#dbeafe">📝</div>
+      <h3>Шалгалт өгөх</h3>
+      <p>2021–2025 оны A болон B хувилбараас сонгон шалгалтаа эхлүүлээрэй.</p>
+      <span class="arrow">Эхлэх →</span>
+    </button>
+    <button class="tile" onclick="showScreen('instructions')">
+      <div class="tile-icon" style="background:#dcfce7">📖</div>
+      <h3>Заавар</h3>
+      <p>Шалгалтын дүрэм, хугацаа, оноо болон үнэлгээний талаарх мэдээлэл.</p>
+      <span class="arrow">Унших →</span>
+    </button>
+    <button class="tile" onclick="openMyResults()">
+      <div class="tile-icon" style="background:#fef3c7">📊</div>
+      <h3>Миний шалгалтын үр дүн</h3>
+      <p>Өөрийн нэрээр хайж, өмнө өгсөн шалгалтуудын үр дүнгээ хараарай.</p>
+      <span class="arrow">Харах →</span>
+    </button>
+  </div>
+
+  <div class="card mt-24">
+    <h2 class="section-title">Системийн онцлог</h2>
+    <p class="section-sub">Шалгалтыг хялбар, хурдан, найдвартай болгох боломжууд</p>
+    <div class="grid grid-3">
+      <div class="feature">
+        <div class="feature-icon">⏱️</div>
+        <div><h3>Цаг хяналт</h3><p>Шалгалтын хугацаа автоматаар тоологдож, дуусахад автоматаар илгээгдэнэ.</p></div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">⚡</div>
+        <div><h3>Шуурхай үнэлгээ</h3><p>Шалгалт дуусахад оноо, хувь, дүн шууд автоматаар бодогдоно.</p></div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">📈</div>
+        <div><h3>Google Sheets</h3><p>Үр дүн автоматаар Google Sheets хүснэгтэд хадгалагдана.</p></div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🔐</div>
+        <div><h3>Багшийн хэсэг</h3><p>Багш нууц үгээр нэвтэрч сурагчдын үр дүнг хянана.</p></div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">📱</div>
+        <div><h3>Бүх төхөөрөмж</h3><p>Утас, таблет, компьютерт тохирсон орчин үеийн дизайн.</p></div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">📚</div>
+        <div><h3>2021–2025</h3><p>Таван жилийн A, B хувилбар бүхий бүрэн шалгалтын сан.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= INSTRUCTIONS ================= -->
+<section class="screen" data-screen="instructions">
+  <div class="card">
+    <h2 class="section-title">📖 Шалгалтын заавар</h2>
+    <p class="section-sub">Шалгалт эхлэхээс өмнө дараах зааврыг анхааралтай уншина уу.</p>
+
+    <div class="alert alert-info">
+      <span>ℹ️</span>
+      <div>Шалгалтын асуултууд <b>англи хэлээр</b>, харин заавар болон товчнууд <b>монгол хэлээр</b> байна.</div>
+    </div>
+
+    <div class="steps mt-24">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div><h4>Шалгалтаа сонгох</h4><p>«Шалгалт өгөх» товчийг дарж, жил (2021–2025) болон хувилбар (A эсвэл B)-аа сонгоно.</p></div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div><h4>Мэдээллээ бөглөх</h4><p>Овог нэр, ангиа зөв бичнэ үү. Энэ мэдээлэл үр дүнтэй хамт хадгалагдана.</p></div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div><h4>Асуултад хариулах</h4><p>Асуулт бүрт нэг зөв хариултыг сонгоно. Баруун талын дугааруудыг ашиглан асуулт хооронд шилжиж болно.</p></div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div><h4>Шалгалтаа дуусгах</h4><p>«Шалгалтыг дуусгах» товчийг дарж баталгаажуулна. Хугацаа дуусахад автоматаар илгээгдэнэ.</p></div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div><h4>Үр дүнгээ харах</h4><p>Оноо, хувь, дүн болон алдсан асуултуудын зөв хариултыг шууд харна.</p></div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <h3 style="font-size:16px;font-weight:800;margin-bottom:14px">Үнэлгээний шалгуур</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Хувь</th><th>Дүн</th><th>Тайлбар</th></tr></thead>
+        <tbody>
+          <tr><td>90 – 100%</td><td><span class="score-chip chip-green">A</span></td><td>Маш сайн</td></tr>
+          <tr><td>80 – 89%</td><td><span class="score-chip chip-blue">B</span></td><td>Сайн</td></tr>
+          <tr><td>70 – 79%</td><td><span class="score-chip chip-blue">C</span></td><td>Дунд</td></tr>
+          <tr><td>60 – 69%</td><td><span class="score-chip chip-blue">D</span></td><td>Хангалттай</td></tr>
+          <tr><td>0 – 59%</td><td><span class="score-chip chip-red">F</span></td><td>Хангалтгүй</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="alert alert-warn mt-24">
+      <span>⚠️</span>
+      <div><b>Анхаар:</b> Шалгалтын хугацаанд хуудсаа шинэчлэх, хаах эсвэл буцах товч дарах нь хариултуудыг алдахад хүргэж болзошгүй.</div>
+    </div>
+
+    <div class="mt-24">
+      <button class="btn btn-primary btn-lg" onclick="showScreen('select')">Шалгалт эхлүүлэх →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ================= EXAM SELECT ================= -->
+<section class="screen" data-screen="select">
+  <div class="flex-between mb-16">
+    <div>
+      <h2 class="section-title">📝 Шалгалт сонгох</h2>
+      <p class="section-sub" style="margin-bottom:0">Жил болон хувилбараа сонгоно уу (A / B).</p>
+    </div>
+    <button class="btn btn-outline btn-sm" onclick="goHome()">← Нүүр хуудас</button>
+  </div>
+  <div class="grid grid-2" id="examList"></div>
+</section>
+
+<!-- ================= STUDENT INFO ================= -->
+<section class="screen" data-screen="start">
+  <div class="card form-narrow">
+    <h2 class="section-title">Сурагчийн мэдээлэл</h2>
+    <p class="section-sub">Шалгалт эхлэхээс өмнө мэдээллээ бөглөнө үү.</p>
+
+    <div class="alert alert-info" id="startExamInfo">
+      <span>📋</span><div></div>
+    </div>
+
+    <div class="field">
+      <label for="inpName">Овог нэр <span style="color:var(--danger)">*</span></label>
+      <input type="text" id="inpName" placeholder="Жишээ: Бат-Эрдэнэ Тэмүүлэн" autocomplete="name">
+    </div>
+    <div class="field">
+      <label for="inpClass">Анги / Бүлэг <span style="color:var(--danger)">*</span></label>
+      <input type="text" id="inpClass" placeholder="Жишээ: 11А" autocomplete="off">
+    </div>
+
+    <div id="startError" class="alert alert-err hidden"><span>⚠️</span><div></div></div>
+
+    <div class="modal-actions mt-16">
+      <button class="btn btn-outline" onclick="showScreen('select')">← Буцах</button>
+      <button class="btn btn-primary" onclick="startExam()">Шалгалт эхлүүлэх →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ================= EXAM RUN ================= -->
+<section class="screen" data-screen="exam">
+  <div class="card exam-top">
+    <div>
+      <div class="exam-title" id="examTitle">—</div>
+      <div class="muted small" id="examStudent">—</div>
+    </div>
+    <div class="timer" id="timer">30:00</div>
+  </div>
+
+  <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
+
+  <div class="exam-layout">
+    <div class="card question-card">
+      <div class="q-number" id="qNumber">АСУУЛТ 1 / 10</div>
+      <div class="passage hidden" id="qPassage"></div>
+      <div class="q-text" id="qText">—</div>
+      <div class="options" id="qOptions"></div>
+      <div class="exam-actions">
+        <button class="btn btn-outline" id="prevBtn" onclick="prevQuestion()">← Өмнөх</button>
+        <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()">Дараах →</button>
+        <button class="btn btn-success" id="submitBtn" onclick="confirmSubmit()">✓ Шалгалтыг дуусгах</button>
+      </div>
+    </div>
+
+    <aside class="card side-card">
+      <h4>Асуултууд</h4>
+      <div class="qnav" id="qnav"></div>
+      <div class="legend">
+        <div><i style="background:var(--primary)"></i>Одоогийн асуулт</div>
+        <div><i style="background:var(--primary-light);border:1px solid #93b4f5"></i>Хариулсан</div>
+        <div><i style="background:#fff;border:1.5px solid var(--border)"></i>Хариулаагүй</div>
+      </div>
+      <div class="divider" style="margin:18px 0"></div>
+      <div class="small muted" id="answeredCount">Хариулсан: 0 / 10</div>
+    </aside>
+  </div>
+</section>
+
+<!-- ================= RESULT ================= -->
+<section class="screen" data-screen="result">
+  <div class="card result-hero" id="resultHero"></div>
+
+  <div class="card mt-24">
+    <div class="flex-between mb-24">
+      <div>
+        <h2 class="section-title" style="margin-bottom:2px">📋 Дэлгэрэнгүй хяналт</h2>
+        <p class="section-sub" style="margin-bottom:0">Асуулт бүрийн хариулт ба зөв хариулт</p>
+      </div>
+      <div style="display:flex;gap:9px;flex-wrap:wrap">
+        <button class="btn btn-outline btn-sm" onclick="window.print()">🖨 Хэвлэх</button>
+        <button class="btn btn-primary btn-sm" onclick="goHome()">🏠 Нүүр хуудас</button>
+      </div>
+    </div>
+    <div id="reviewList"></div>
+  </div>
+</section>
+
+<!-- ================= MY RESULTS ================= -->
+<section class="screen" data-screen="myresults">
+  <div class="card">
+    <h2 class="section-title">📊 Миний шалгалтын үр дүн</h2>
+    <p class="section-sub">Өөрийн овог нэрийг бичээд үр дүнгээ хараарай.</p>
+
+    <div style="display:flex;gap:10px;flex-wrap:wrap;max-width:560px">
+      <input type="text" id="mySearchName" placeholder="Овог нэрээ бичнэ үү..."
+             style="flex:1;min-width:220px;padding:13px 15px;border-radius:11px;border:1.5px solid var(--border);font-size:15px">
+      <button class="btn btn-primary" onclick="searchMyResults()">🔍 Хайх</button>
+    </div>
+
+    <div id="myResultsBox" class="mt-24"></div>
+  </div>
+</section>
+
+<!-- ================= TEACHER LOGIN ================= -->
+<section class="screen" data-screen="teacher-login">
+  <div class="card form-narrow">
+    <div style="text-align:center;margin-bottom:22px">
+      <div style="font-size:44px;margin-bottom:10px">🔐</div>
+      <h2 class="section-title">Багшийн хэсэг</h2>
+      <p class="section-sub">Зөвхөн багш нарт зориулсан хэсэг. Нууц үгээ оруулна уу.</p>
+    </div>
+
+    <div class="field">
+      <label for="inpPass">Нууц үг</label>
+      <input type="password" id="inpPass" placeholder="••••••••" onkeydown="if(event.key==='Enter')teacherLogin()">
+    </div>
+
+    <div id="loginError" class="alert alert-err hidden"><span>⚠️</span><div>Нууц үг буруу байна.</div></div>
+
+    <div class="modal-actions mt-16">
+      <button class="btn btn-outline" onclick="goHome()">← Буцах</button>
+      <button class="btn btn-primary" onclick="teacherLogin()">Нэвтрэх →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TEACHER DASHBOARD ================= -->
+<section class="screen" data-screen="teacher">
+  <div class="flex-between mb-16">
+    <div>
+      <h2 class="section-title">👨‍🏫 Багшийн удирдлагын хэсэг</h2>
+      <p class="section-sub" style="margin-bottom:0">Сурагчдын шалгалтын үр дүнгийн хяналт</p>
+    </div>
+    <div style="display:flex;gap:9px;flex-wrap:wrap">
+      <button class="btn btn-outline btn-sm" onclick="exportCSV()">⬇️ CSV татах</button>
+      <button class="btn btn-danger btn-sm" onclick="clearAllResults()">🗑 Бүгдийг устгах</button>
+      <button class="btn btn-primary btn-sm" onclick="teacherLogout()">Гарах</button>
+    </div>
+  </div>
+
+  <div class="grid grid-3 mb-24" id="teacherStats"></div>
+
+  <div class="card mb-24">
+    <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end">
+      <div style="flex:1;min-width:190px">
+        <label class="small" style="font-weight:700;display:block;margin-bottom:6px">Нэрээр хайх</label>
+        <input type="text" id="tSearch" placeholder="Сурагчийн нэр..." oninput="renderTeacherTable()"
+               style="width:100%;padding:11px 14px;border-radius:10px;border:1.5px solid var(--border);font-size:14px">
+      </div>
+      <div style="min-width:150px">
+        <label class="small" style="font-weight:700;display:block;margin-bottom:6px">Жил</label>
+        <select id="tYear" onchange="renderTeacherTable()"
+                style="width:100%;padding:11px 14px;border-radius:10px;border:1.5px solid var(--border);font-size:14px;background:#fff">
+          <option value="">Бүгд</option>
+          <option>2021</option><option>2022</option><option>2023</option><option>2024</option><option>2025</option>
+        </select>
+      </div>
+      <div style="min-width:130px">
+        <label class="small" style="font-weight:700;display:block;margin-bottom:6px">Хувилбар</label>
+        <select id="tVersion" onchange="renderTeacherTable()"
+                style="width:100%;padding:11px 14px;border-radius:10px;border:1.5px solid var(--border);font-size:14px;background:#fff">
+          <option value="">Бүгд</option>
+          <option value="A">A</option>
+          <option value="B">B</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div id="teacherTableBox"></div>
+
+  <div class="card mt-24">
+    <details>
+      <summary>⚙️ Google Sheets холболтын тохиргоо</summary>
+      <div class="mt-16">
+        <p class="small muted mb-16">
+          Үр дүнг автоматаар Google Sheets рүү илгээхийн тулд Google Apps Script Web App-ийн URL-ийг оруулна уу.
+          URL-ийг энэ хөтөч дээр хадгална.
+        </p>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <input type="text" id="scriptUrlInput" placeholder="https://script.google.com/macros/s/..../exec"
+                 style="flex:1;min-width:240px;padding:12px 14px;border-radius:10px;border:1.5px solid var(--border);font-size:13.5px">
+          <button class="btn btn-primary btn-sm" onclick="saveScriptUrl()">Хадгалах</button>
+        </div>
+        <div id="scriptUrlStatus" class="small mt-16"></div>
+
+        <div class="divider"></div>
+        <p class="small" style="font-weight:700;margin-bottom:8px">Google Apps Script код (Code.gs):</p>
+        <pre>function doPost(e) {
+  try {
+    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    var sheet = ss.getSheetByName('Results') || ss.insertSheet('Results');
+
+    if (sheet.getLastRow() === 0) {
+      sheet.appendRow(['Огноо','Овог нэр','Анги','Жил','Хувилбар',
+                       'Оноо','Нийт','Хувь','Дүн','Хугацаа']);
+    }
+
+    var d = JSON.parse(e.postData.contents);
+    sheet.appendRow([
+      new Date(),
+      d.name,
+      d.className,
+      d.year,
+      d.version,
+      d.score,
+      d.total,
+      d.percent + '%',
+      d.grade,
+      d.timeUsed
+    ]);
+
+    return ContentService
+      .createTextOutput(JSON.stringify({ status: 'ok' }))
+      .setMimeType(ContentService.MimeType.JSON);
+  } catch (err) {
+    return ContentService
+      .createTextOutput(JSON.stringify({ status: 'error', message: err.message }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}</pre>
+        <p class="small muted mt-16">
+          Дараа нь <b>Deploy → New deployment → Web app</b> сонгож,
+          <b>Execute as: Me</b>, <b>Who has access: Anyone</b> гэж тохируулан deploy хийнэ.
+        </p>
+      </div>
+    </details>
+  </div>
+</section>
+
+</div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p><b>English Exam Portal</b> — Англи хэлний цахим шалгалтын систем</p>
+    <p class="small" style="margin-top:5px">© 2021–2025 · Монгол сурагчдад зориулав</p>
+  </div>
+</footer>
+
+<!-- ================= MODAL ================= -->
+<div class="modal-back" id="modalBack">
+  <div class="modal">
+    <h3 id="modalTitle">Баталгаажуулалт</h3>
+    <p id="modalText">Та шалгалтаа дуусгахдаа итгэлтэй байна уу?</p>
+    <div class="modal-actions">
+      <button class="btn btn-outline" id="modalCancel">Үгүй, буцах</button>
+      <button class="btn btn-primary" id="modalOk">Тийм, дуусгах</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* =========================================================
+   1. CONFIGURATION
+   ========================================================= */
+const CONFIG = {
+  TEACHER_PASSWORD: 'teacher2025',
+  SCRIPT_URL: '',              // Google Apps Script Web App URL (optional)
+  STORAGE_KEY: 'eep_results_v1',
+  SCRIPT_KEY: 'eep_script_url',
+  EXAM_DURATION_MIN: 30
+};
+
+/* =========================================================
+   2. EXAM DATABASE  (2021–2025, A & B)
+   ========================================================= */
+const EXAMS = {
+  '2021': {
+    A: { duration: 30, questions: [
+      { q:'My sister ___ to music every evening.', o:['listen','listens','listening','is listen'], a:1 },
+      { q:'There ___ some milk in the fridge.', o:['are','is','be','were'], a:1 },
+      { q:'We have lived in Ulaanbaatar ___ 2015.', o:['for','since','from','during'], a:1 },
+      { q:'If it ___ tomorrow, we will cancel the trip.', o:['rain','rains','rained','will rain'], a:1 },
+      { q:'This is ___ book I have ever read.', o:['good','better','the best','best'], a:2 },
+      { q:'The letter ___ by Tom yesterday.', o:['wrote','was written','is written','writes'], a:1 },
+      { q:'She is good ___ mathematics.', o:['at','in','on','for'], a:0 },
+      { q:'He asked me where I ___.', o:['live','lived','living','am living'], a:1 },
+      { q:'I\'m looking forward to ___ you again.', o:['see','seeing','saw','seen'], a:1 },
+      { p:'Bat wakes up at six o\'clock every morning. He eats breakfast, then he rides his bicycle to school. His school starts at eight o\'clock.',
+        q:'How does Bat go to school?', o:['By bus','By bicycle','On foot','By car'], a:1 }
+    ]},
+    B: { duration: 30, questions: [
+      { q:'They ___ football in the park every Sunday.', o:['play','plays','playing','is playing'], a:0 },
+      { q:'___ you ever been to London?', o:['Did','Have','Are','Do'], a:1 },
+      { q:'She has been studying English ___ three years.', o:['since','for','from','during'], a:1 },
+      { q:'The window ___ by the boy yesterday.', o:['broke','was broken','is breaking','breaks'], a:1 },
+      { q:'He is the ___ student in our class.', o:['tall','taller','tallest','most tall'], a:2 },
+      { q:'I don\'t know ___ he will come to the party.', o:['if','that','what','which'], a:0 },
+      { q:'My father is interested ___ history.', o:['on','in','at','of'], a:1 },
+      { q:'She told me she ___ busy that day.', o:['is','was','be','been'], a:1 },
+      { q:'Would you mind ___ the door?', o:['close','closing','closed','to close'], a:1 },
+      { p:'In Mongolia, winter is very cold. It often snows from November to March. Children wear warm clothes and play outside in the snow.',
+        q:'When does it often snow in Mongolia?', o:['From June to August','From November to March','From March to May','From September to October'], a:1 }
+    ]}
+  },
+
+  '2022': {
+    A: { duration: 30, questions: [
+      { q:'He usually ___ up at seven o\'clock.', o:['get','gets','getting','got'], a:1 },
+      { q:'There aren\'t ___ apples left in the basket.', o:['some','any','much','a'], a:1 },
+      { q:'I ___ my homework already.', o:['finish','finished','have finished','finishing'], a:2 },
+      { q:'The Great Wall of China ___ by millions of tourists every year.', o:['visits','is visited','visited','visiting'], a:1 },
+      { q:'She is ___ than her sister.', o:['intelligent','more intelligent','most intelligent','intelligenter'], a:1 },
+      { q:'We arrived ___ the airport at six o\'clock.', o:['in','at','on','to'], a:1 },
+      { q:'He said, "I am tired." → He said that he ___ tired.', o:['is','was','be','has been'], a:1 },
+      { q:'I enjoy ___ books in my free time.', o:['read','reading','to read','reads'], a:1 },
+      { q:'If I ___ rich, I would travel around the world.', o:['am','was','were','be'], a:2 },
+      { p:'Naadam is the biggest festival in Mongolia. It is held in July and includes three traditional sports: wrestling, horse racing and archery.',
+        q:'Which sport is NOT mentioned in the text?', o:['Wrestling','Horse racing','Swimming','Archery'], a:2 }
+    ]},
+    B: { duration: 30, questions: [
+      { q:'My brother ___ TV at the moment.', o:['watch','watches','is watching','watched'], a:2 },
+      { q:'How ___ money do you have?', o:['many','much','some','any'], a:1 },
+      { q:'They ___ in this city since 2010.', o:['live','lived','have lived','are living'], a:2 },
+      { q:'English ___ all over the world.', o:['speaks','is spoken','spoke','speaking'], a:1 },
+      { q:'This is ___ film I have ever seen.', o:['bad','worse','the worst','worst'], a:2 },
+      { q:'She is afraid ___ dogs.', o:['of','from','with','at'], a:0 },
+      { q:'He asked me what time it ___.', o:['is','was','be','been'], a:1 },
+      { q:'I\'d like ___ a cup of tea, please.', o:['have','having','to have','had'], a:2 },
+      { q:'You ___ smoke here. It is not allowed.', o:['mustn\'t','don\'t have to','needn\'t','can'], a:0 },
+      { p:'In Ulaanbaatar, traffic is very heavy in the morning. Many people drive to work between 7 and 9 a.m. The roads are usually quieter in the afternoon.',
+        q:'When is traffic the heaviest in Ulaanbaatar?', o:['In the evening','In the morning','At noon','At midnight'], a:1 }
+    ]}
+  },
+
+  '2023': {
+    A: { duration: 30, questions: [
+      { q:'She ___ her teeth twice a day.', o:['brush','brushes','brushing','brushed'], a:1 },
+      { q:'I was born ___ 2005.', o:['on','in','at','for'], a:1 },
+      { q:'He has ___ finished his homework.', o:['yet','already','still','ever'], a:1 },
+      { q:'The homework ___ by the students yesterday.', o:['did','was done','is done','does'], a:1 },
+      { q:'She sings ___ than her friend.', o:['good','well','better','best'], a:2 },
+      { q:'I\'m used ___ getting up early.', o:['to','for','of','at'], a:0 },
+      { q:'He told me he ___ come tomorrow.', o:['will','would','can','shall'], a:1 },
+      { q:'It\'s important ___ English every day.', o:['practice','to practice','practicing','practiced'], a:1 },
+      { q:'If you heat ice, it ___.', o:['melt','melts','melted','will melting'], a:1 },
+      { p:'The internet has changed the way we live. Today students can study online, watch lessons and find information in a few seconds. However, spending too much time online can be bad for your health.',
+        q:'What is one advantage of the internet mentioned in the text?', o:['It makes people lazy','Students can study online','It is always free','It replaces teachers'], a:1 }
+    ]},
+    B: { duration: 30, questions: [
+      { q:'___ she like ice cream?', o:['Do','Does','Is','Are'], a:1 },
+      { q:'He arrived ___ Monday morning.', o:['in','on','at','for'], a:1 },
+      { q:'Have you ___ been to Japan?', o:['ever','never','yet','already'], a:0 },
+      { q:'The cake ___ by my mother last night.', o:['made','was made','is made','makes'], a:1 },
+      { q:'This shirt is ___ than that one.', o:['cheap','cheaper','cheapest','the cheapest'], a:1 },
+      { q:'She apologized ___ being late.', o:['for','of','to','at'], a:0 },
+      { q:'He said he ___ finished the work.', o:['has','had','have','having'], a:1 },
+      { q:'I\'m thinking of ___ a new language.', o:['learn','learning','to learn','learned'], a:1 },
+      { q:'You ___ wear a uniform at school. It\'s a rule.', o:['have to','don\'t have to','needn\'t','might'], a:0 },
+      { p:'Chinggis Khaan was born in 1162 near the Onon River. He united the Mongolian tribes and created one of the largest empires in history.',
+        q:'When was Chinggis Khaan born?', o:['In 1162','In 1262','In 1062','In 1206'], a:0 }
+    ]}
+  },
+
+  '2024': {
+    A: { duration: 30, questions: [
+      { q:'They ___ to the cinema last night.', o:['go','goes','went','going'], a:2 },
+      { q:'She hasn\'t finished her work ___.', o:['already','yet','just','ever'], a:1 },
+      { q:'The bridge ___ built in 1990.', o:['is','was','were','has'], a:1 },
+      { q:'My phone is ___ than yours.', o:['expensive','more expensive','most expensive','expensiver'], a:1 },
+      { q:'He is interested ___ learning new languages.', o:['on','in','at','for'], a:1 },
+      { q:'She asked me if I ___ help her.', o:['can','could','will','may'], a:1 },
+      { q:'I look forward to ___ from you soon.', o:['hear','hearing','heard','hears'], a:1 },
+      { q:'If I had studied harder, I ___ the exam.', o:['will pass','would pass','would have passed','had passed'], a:2 },
+      { q:'The children ___ playing in the yard now.', o:['is','am','are','be'], a:2 },
+      { p:'Climate change is one of the biggest problems in the world today. The Earth is getting warmer because of pollution. Scientists say we must reduce the use of coal and oil.',
+        q:'Why is the Earth getting warmer according to the text?', o:['Because of the sun','Because of pollution','Because of the moon','Because of water'], a:1 }
+    ]},
+    B: { duration: 30, questions: [
+      { q:'I ___ my keys yesterday.', o:['lose','lost','losing','have lose'], a:1 },
+      { q:'She has lived here ___ ten years.', o:['since','for','from','during'], a:1 },
+      { q:'The song ___ by a famous singer.', o:['sang','was sung','is sing','sings'], a:1 },
+      { q:'This exercise is ___ than I expected.', o:['easy','easier','easiest','the easiest'], a:1 },
+      { q:'He is good ___ playing the guitar.', o:['at','in','on','for'], a:0 },
+      { q:'She told me she ___ call me later.', o:['will','would','can','shall'], a:1 },
+      { q:'I don\'t mind ___ the washing-up.', o:['do','doing','to do','did'], a:1 },
+      { q:'You ___ take an umbrella. It might rain.', o:['should','can\'t','mustn\'t','needn\'t'], a:0 },
+      { q:'If she ___ harder, she will pass the test.', o:['study','studies','studied','will study'], a:1 },
+      { p:'The National Library of Mongolia has thousands of books in many languages. Students can read there for free and use the computers.',
+        q:'What can students do at the National Library?', o:['Buy books','Read for free','Sleep','Play football'], a:1 }
+    ]}
+  },
+
+  '2025': {
+    A: { duration: 30, questions: [
+      { q:'She ___ English for five years.', o:['studies','studied','has studied','is studying'], a:2 },
+      { q:'This is the man ___ helped me yesterday.', o:['which','who','whom','whose'], a:1 },
+      { q:'The report ___ tomorrow morning.', o:['will finish','will be finished','finishes','finished'], a:1 },
+      { q:'It was ___ a beautiful day that we went to the park.', o:['so','such','very','too'], a:1 },
+      { q:'Neither Bat ___ Dorj came to the meeting.', o:['or','nor','and','but'], a:1 },
+      { q:'He suggested ___ a taxi to the airport.', o:['take','taking','to take','took'], a:1 },
+      { q:'I wish I ___ more time to study.', o:['have','had','will have','having'], a:1 },
+      { q:'By the time we arrived, the film ___.', o:['started','has started','had started','starts'], a:2 },
+      { q:'She is the woman ___ car was stolen.', o:['who','which','whose','whom'], a:2 },
+      { p:'Studying abroad gives students the chance to learn a new language and experience a different culture. However, it can also be expensive and lonely at first.',
+        q:'What is one disadvantage of studying abroad mentioned in the text?', o:['Learning a language','Experiencing a new culture','Being expensive and lonely','Making new friends'], a:2 }
+    ]},
+    B: { duration: 30, questions: [
+      { q:'By next year, I ___ my studies.', o:['finish','will finish','will have finished','finished'], a:2 },
+      { q:'She asked me ___ I had seen the film.', o:['if','that','what','which'], a:0 },
+      { q:'The house ___ last year.', o:['painted','was painted','is painted','paints'], a:1 },
+      { q:'He is used to ___ up early.', o:['get','getting','got','gets'], a:1 },
+      { q:'It\'s the first time I ___ such a beautiful place.', o:['see','saw','have seen','had seen'], a:2 },
+      { q:'She made me ___ the truth.', o:['tell','to tell','telling','told'], a:0 },
+      { q:'If I ___ you, I would apologize.', o:['am','was','were','be'], a:2 },
+      { q:'The more you practice, ___ you become.', o:['the good','the better','better','the best'], a:1 },
+      { q:'He denied ___ the money.', o:['steal','stealing','to steal','stole'], a:1 },
+      { p:'Regular exercise is important for good health. It helps your heart, your muscles and even your mood. Doctors recommend at least thirty minutes of exercise a day.',
+        q:'How much exercise do doctors recommend?', o:['At least 30 minutes a day','At least 3 hours a day','Once a week','Only in the morning'], a:0 }
+    ]}
+  }
+};
+
+/* =========================================================
+   3. STATE
+   ========================================================= */
+const state = {
+  selected: null,        // { year, version, duration, questions }
+  student: { name:'', className:'' },
+  answers: [],
+  current: 0,
+  timerId: null,
+  remaining: 0,
+  startTime: 0,
+  submitted: false
+};
+
+/* =========================================================
+   4. HELPERS
+   ========================================================= */
+const $  = (s, el = document) => el.querySelector(s);
+const $$ = (s, el = document) => Array.from(el.querySelectorAll(s));
+const esc = (s) => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+function showScreen(name){
+  $$('.screen').forEach(s => s.classList.toggle('active', s.dataset.screen === name));
+  $$('.nav-link').forEach(n => n.classList.remove('active'));
+  const map = { home:'home', instructions:'instructions', myresults:'myresults', teacher:'teacher' };
+  if (map[name]) {
+    const nav = $(`.nav-link[data-nav="${map[name]}"]`);
+    if (nav) nav.classList.add('active');
+  }
+  if (name !== 'exam') stopTimer();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function goHome(){
+  if (state.timerId && !state.submitted) {
+    openModal('Шалгалтаас гарах уу?', 'Хэрэв та одоо гарвал хариултууд хадгалагдахгүй болно.', 'Тийм, гарах', () => {
+      stopTimer();
+      state.timerId = null;
+      state.submitted = true;
+      showScreen('home');
+    });
+    return;
+  }
+  showScreen('home');
+}
+
+function fmtTime(sec){
+  const m = Math.floor(sec / 60);
+  const s = sec % 60;
+  return String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+}
+
+function gradeOf(pct){
+  if (pct >= 90) return { letter:'A', label:'Маш сайн',    color:'#16a34a' };
+  if (pct >= 80) return { letter:'B', label:'Сайн',        color:'#2563eb' };
+  if (pct >= 70) return { letter:'C', label:'Дунд',        color:'#0891b2' };
+  if (pct >= 60) return { letter:'D', label:'Хангалттай',  color:'#f59e0b' };
+  return                 { letter:'F', label:'Хангалтгүй',  color:'#dc2626' };
+}
+
+function fmtDate(iso){
+  const d = new Date(iso);
+  const p = n => String(n).padStart(2,'0');
+  return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}`;
+}
+
+/* =========================================================
+   5. MODAL
+   ========================================================= */
+let modalAction = null;
+function openModal(title, text, okLabel, action){
+  $('#modalTitle').textContent = title;
+  $('#modalText').textContent = text;
+  $('#modalOk').textContent = okLabel || 'Тийм';
+  modalAction = action;
+  $('#modalBack').classList.add('show');
+}
+function closeModal(){
+  $('#modalBack').classList.remove('show');
+  modalAction = null;
+}
+$('#modalCancel').addEventListener('click', closeModal);
+$('#modalOk').addEventListener('click', () => {
+  const a = modalAction;
+  closeModal();
+  if (typeof a === 'function') a();
+});
+$('#modalBack').addEventListener('click', e => { if (e.target === $('#modalBack')) closeModal(); });
+
+/* =========================================================
+   6. EXAM SELECTION
+   ========================================================= */
+function renderExamList(){
+  const wrap = $('#examList');
+  wrap.innerHTML = '';
+  Object.keys(EXAMS).sort().forEach(year => {
+    const card = document.createElement('div');
+    card.className = 'card exam-card';
+    card.innerHTML = `
+      <div class="flex-between">
+        <div class="exam-year">${year}</div>
+        <span class="badge badge-a">2 хувилбар</span>
+      </div>
+      <p class="muted small" style="margin-top:6px">
+        Англи хэлний шалгалт · ${EXAMS[year].A.questions.length} асуулт · ${EXAMS[year].A.duration} минут
+      </p>
+      <div class="version-row">
+        <button class="btn btn-primary" data-year="${year}" data-version="A">A хувилбар</button>
+        <button class="btn btn-outline" data-year="${year}" data-version="B">B хувилбар</button>
+      </div>`;
+    wrap.appendChild(card);
+  });
+
+  wrap.addEventListener('click', e => {
+    const btn = e.target.closest('button[data-year]');
+    if (!btn) return;
+    selectExam(btn.dataset.year, btn.dataset.version);
+  });
+}
+
+function selectExam(year, version){
+  const data = EXAMS[year][version];
+  state.selected = {
+    year,
+    version,
+    duration: data.duration,
+    questions: data.questions
+  };
+
+  $('#startExamInfo').innerHTML = `<span>📋</span><div>
+    <b>${year} он · ${version} хувилбар</b><br>
+    Асуултын тоо: <b>${data.questions.length}</b> · Хугацаа: <b>${data.duration} минут</b>
+  </div>`;
+
+  showScreen('start');
+  setTimeout(() => $('#inpName').focus(), 250);
+}
+
+/* =========================================================
+   7. START EXAM
+   ========================================================= */
+function startExam(){
+  const name = $('#inpName').value.trim();
+  const cls  = $('#inpClass').value.trim();
+  const errBox = $('#startError');
+
+  if (!name || !cls) {
+    errBox.classList.remove('hidden');
+    errBox.querySelector('div').textContent = 'Овог нэр болон ангиа бөглөнө үү.';
+    return;
+  }
+  errBox.classList.add('hidden');
+
+  state.student = { name, className: cls };
+  state.answers  = new Array(state.selected.questions.length).fill(null);
+  state.current  = 0;
+  state.submitted = false;
+  state.startTime = Date.now();
+  state.remaining = state.selected.duration * 60;
+
+  $('#examTitle').textContent = `${state.selected.year} он · ${state.selected.version} хувилбар — English Test`;
+  $('#examStudent').textContent = `${name} · ${cls}`;
+
+  showScreen('exam');
+  renderQuestion();
+  renderQNav();
+  startTimer();
+}
+
+/* =========================================================
+   8. TIMER
+   ========================================================= */
+function startTimer(){
+  stopTimer();
+  updateTimerDisplay();
+  state.timerId = setInterval(() => {
+    state.remaining--;
+    updateTimerDisplay();
+    if (state.remaining <= 0) {
+      stopTimer();
+      autoSubmit();
+    }
+  }, 1000);
+}
+function stopTimer(){
+  if (state.timerId) { clearInterval(state.timerId); state.timerId = null; }
+}
+function updateTimerDisplay(){
+  const el = $('#timer');
+  el.textContent = fmtTime(Math.max(0, state.remaining));
+  el.classList.remove('warning','danger');
+  if (state.remaining <= 60) el.classList.add('danger');
+  else if (state.remaining <= 300) el.classList.add('warning');
+}
+
+/* =========================================================
+   9. QUESTION RENDERING
+   ========================================================= */
+function renderQuestion(){
+  const qs = state.selected.questions;
+  const idx = state.current;
+  const q = qs[idx];
+
+  $('#qNumber').textContent = `АСУУЛТ ${idx + 1} / ${qs.length}`;
+  $('#qText').textContent = q.q;
+
+  const pBox = $('#qPassage');
+  if (q.p) { pBox.textContent = q.p; pBox.classList.remove('hidden'); }
+  else { pBox.classList.add('hidden'); pBox.textContent = ''; }
+
+  const optBox = $('#qOptions');
+  optBox.innerHTML = '';
+  const letters = ['A','B','C','D','E'];
+  q.o.forEach((text, i) => {
+    const b = document.createElement('button');
+    b.className = 'opt' + (state.answers[idx] === i ? ' selected' : '');
+    b.innerHTML = `<span class="letter">${letters[i]}</span><span>${esc(text)}</span>`;
+    b.addEventListener('click', () => chooseAnswer(i));
+    optBox.appendChild(b);
+  });
+
+  $('#prevBtn').disabled = idx === 0;
+  $('#nextBtn').style.display = idx === qs.length - 1 ? 'none' : 'inline-flex';
+
+  updateProgress();
+}
+
+function chooseAnswer(i){
+  state.answers[state.current] = i;
+  renderQuestion();
+  renderQNav();
+}
+
+function renderQNav(){
+  const nav = $('#qnav');
+  nav.innerHTML = '';
+  state.selected.questions.forEach((_, i) => {
+    const b = document.createElement('button');
+    b.textContent = i + 1;
+    if (state.answers[i] !== null) b.classList.add('answered');
+    if (i === state.current) b.classList.add('current');
+    b.addEventListener('click', () => { state.current = i; renderQuestion(); renderQNav(); });
+    nav.appendChild(b);
+  });
+  const answered = state.answers.filter(a => a !== null).length;
+  $('#answeredCount').textContent = `Хариулсан: ${answered} / ${state.selected.questions.length}`;
+}
+
+function updateProgress(){
+  const answered = state.answers.filter(a => a !== null).length;
+  const total = state.selected.questions.length;
+  $('#progressBar').style.width = ((state.current + 1) / total * 100) + '%';
+  $('#answeredCount').textContent = `Хариулсан: ${answered} / ${total}`;
+}
+
+function nextQuestion(){
+  if (state.current < state.selected.questions.length - 1) {
+    state.current++;
+    renderQuestion(); renderQNav();
+  }
+}
+function prevQuestion(){
+  if (state.current > 0) {
+    state.current--;
+    renderQuestion(); renderQNav();
+  }
+}
+
+/* =========================================================
+   10. SUBMIT & GRADING
+   ========================================================= */
+function confirmSubmit(){
+  const unanswered = state.answers.filter(a => a === null).length;
+  const msg = unanswered > 0
+    ? `Танд ${unanswered} хариулаагүй асуулт байна. Шалгалтыг дуусгахдаа итгэлтэй байна уу?`
+    : 'Та бүх асуултад хариулсан байна. Шалгалтыг дуусгахдаа итгэлтэй байна уу?';
+  openModal('Шалгалтыг дуусгах', msg, 'Тийм, дуусгах', finishExam);
+}
+
+function autoSubmit(){
+  openModal('Хугацаа дууслаа', 'Шалгалтын хугацаа дууссан тул хариултууд автоматаар илгээгдлээ.', 'Үр дүнг харах', finishExam);
+}
+
+function finishExam(){
+  if (state.submitted) return;
+  state.submitted = true;
+  stopTimer();
+
+  const qs = state.selected.questions;
+  let score = 0;
+  const details = qs.map((q, i) => {
+    const chosen = state.answers[i];
+    const ok = chosen === q.a;
+    if (ok) score++;
+    return { q: q.q, p: q.p, options: q.o, chosen, correct: q.a, ok };
+  });
+
+  const total = qs.length;
+  const percent = Math.round(score / total * 100);
+  const grade = gradeOf(percent);
+  const secondsUsed = Math.round((Date.now() - state.startTime) / 1000);
+  const timeUsed = fmtTime(secondsUsed);
+
+  const record = {
+    id: Date.now() + '-' + Math.random().toString(36).slice(2, 8),
+    timestamp: new Date().toISOString(),
+    name: state.student.name,
+    className: state.student.className,
+    year: state.selected.year,
+    version: state.selected.version,
+    score, total, percent,
+    grade: grade.letter,
+    gradeLabel: grade.label,
+    timeUsed
+  };
+
+  saveResult(record);
+  sendToSheet(record);
+  renderResult(record, details);
+  showScreen('result');
+}
+
+/* =========================================================
+   11. RESULT RENDERING
+   ========================================================= */
+function renderResult(r, details){
+  const g = gradeOf(r.percent);
+  const ringColor = g.color;
+
+  $('#resultHero').innerHTML = `
+    <div class="score-ring" style="--pct:${r.percent};--ring-color:${ringColor}">
+      <div class="score-inner">
+        <b style="color:${ringColor}">${r.percent}%</b>
+        <span>${r.score} / ${r.total} оноо</span>
+      </div>
+    </div>
+    <div class="grade-pill" style="background:${g.color}1a;color:${g.color}">
+      ${g.letter} — ${g.label}
+    </div>
+    <h2 style="font-size:21px;font-weight:800;letter-spacing:-.4px">${esc(r.name)}</h2>
+    <p class="muted small">${esc(r.className)} · ${r.year} он · ${r.version} хувилбар</p>
+
+    <div class="result-stats">
+      <div class="stat-box"><b style="color:var(--success)">${r.score}</b><span>Зөв хариулт</span></div>
+      <div class="stat-box"><b style="color:var(--danger)">${r.total - r.score}</b><span>Буруу хариулт</span></div>
+      <div class="stat-box"><b>${r.percent}%</b><span>Гүйцэтгэл</span></div>
+      <div class="stat-box"><b>${r.timeUsed}</b><span>Зарцуулсан хугацаа</span></div>
+    </div>`;
+
+  const letters = ['A','B','C','D','E'];
+  const list = $('#reviewList');
+  list.innerHTML = '';
+
+  details.forEach((d, i) => {
+    const div = document.createElement('div');
+    div.className = 'review-item ' + (d.ok ? 'ok' : 'no');
+
+    const chosenText = d.chosen === null
+      ? '<i style="color:var(--danger)">Хариулаагүй</i>'
+      : `${letters[d.chosen]}) ${esc(d.options[d.chosen])}`;
+
+    div.innerHTML = `
+      <div class="review-head">
+        <span class="q-number" style="margin:0">АСУУЛТ ${i + 1}</span>
+        <span class="tag ${d.ok ? 'tag-ok' : 'tag-no'}">${d.ok ? '✓ ЗӨВ' : '✗ БУРУУ'}</span>
+      </div>
+      ${d.p ? `<div class="passage" style="margin-bottom:12px">${esc(d.p)}</div>` : ''}
+      <div class="review-q">${esc(d.q)}</div>
+      <div class="review-ans">
+        <div><span class="lbl">Таны хариулт: </span>${chosenText}</div>
+        <div><span class="lbl">Зөв хариулт: </span><b style="color:var(--success)">${letters[d.correct]}) ${esc(d.options[d.correct])}</b></div>
+      </div>`;
+    list.appendChild(div);
+  });
+}
+
+/* =========================================================
+   12. STORAGE
+   ========================================================= */
+function getResults(){
+  try { return JSON.parse(localStorage.getItem(CONFIG.STORAGE_KEY) || '[]'); }
+  catch { return []; }
+}
+function saveResult(r){
+  const all = getResults();
+  all.push(r);
+  try { localStorage.setItem(CONFIG.STORAGE_KEY, JSON.stringify(all)); } catch(e){ console.warn(e); }
+}
+function clearAllResults(){
+  openModal('Бүх үр дүнг устгах', 'Энэ үйлдлийг буцаах боломжгүй. Үргэлжлүүлэх үү?', 'Тийм, устгах', () => {
+    localStorage.removeItem(CONFIG.STORAGE_KEY);
+    renderTeacherTable();
+    renderTeacherStats();
+  });
+}
+
+/* =========================================================
+   13. GOOGLE SHEETS SUBMISSION
+   ========================================================= */
+function getScriptUrl(){
+  return localStorage.getItem(CONFIG.SCRIPT_KEY) || CONFIG.SCRIPT_URL || '';
+}
+
+async function sendToSheet(payload){
+  const url = getScriptUrl();
+  if (!url) { console.info('[Sheets] URL тохируулаагүй — зөвхөн локал хадгаллаа.'); return; }
+  try {
+    await fetch(url, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(payload)
+    });
+    console.info('[Sheets] Илгээгдлээ.');
+  } catch (e) {
+    console.warn('[Sheets] Алдаа:', e);
+  }
+}
+
+/* =========================================================
+   14. MY RESULTS
+   ========================================================= */
+function openMyResults(){
+  showScreen('myresults');
+  setTimeout(() => $('#mySearchName').focus(), 200);
+}
+
+function searchMyResults(){
+  const q = $('#mySearchName').value.trim().toLowerCase();
+  const box = $('#myResultsBox');
+
+  if (!q) {
+    box.innerHTML = `<div class="alert alert-warn"><span>⚠️</span><div>Хайх нэрээ бичнэ үү.</div></div>`;
+    return;
+  }
+
+  const found = getResults()
+    .filter(r => r.name.toLowerCase().includes(q))
+    .sort((a,b) => new Date(b.timestamp) - new Date(a.timestamp));
+
+  if (!found.length) {
+    box.innerHTML = `<div class="empty-state">
+      <div class="icon">🔍</div>
+      <p><b>«${esc($('#mySearchName').value.trim())}»</b> нэрээр үр дүн олдсонгүй.</p>
+      <p class="small" style="margin-top:6px">Шалгалтаа өгсөн нэрээ бүрэн бичсэн эсэхээ шалгаарай.</p>
+    </div>`;
+    return;
+  }
+
+  box.innerHTML = `<div class="table-wrap"><table>
+    <thead><tr>
+      <th>Огноо</th><th>Овог нэр</th><th>Анги</th><th>Жил</th>
+      <th>Хувилбар</th><th>Оноо</th><th>Хувь</th><th>Дүн</th>
+    </tr></thead>
+    <tbody>${found.map(r => {
+      const g = gradeOf(r.percent);
+      return `<tr>
+        <td>${fmtDate(r.timestamp)}</td>
+        <td><b>${esc(r.name)}</b></td>
+        <td>${esc(r.className)}</td>
+        <td>${r.year}</td>
+        <td><span class="badge badge-${r.version.toLowerCase()}">${r.version}</span></td>
+        <td>${r.score} / ${r.total}</td>
+        <td><b>${r.percent}%</b></td>
+        <td><span class="score-chip" style="background:${g.color}1a;color:${g.color}">${g.letter}</span></td>
+      </tr>`;
+    }).join('')}</tbody>
+  </table></div>`;
+}
+
+/* =========================================================
+   15. TEACHER
+   ========================================================= */
+function openTeacher(){
+  if (sessionStorage.getItem('eep_teacher') === '1') {
+    renderTeacherStats();
+    renderTeacherTable();
+    showScreen('teacher');
+  } else {
+    showScreen('teacher-login');
+    setTimeout(() => $('#inpPass').focus(), 200);
+  }
+}
+
+function teacherLogin(){
+  const pass = $('#inpPass').value;
+  if (pass === CONFIG.TEACHER_PASSWORD) {
+    sessionStorage.setItem('eep_teacher', '1');
+    $('#inpPass').value = '';
+    $('#loginError').classList.add('hidden');
+    renderTeacherStats();
+    renderTeacherTable();
+    showScreen('teacher');
+  } else {
+    $('#loginError').classList.remove('hidden');
+    $('#inpPass').value = '';
+    $('#inpPass').focus();
+  }
+}
+
+function teacherLogout(){
+  sessionStorage.removeItem('eep_teacher');
+  showScreen('home');
+}
+
+function renderTeacherStats(){
+  const all = getResults();
+  const box = $('#teacherStats');
+
+  if (!all.length) {
+    box.innerHTML = `<div class="card" style="grid-column:1/-1">
+      <div class="empty-state"><div class="icon">📭</div>
+      <p>Одоогоор ямар ч үр дүн бүртгэгдээгүй байна.</p></div></div>`;
+    return;
+  }
+
+  const avg = Math.round(all.reduce((s,r) => s + r.percent, 0) / all.length);
+  const best = Math.max(...all.map(r => r.percent));
+  const passed = all.filter(r => r.percent >= 60).length;
+
+  box.innerHTML = `
+    <div class="card" style="text-align:center">
+      <div style="font-size:30px;font-weight:800;color:var(--primary)">${all.length}</div>
+      <div class="muted small" style="font-weight:700">Нийт шалгалт</div>
+    </div>
+    <div class="card" style="text-align:center">
+      <div style="font-size:30px;font-weight:800;color:var(--accent)">${avg}%</div>
+      <div class="muted small" style="font-weight:700">Дундаж гүйцэтгэл</div>
+    </div>
+    <div class="card" style="text-align:center">
+      <div style="font-size:30px;font-weight:800;color:var(--success)">${best}%</div>
+      <div class="muted small" style="font-weight:700">Хамгийн өндөр</div>
+    </div>
+    <div class="card" style="text-align:center">
+      <div style="font-size:30px;font-weight:800;color:var(--warning)">${passed}/${all.length}</div>
+      <div class="muted small" style="font-weight:700">Тэнцсэн (≥60%)</div>
+    </div>`;
+}
+
+function renderTeacherTable(){
+  const box = $('#teacherTableBox');
+  const search = ($('#tSearch').value || '').toLowerCase().trim();
+  const year = $('#tYear').value;
+  const version = $('#tVersion').value;
+
+  let rows = getResults().sort((a,b) => new Date(b.timestamp) - new Date(a.timestamp));
+  if (search)  rows = rows.filter(r => r.name.toLowerCase().includes(search) || (r.className||'').toLowerCase().includes(search));
+  if (year)    rows = rows.filter(r => r.year === year);
+  if (version) rows = rows.filter(r => r.version === version);
+
+  if (!rows.length) {
+    box.innerHTML = `<div class="card"><div class="empty-state">
+      <div class="icon">📭</div><p>Үр дүн олдсонгүй.</p></div></div>`;
+    return;
+  }
+
+  box.innerHTML = `<div class="table-wrap"><table>
+    <thead><tr>
+      <th>#</th><th>Огноо</th><th>Овог нэр</th><th>Анги</th><th>Жил</th>
+      <th>Хувилбар</th><th>Оноо</th><th>Хувь</th><th>Дүн</th><th>Хугацаа</th>
+    </tr></thead>
+    <tbody>${rows.map((r,i) => {
+      const g = gradeOf(r.percent);
+      return `<tr>
+        <td>${i + 1}</td>
+        <td>${fmtDate(r.timestamp)}</td>
+        <td><b>${esc(r.name)}</b></td>
+        <td>${esc(r.className)}</td>
+        <td>${r.year}</td>
+        <td><span class="badge badge-${r.version.toLowerCase()}">${r.version}</span></td>
+        <td>${r.score} / ${r.total}</td>
+        <td><b>${r.percent}%</b></td>
+        <td><span class="score-chip" style="background:${g.color}1a;color:${g.color}">${g.letter}</span></td>
+        <td class="muted">${r.timeUsed || '—'}</td>
+      </tr>`;
+    }).join('')}</tbody>
+  </table></div>
+  <p class="small muted mt-16">Нийт <b>${rows.length}</b> бичлэг харагдаж байна.</p>`;
+}
+
+function exportCSV(){
+  const rows = getResults().sort((a,b) => new Date(b.timestamp) - new Date(a.timestamp));
+  if (!rows.length) { alert('Татах өгөгдөл байхгүй байна.'); return; }
+
+  const head = ['Огноо','Овог нэр','Анги','Жил','Хувилбар','Оноо','Нийт','Хувь','Дүн','Хугацаа'];
+  const body = rows.map(r => [
+    fmtDate(r.timestamp), r.name, r.className, r.year, r.version,
+    r.score, r.total, r.percent + '%', r.grade, r.timeUsed || ''
+  ]);
+
+  const csv = [head, ...body]
+    .map(row => row.map(c => `"${String(c).replace(/"/g,'""')}"`).join(','))
+    .join('\r\n');
+
+  const blob = new Blob(['\uFEFF' + csv], { type:'text/csv;charset=utf-8;' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `english_exam_results_${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+function saveScriptUrl(){
+  const url = $('#scriptUrlInput').value.trim();
+  if (!url) {
+    localStorage.removeItem(CONFIG.SCRIPT_KEY);
+    $('#scriptUrlStatus').innerHTML = '<span style="color:var(--muted)">URL устгагдлаа.</span>';
+    return;
+  }
+  if (!/^https:\/\/script\.google\.com\//.test(url)) {
+    $('#scriptUrlStatus').innerHTML = '<span style="color:var(--danger)">⚠️ URL нь script.google.com-оос эхлэх ёстой.</span>';
+    return;
+  }
+  localStorage.setItem(CONFIG.SCRIPT_KEY, url);
+  $('#scriptUrlStatus').innerHTML = '<span style="color:var(--success)">✓ Хадгалагдлаа.</span>';
+}
+
+/* =========================================================
+   16. INIT
+   ========================================================= */
+(function init(){
+  renderExamList();
+
+  // Restore saved script URL
+  const saved = localStorage.getItem(CONFIG.SCRIPT_KEY);
+  if (saved) $('#scriptUrlInput').value = saved;
+
+  // Warn before leaving during an exam
+  window.addEventListener('beforeunload', e => {
+    if (state.timerId && !state.submitted) {
+      e.preventDefault();
+      e.returnValue = '';
+    }
+  });
+
+  // Keyboard shortcuts during exam
+  document.addEventListener('keydown', e => {
+    if (!$('.screen[data-screen="exam"]').classList.contains('active')) return;
+    if (e.key === 'ArrowRight') nextQuestion();
+    if (e.key === 'ArrowLeft')  prevQuestion();
+    if (['1','2','3','4','5'].includes(e.key)) {
+      const i = parseInt(e.key, 10) - 1;
+      if (i < state.selected.questions[state.current].o.length) chooseAnswer(i);
+    }
+  });
+})();
+</script>
+</body>
+</html>
